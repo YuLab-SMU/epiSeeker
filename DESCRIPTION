@@ -1,0 +1,101 @@
+Package: epiSeeker
+Type: Package
+Title: epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
+Version: 0.0.1
+Authors@R: c( 
+    person(given = "Guangchuang", family = "Yu",       email = "guangchuangyu@gmail.com",      role  = c("aut", "cre"), comment = c(ORCID = "0000-0002-6485-8781")),
+    person(given = "Ming",        family = "Li",       email = "limiang929@gmail.com",         role = "ctb"),
+    person(given = "Qianwen",     family = "Wang",     email = "treywea@gmail.com",            role = "ctb"),
+    person(given = "Yun",         family = "Yan",      email = "youryanyun@gmail.com",         role = "ctb"),
+    person(given = "Hervé",       family = "Pagès",    email = "hpages.on.github@gmail.com",   role  = "ctb"),
+    person(given = "Michael",     family = "Kluge",    email = "michael.kluge@bio.ifi.lmu.de", role  = "ctb"),
+    person(given = "Thomas",      family = "Schwarzl", email = "schwarzl@embl.de",             role  = "ctb"),
+    person(given = "Zhougeng",    family = "Xu",       email = "xuzhougeng@163.com",           role  = "ctb"),
+	person(given = "Chun-Hui",    family = "Gao",      email="gaospecial@gmail.com",           role  = "ctb", comment=c(ORCID = "0000-0002-1445-7939"))
+	)
+Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
+Description: This package implements functions to analyzing multi-omics epigenetic data. 
+    Data of fragment type and base type are supported by epiSeeker. 
+    It provide function to retrieve the nearest genes around the peak, annotate genomic region of the peak, 
+    statstical methods for estimate the significance of overlap among peak data sets, and motif analysis.
+    It incorporate GEO database for user to compare the own dataset with those deposited in database. 
+    The comparison can be used to infer cooperative regulation and thus can be used to generate hypotheses. 
+    Several visualization functions are implemented to summarize the coverage of the
+    peak experiment, average profile and heatmap of peaks binding to TSS
+    regions, genomic annotation, distance to TSS, overlap of peaks or genes, and
+    the single-base resolution epigenetic data by considering the strand, motif, and additional information.
+Depends:
+    R (>= 3.5.0)
+Imports:
+    AnnotationDbi,
+    aplot,
+    BiocGenerics,
+    boot,
+    dplyr,
+    enrichplot,
+    IRanges,
+    GenomeInfoDb,
+    GenomicRanges,
+    GenomicFeatures,
+    ggplot2,
+    gplots,
+    graphics,
+    grDevices,
+    gtools,
+    magrittr,
+    methods,
+    plotrix,
+    parallel,
+    RColorBrewer,
+    rlang,
+    rtracklayer,
+    S4Vectors,
+    scales,
+    stats,
+    tibble,
+    utils,
+    yulab.utils (>= 0.2.0),
+    ggiraph,
+    BSgenome,
+    Biostrings,
+    DSS,
+    SummarizedExperiment,
+    bsseq,
+    data.table,
+    gginnards,
+    tidyr,
+    tidyselect
+Suggests:
+    ape,
+    BSgenome.Dmelanogaster.UCSC.dm6,
+    BSgenome.Hsapiens.UCSC.hg19,
+    clusterProfiler,
+    gggenes,
+    ggimage,
+    ggplotify,
+    ggtree,
+    ggupset,
+    ggVennDiagram,
+    JASPAR2024,
+    knitr,
+    motifmatchr,
+    org.Hs.eg.db,
+    prettydoc,
+    ReactomePA,
+    rmarkdown,
+    RSQLite,
+    testthat,
+    TFBSTools,
+    TxDb.Hsapiens.UCSC.hg19.knownGene
+Remotes:
+    GuangchuangYu/enrichplot
+URL: https://yulab-smu.top/contribution-knowledge-mining/
+BugReports: https://github.com/YuLab-SMU/epiSeeker/issues
+Encoding: UTF-8
+VignetteBuilder: knitr
+ByteCompile: TRUE
+License: Artistic-2.0
+biocViews: Annotation, ChIPSeq, Software, Visualization, MultipleComparison
+RoxygenNote: 7.3.2
+LazyData: TRUE
+LazyDataCompression: xz
