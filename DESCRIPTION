@@ -1,7 +1,7 @@
 Package: epiSeeker
 Type: Package
 Title: epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
-Version: 0.0.1
+Version: 0.99.0
 Authors@R: c( 
     person(given = "Guangchuang", family = "Yu",       email = "guangchuangyu@gmail.com",      role  = c("aut", "cre"), comment = c(ORCID = "0000-0002-6485-8781")),
     person(given = "Ming",        family = "Li",       email = "limiang929@gmail.com",         role = "ctb"),
@@ -25,7 +25,7 @@ Description: This package implements functions to analyzing multi-omics epigenet
     regions, genomic annotation, distance to TSS, overlap of peaks or genes, and
     the single-base resolution epigenetic data by considering the strand, motif, and additional information.
 Depends:
-    R (>= 3.5.0)
+    R (>= 4.1.0)
 Imports:
     AnnotationDbi,
     aplot,
@@ -88,8 +88,8 @@ Suggests:
     TFBSTools,
     TxDb.Hsapiens.UCSC.hg19.knownGene
 Remotes:
-    GuangchuangYu/enrichplot
-URL: https://yulab-smu.top/contribution-knowledge-mining/
+    YuLab-SMU/enrichplot
+URL: https://github.com/YuLab-SMU/epiSeeker
 BugReports: https://github.com/YuLab-SMU/epiSeeker/issues
 Encoding: UTF-8
 VignetteBuilder: knitr

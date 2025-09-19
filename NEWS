@@ -1,3 +1,0 @@
-CHANGES IN VERSION 0.0.1
-------------------------
- o epiSeeker inherits from ChIPseeker to support analysis of multi-omics epigenomic data
