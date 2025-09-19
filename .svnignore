@@ -1,7 +1,0 @@
-.git
-*.Rhistory
-.travis.yml
-appveyor.yml
-docs
-mkdocs
-.github
