@@ -85,8 +85,9 @@ Suggests:
     RSQLite,
     testthat,
     TFBSTools,
-    TxDb.Hsapiens.UCSC.hg19.knownGene,
-    Vennerable
+    TxDb.Hsapiens.UCSC.hg19.knownGene
+Remotes:
+    YuLab-SMU/enrichplot
 URL: https://github.com/YuLab-SMU/epiSeeker
 BugReports: https://github.com/YuLab-SMU/epiSeeker/issues
 Encoding: UTF-8
