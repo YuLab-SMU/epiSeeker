@@ -1,18 +1,14 @@
 # epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
 
 <!-- r badge_bioc_release("epiSeeker", "green")` 
-r badge_devel("YuLab-SMU/epiSeeker", "green")`-->
-
+r badge_devel("YuLab-SMU/epiSeeker", "green")`
 [![Bioc](http://www.bioconductor.org/shields/years-in-bioc/epiSeeker.svg)](https://www.bioconductor.org/packages/devel/bioc/html/epiSeeker.html#since)
-[![Project Status: Active - The project has reached a stable, usable
-state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+&#10;
 [![platform](http://www.bioconductor.org/shields/availability/devel/epiSeeker.svg)](https://www.bioconductor.org/packages/devel/bioc/html/epiSeeker.html#archives)
-[![Build
-Status](http://www.bioconductor.org/shields/build/devel/bioc/epiSeeker.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/epiSeeker/)
+[![Build Status](http://www.bioconductor.org/shields/build/devel/bioc/epiSeeker.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/epiSeeker/)
 [![Last-changedate](https://img.shields.io/badge/last%20change-2025--09--19-green.svg)](https://github.com/YuLab-SMU/epiSeeker/commits/master)
-[![codecov](https://codecov.io/gh/YuLab-SMU/epiSeeker/branch/master/graph/badge.svg)](https://codecov.io/gh/YuLab-SMU/epiSeeker/)
+-->
 
 This package implements functions to analyzing multi-omics epigenetic
 data. Data of fragment type and base type are supported by epiSeeker. It
