@@ -9,6 +9,9 @@ parse_peak(peak_str)
 \arguments{
 \item{peak_str}{peak str}
 }
+\value{
+data frame
+}
 \description{
 parse peak str
 }

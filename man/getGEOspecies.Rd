@@ -12,6 +12,9 @@ data.frame
 \description{
 accessing species statistics collecting from GEO database
 }
+\examples{
+getGEOspecies()
+}
 \author{
 G Yu
 }

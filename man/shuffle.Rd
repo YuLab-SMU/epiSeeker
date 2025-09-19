@@ -17,6 +17,13 @@ GRanges object
 \description{
 shuffle the position of peak
 }
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peak <- readPeakFile(peakfile)
+shuffle(peak, txdb)
+}
 \author{
 G Yu
 }

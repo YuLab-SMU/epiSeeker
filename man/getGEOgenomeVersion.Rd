@@ -12,6 +12,9 @@ data.frame
 \description{
 get genome version statistics collecting from GEO ChIPseq data
 }
+\examples{
+getGEOgenomeVersion()
+}
 \author{
 G Yu
 }

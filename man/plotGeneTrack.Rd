@@ -21,7 +21,7 @@ plotGeneTrack(
   highlight_alpha = 0.2,
   OrgDb = NULL,
   show_legend = FALSE,
-  auto_x_axis = T
+  auto_x_axis = TRUE
 )
 }
 \arguments{
@@ -64,4 +64,9 @@ ggplot object
 }
 \description{
 plot gene track to plot
+}
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126713193)
 }

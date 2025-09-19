@@ -65,49 +65,41 @@ is_valid_color = function(color){
   })
 }
 
-##' plot feature distribution based on the distances to the TSS
-##'
-##'
-##' @title plotDistToTSS.data.frame
-##' @param peakDist peak annotation
-##' @param distanceColumn column name of the distance from peak to nearest gene
-##' @param distanceBreaks default is 'c(0, 1000, 3000, 5000, 10000, 100000)'
-##' @param palette palette name for coloring different distances. Run `RColorBrewer::display.brewer.all()` to see all applicable values.
-##' @param xlab x label
-##' @param ylab y lable
-##' @param title figure title
-##' @param categoryColumn category column, default is ".id"
-##' @return bar plot that summarize distance from peak to
-##' TSS of the nearest gene.
-##' @importFrom magrittr %<>%
-##' @importFrom ggplot2 ggplot
-##' @importFrom ggplot2 aes
-##' @importFrom ggplot2 aes_string
-##' @importFrom ggplot2 geom_bar
-##' @importFrom ggplot2 geom_hline
-##' @importFrom ggplot2 theme_bw
-##' @importFrom ggplot2 coord_flip
-##' @importFrom ggplot2 xlab
-##' @importFrom ggplot2 ylab
-##' @importFrom ggplot2 ggtitle
-##' @importFrom ggplot2 geom_hline
-##' @importFrom ggplot2 scale_y_continuous
-##' @importFrom ggplot2 scale_x_continuous
-##' @importFrom ggplot2 scale_fill_brewer
-##' @importFrom ggplot2 scale_fill_hue
-##' @importFrom ggplot2 scale_fill_manual
-##' @importFrom ggplot2 geom_text
-##' @importFrom rlang .data
-##' @examples
-##' \dontrun{
-##' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-##' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-##' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-##' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
-##' plotDistToTSS(peakAnno)
-##' }
-##' @seealso \code{\link{annotateSeq}}
-##' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+#' plot feature distribution based on the distances to the TSS
+#'
+#'
+#' @title plotDistToTSS.data.frame
+#' @param peakDist peak annotation
+#' @param distanceColumn column name of the distance from peak to nearest gene
+#' @param distanceBreaks default is 'c(0, 1000, 3000, 5000, 10000, 100000)'
+#' @param palette palette name for coloring different distances. Run `RColorBrewer::display.brewer.all()` to see all applicable values.
+#' @param xlab x label
+#' @param ylab y lable
+#' @param title figure title
+#' @param categoryColumn category column, default is ".id"
+#' @return bar plot that summarize distance from peak to
+#' TSS of the nearest gene.
+#' @importFrom magrittr %<>%
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 aes_string
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 geom_hline
+#' @importFrom ggplot2 theme_bw
+#' @importFrom ggplot2 coord_flip
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 ggtitle
+#' @importFrom ggplot2 geom_hline
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom ggplot2 scale_x_continuous
+#' @importFrom ggplot2 scale_fill_brewer
+#' @importFrom ggplot2 scale_fill_hue
+#' @importFrom ggplot2 scale_fill_manual
+#' @importFrom ggplot2 geom_text
+#' @importFrom rlang .data
+#' @seealso \code{\link{annotateSeq}}
+#' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 plotDistToTSS.data.frame <- function(peakDist,
                                      distanceColumn="distanceToTSS",
                                      distanceBreaks=c(0, 1000, 3000, 5000, 10000, 100000),

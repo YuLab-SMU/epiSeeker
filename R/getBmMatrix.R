@@ -150,7 +150,7 @@ getBmMatrix.BSseq.internal <- function(region,
 
   ## fill in the non-mentioned site
   coordinate <- data.frame(coordinate = coordinate)
-  results <- merge(results,coordinate,by = "coordinate",all=T)
+  results <- merge(results,coordinate,by = "coordinate",all = TRUE)
   results$motif[is.na(results$motif)] <- "none"
   results[is.na(results)] <- 0
 
@@ -175,7 +175,7 @@ getBmMatrix.BSseq.internal <- function(region,
   df$strand[df$strand == 0] <- "*"
 
   ## assign attributes to df
-  attr(df,"chromosome") <- paste0("chr",gsub("chr","",region$chr,ignore.case = T))
+  attr(df,"chromosome") <- paste0("chr",gsub("chr","",region$chr,ignore.case = TRUE))
   return(df)
 }
 
@@ -329,7 +329,7 @@ getBmMatrix.bmData.internal <- function(region,
 
   ## fill in the non-mentioned site
   coordinate <- data.frame(coordinate = coordinate)
-  results <- merge(results,coordinate,by = "coordinate",all=T)
+  results <- merge(results,coordinate,by = "coordinate",all = TRUE)
   results$motif[is.na(results$motif)] <- "none"
   results[is.na(results)] <- 0
 
@@ -376,6 +376,6 @@ getBmMatrix.bmData.internal <- function(region,
 
   ## assign attributes to df
   attr(df, "data") <- "bmData"
-  attr(df,"chromosome") <- paste0("chr",gsub("chr","",region$chr,ignore.case = T))
+  attr(df,"chromosome") <- paste0("chr",gsub("chr","",region$chr,ignore.case = TRUE))
   return(df)
 }

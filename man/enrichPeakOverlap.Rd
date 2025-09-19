@@ -41,6 +41,13 @@ data.frame
 \description{
 calculate overlap significant of ChIP experiments based on the genome coordinations
 }
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peak <- readPeakFile(peakfile)
+enrichPeakOverlap(peak, peak, txdb)
+}
 \author{
 G Yu
 }

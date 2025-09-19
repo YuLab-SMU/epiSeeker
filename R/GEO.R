@@ -6,13 +6,15 @@
 
 
 
-##' accessing species statistics collecting from GEO database
-##'
-##'
-##' @title getGEOspecies
-##' @return data.frame
-##' @author G Yu
-##' @export
+#' accessing species statistics collecting from GEO database
+#'
+#'
+#' @title getGEOspecies
+#' @return data.frame
+#' @author G Yu
+#' @examples 
+#' getGEOspecies()
+#' @export
 getGEOspecies <- function() {
     gsminfo <- get_gsminfo()
     species <- gsminfo$organism
@@ -20,13 +22,15 @@ getGEOspecies <- function() {
     return(res)
 }
 
-##' get genome version statistics collecting from GEO ChIPseq data
-##'
-##'
-##' @title getGEOgenomeVersion
-##' @return data.frame
-##' @author G Yu
-##' @export
+#' get genome version statistics collecting from GEO ChIPseq data
+#'
+#'
+#' @title getGEOgenomeVersion
+#' @return data.frame
+#' @author G Yu
+#' @examples 
+#' getGEOgenomeVersion()
+#' @export
 getGEOgenomeVersion <- function() {
     gsminfo <- get_gsminfo()
     gv <- gsminfo[, c("organism",
@@ -40,15 +44,17 @@ getGEOgenomeVersion <- function() {
     return(res)
 }
 
-##' get subset of GEO information by genome version keyword
-##'
-##'
-##' @title getGEOInfo
-##' @param genome genome version
-##' @param simplify simplify result or not
-##' @return data.frame
-##' @author G Yu
-##' @export
+#' get subset of GEO information by genome version keyword
+#'
+#'
+#' @title getGEOInfo
+#' @param genome genome version
+#' @param simplify simplify result or not
+#' @return data.frame
+#' @author G Yu
+#' @examples 
+#' hg19 <- getGEOInfo(genome="hg19", simplify=TRUE)
+#' @export
 getGEOInfo <- function(genome, simplify =TRUE) {
     gsminfo <- get_gsminfo()
     genomeVersion <- NULL ## to satisfy codetools
@@ -59,36 +65,42 @@ getGEOInfo <- function(genome, simplify =TRUE) {
     return(res)
 }
 
-##' download all BED files of a particular genome version
-##'
-##'
-##' @title downloadGEObedFiles
-##' @param genome genome version
-##' @param destDir destination folder
-##' @return NULL
-##' @author G Yu
-##' @export
+#' download all BED files of a particular genome version
+#'
+#'
+#' @title downloadGEObedFiles
+#' @param genome genome version
+#' @param destDir destination folder
+#' @return NULL
+#' @author G Yu
+#' @return GEO files
+#' @examples 
+#' gse <- "GSE11431"
+#' @export
 downloadGEObedFiles <- function(genome, destDir=getwd()) {
     info <- getGEOInfo(genome)
     downloadGEO.internal(info, destDir)
 }
 
-##' download BED supplementary files of a list of GSM accession numbers
-##'
-##'
-##' @title downloadGSMbedFiles
-##' @param GSM GSM accession numbers
-##' @param destDir destination folder
-##' @return NULL
-##' @author G Yu
-##' @export
+#' download BED supplementary files of a list of GSM accession numbers
+#'
+#'
+#' @title downloadGSMbedFiles
+#' @param GSM GSM accession numbers
+#' @param destDir destination folder
+#' @return NULL
+#' @author G Yu
+#' @return GEO data
+#' @examples 
+#' gsm <- "GSM288348"
+#' @export
 downloadGSMbedFiles <- function(GSM, destDir=getwd()) {
     gsminfo <- get_gsminfo()
     info <- gsminfo[gsminfo$gsm %in% GSM,]
     downloadGEO.internal(info, destDir)
 }
 
-##' @importFrom utils download.file
+#' @importFrom utils download.file
 downloadGEO.internal <- function(info, destDir) {
     fnames <- as.character(info$supplementary_file)
     destfiles <- sub(".*\\/", paste(destDir, "/", sep=""), fnames)
@@ -103,16 +115,16 @@ downloadGEO.internal <- function(info, destDir) {
     }
 }
 
-##' @importFrom utils data
-## @importFrom GEOmetadb
-## @importFrom RSQLite dbConnect
-## @importFrom RSQLite dbGetQuery
+#' @importFrom utils data
+#' @importFrom RSQLite dbConnect
+#' @importFrom RSQLite dbGetQuery
 prepareGSMInfo <- function() {
-    pkg <- "GEOmetadb"
-    require(pkg, character.only=TRUE)
-    getSQLiteFile <- eval(parse(text="getSQLiteFile"))
-    ## get the latest version of sql file
-    is.dl <- tryCatch(getSQLiteFile(), error = function(e) NULL)
+
+    if (requireNamespace("GEOmetadb", quietly = TRUE)){
+        getSQLiteFile <- eval(parse(text="getSQLiteFile"))
+        ## get the latest version of sql file
+        is.dl <- tryCatch(getSQLiteFile(), error = function(e) NULL)
+    }
 
     if (is.null(is.dl)) {
         url <- 'http://starbuck1.s3.amazonaws.com/sradb/GEOmetadb.sqlite.gz'
@@ -121,41 +133,40 @@ prepareGSMInfo <- function() {
         size <- hh$headers[["content-length"]]
         cmd <- paste('wget -c', url)
         while(file.info("GEOmetadb.sqlite.gz")$size < size) {
-            system(cmd)
+            system2(cmd)
         }
         if (file.exists('GEOmetadb.sqlite') && file.exists('GEOmetadb.sqlite.gz')) {
             file.remove("GEOmetadb.sqlite")
         }
-        system('gunzip GEOmetadb.sqlite.gz')
+        system2('gunzip GEOmetadb.sqlite.gz')
     }
 
-    GEOmetadbFile="GEOmetadb.sqlite"
+    GEOmetadbFile <- "GEOmetadb.sqlite"
     file.info(GEOmetadbFile)
 
-    sqlpkg <- "RSQLite"
-    require(sqlpkg, character.only=TRUE)
-    dbConnect <- eval(parse(text="dbConnect"))
-    dbGetQuery <- eval(parse(text="dbGetQuery"))
-    SQLite <- eval(parse(text="SQLite"))
+    if (requireNamespace("RSQLite", quietly = TRUE)){
+        dbConnect <- eval(parse(text="dbConnect"))
+        dbGetQuery <- eval(parse(text="dbGetQuery"))
+        SQLite <- eval(parse(text="SQLite"))
+        con <- dbConnect(SQLite(),GEOmetadbFile)
+        ## dbListTables(con)
+    }    
 
-    con <- dbConnect(SQLite(),GEOmetadbFile)
-    ## dbListTables(con)
+    if (requireNamespace("GEOquery", quietly = TRUE)){
+        getGEO <- eval(parse(text="getGEO"))
+        Meta <- eval(parse(text="Meta"))
 
+        ## get all GPL IDs
+        ## download soft using gpl = getGEO("GPLXXX")
+        ## using Meta(gpl) find the technology match sequencing
+        ## get all gsm IDs
+        ## parse it
 
-    pkg <- "GEOquery"
-    require(pkg, character.only=TRUE)
-    getGEO <- eval(parse(text="getGEO"))
-    Meta <- eval(parse(text="Meta"))
-
-    ## get all GPL IDs
-    ## download soft using gpl = getGEO("GPLXXX")
-    ## using Meta(gpl) find the technology match sequencing
-    ## get all gsm IDs
-    ## parse it
-
-    gpl <- dbGetQuery(con, 'select gpl, technology from gpl')
-    gpl <- gpl[gpl[,2] == "high-throughput sequencing",1]
-    gpl <- gpl[!is.na(gpl)]
+        gpl <- dbGetQuery(con, 'select gpl, technology from gpl')
+        gpl <- gpl[gpl[,2] == "high-throughput sequencing",1]
+        gpl <- gpl[!is.na(gpl)]
+    }
+    
 
     ## save the processedGSM vector that contain all the GSM that have been processed.
     ## next time when preparing GSMInfo, filter those have been processed before.
@@ -295,8 +306,8 @@ getGenomicVersion <- function(ucsc_release, data_processing, organism, supplemen
 ##     return(gsm)
 ## }
 
-##' @importFrom parallel mclapply
-##' @importFrom parallel detectCores
+#' @importFrom parallel mclapply
+#' @importFrom parallel detectCores
 batchGetGSMsuppFile <- function(gsm) {
     suppfiles <- mclapply(seq_along(gsm), function(i) {
         cat("processing ", gsm[i], "\t",  i , " of ", length(gsm), "\n")
@@ -310,10 +321,13 @@ batchGetGSMsuppFile <- function(gsm) {
 }
 
 getGSMsuppFile <- function(GSM) {
-    pkg <- "GEOquery"
-    require(pkg, character.only=TRUE)
-    getGEO <- eval(parse(text="getGEO"))
-    Meta <- eval(parse(text="Meta"))
+
+    if (requireNamespace("GEOquery", quietly = TRUE)){
+        getGEO <- eval(parse(text="getGEO"))
+        Meta <- eval(parse(text="Meta"))
+    }
+
+    
 
     destdir="geo_soft"
     if (!file.exists(destdir)) {

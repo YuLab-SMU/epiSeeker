@@ -1,17 +1,17 @@
-## @importFrom UpSetR upset
-## @importFrom grid viewport
-## @importFrom grid pushViewport
-## @importFrom grid popViewport
-## @importFrom gridBase gridPLT
-## @importFrom graphics plot.new
-##' @importFrom ggplot2 coord_fixed
-##' @importFrom ggplot2 ggplot
-##' @importFrom ggplot2 aes_
-##' @importFrom ggplot2 geom_bar
-##' @importFrom ggplot2 xlab
-##' @importFrom ggplot2 ylab
-##' @importFrom ggplot2 theme_minimal
-##' @author Guangchuang Yu
+#' @importFrom UpSetR upset
+#' @importFrom grid viewport
+#' @importFrom grid pushViewport
+#' @importFrom grid popViewport
+#' @importFrom gridBase gridPLT
+#' @importFrom graphics plot.new
+#' @importFrom ggplot2 coord_fixed
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 aes_
+#' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 xlab
+#' @importFrom ggplot2 ylab
+#' @importFrom ggplot2 theme_minimal
+#' @author Guangchuang Yu
 upsetplot.csAnno <- function(x, order_by = "freq", vennpie=FALSE, vp = list(x=.6, y=.7, width=.8, height=.8)) {
     y <- x@detailGenomicAnnotation
     nn <- names(y)

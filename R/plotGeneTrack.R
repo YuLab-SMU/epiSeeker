@@ -31,12 +31,16 @@
 #' @importFrom ggplot2 coord_cartesian
 #' @importFrom rlang sym
 #' @importFrom rlang check_installed
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126713193)
 #' @export 
 plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
                           x_text_size = 10, y_text_size = 10,
                           select_gene = "all", palette = NULL,  fromType = "ENTREZID",
                           highlight = NULL, highlight_color = "#c6c3c3", highlight_alpha = 0.2,
-                          OrgDb = NULL, show_legend = FALSE, auto_x_axis = T) {
+                          OrgDb = NULL, show_legend = FALSE, auto_x_axis = TRUE) {
     
 
     # Get genes in the region

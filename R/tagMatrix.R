@@ -26,6 +26,7 @@ getPromoters <- function(TxDb = NULL,
 #' @param downstream downstream extension. One of actual number or rel() object.
 #' @param by one of 'gene', 'transcript', 'exon', 'intron' , '3UTR' , '5UTR', 'UTR'.
 #' @param type one of "start_site", "end_site", "body".
+#' @return grange object
 extend_gr <- function(regions, upstream, downstream, by, type){
 
   check_extension(upstream = upstream, downstream = downstream, type = type)
@@ -111,6 +112,10 @@ extend_gr <- function(regions, upstream, downstream, by, type){
 #' @param type one of "start_site", "end_site", "body".
 #' @return GRanges object
 #' @import IRanges GenomicRanges
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' getBioRegion(txdb)
 #' @author Guangchuang Yu
 #' @export
 getBioRegion <- function(TxDb = NULL,
@@ -218,6 +223,12 @@ getBioRegion <- function(TxDb = NULL,
 #' Idea is derived from the function of deeptools(https://deeptools.readthedocs.io/en/develop/content/tools/computeMatrix.html)
 #' @param verbose print message or not
 #' @param ignore_strand ignore the strand information or not
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
 #' @return tagMatrix
 #' @author G Yu
 #' @export
@@ -292,6 +303,7 @@ getTagMatrix <- function(peak,
 #' @param nbin the amount of nbines. 
 #' @param verbose print message or not
 #' @param ignore_strand ignore the strand information or not
+#' @return matrix
 getTagMatrix.internal <- function(peak, 
                                   upstream = 0,
                                   downstream = 0,
@@ -736,6 +748,7 @@ getTagMatrix_body <- function(peak.cov,
 #' @param nbin the amount of nbines.
 #' @param chr.idx idx of chr.
 #' @importFrom methods as
+#' @return matrix
 getTagMatrix_body_internal <- function(peak.cov, windows, nbin, chr.idx){
 
     peakView <- Views(peak.cov[chr.idx], as(windows, "IntegerRangesList")[chr.idx])

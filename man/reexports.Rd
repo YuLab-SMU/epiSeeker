@@ -3,27 +3,20 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
-\alias{GRangesList}
 \alias{rel}
-\alias{makeBSseqData}
-\alias{BSseq}
-\alias{assays}
-\alias{assay}
 \title{Objects exported from other packages}
+\value{
+function
+}
+\examples{
+rel(0.2)
+}
 \keyword{internal}
 \description{
 These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{bsseq}{\code{\link[bsseq]{BSseq}}}
-
-  \item{DSS}{\code{\link[DSS]{makeBSseqData}}}
-
-  \item{GenomicRanges}{\code{\link[GenomicRanges:GRangesList-class]{GRangesList}}}
-
   \item{ggplot2}{\code{\link[ggplot2:element]{rel}}}
-
-  \item{SummarizedExperiment}{\code{\link[SummarizedExperiment:SummarizedExperiment-class]{assay}}, \code{\link[SummarizedExperiment:SummarizedExperiment-class]{assays}}}
 }}
 

@@ -26,6 +26,9 @@ plotPeakHeatmap_sub.internal(
 
 \item{facet_label_text_size}{the size of facet label text}
 }
+\value{
+ggplot object
+}
 \description{
 internal function of plotPeakHeatmap
 }

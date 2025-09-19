@@ -4,6 +4,12 @@
 #' @docType methods
 #' @name vennpie
 #' @rdname vennpie-methods
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' vennpie(peakAnno)
 #' @export
 setGeneric("vennpie", 
   function(x, r = 0.2, cex = 1.2, ...) 
@@ -17,6 +23,12 @@ setGeneric("vennpie",
 #' @docType methods
 #' @name plotDistToTSS
 #' @rdname plotDistToTSS-methods
+#' @examples
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+#' plotDistToTSS(peakAnno)
 #' @export
 setGeneric("plotDistToTSS", 
   function(x, 
@@ -33,6 +45,12 @@ setGeneric("plotDistToTSS",
 #' @docType methods
 #' @name plotAnnoBar
 #' @rdname plotAnnoBar-methods
+#' @examples
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+#' plotAnnoBar(peakAnno)
 #' @export
 setGeneric("plotAnnoBar", 
   function(x,
@@ -71,6 +89,15 @@ setGeneric("plotAnnoPie",
 #' @name getBmMatrix
 #' @rdname getBmMatrix-methods
 #' @importFrom methods setGeneric
+#' @examples 
+#' data(Human_BSobj)
+#' require(BSgenome.Hsapiens.UCSC.hg19)
+#' BSgenome_hg19 <- BSgenome.Hsapiens.UCSC.hg19
+#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr1", start = 894849, end = 895849),
+#'                         BSgenome = BSgenome_hg19,
+#'                         input = Human_BSobj[,c(1)],
+#'                         base = "C",
+#'                         motif = c("CG","CHH","CHG"))
 #' @export
 setGeneric("getBmMatrix",
            function(region,
@@ -92,6 +119,7 @@ setGeneric("getBmMatrix",
 #' @name makeBmDataFromData
 #' @rdname makeBmDataFromData-methods
 #' @importFrom methods setGeneric
+#' @return bmData
 #' @export
 setGeneric("makeBmDataFromData", function(data,
                                           sampleNames=NULL){

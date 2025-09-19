@@ -11,8 +11,14 @@ downloadGEObedFiles(genome, destDir = getwd())
 
 \item{destDir}{destination folder}
 }
+\value{
+GEO files
+}
 \description{
 download all BED files of a particular genome version
+}
+\examples{
+gse <- "GSE11431"
 }
 \author{
 G Yu

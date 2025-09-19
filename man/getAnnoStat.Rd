@@ -9,6 +9,16 @@ getAnnoStat(x)
 \arguments{
 \item{x}{csAnno object}
 }
+\value{
+data frame
+}
 \description{
 getting status of annotation
+}
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+getAnnoStat(peakAnno)
 }

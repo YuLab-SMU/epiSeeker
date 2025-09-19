@@ -35,11 +35,16 @@ setClass("csAnno",
 
 #' convert csAnno object to GRanges
 #'
-#'
 #' @title as.GRanges
 #' @param x csAnno object
 #' @return GRanges object
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+#' @examples
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' as.GRanges(peakAnno)
 #' @export
 as.GRanges <- function(x) {
     if (!is(x, "csAnno"))
@@ -52,6 +57,13 @@ as.GRanges <- function(x) {
 #' 
 #' @title getAnnoStat
 #' @param x csAnno object
+#' @return data frame
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' getAnnoStat(peakAnno)
 #' @export
 getAnnoStat <- function(x) {
     if (!is(x, "csAnno"))
@@ -69,6 +81,12 @@ getAnnoStat <- function(x) {
 #' @param x csAnno object
 #' @param ... csAnno objects
 #' @return csAnno object
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' combine_csAnno(peakAnno, peakAnno)
 #' @importFrom methods new 
 #' @export
 combine_csAnno <- function(x, ...){
@@ -136,7 +154,7 @@ combine_csAnno <- function(x, ...){
     
     for(i in 1:length(z)){
         combine_annoStat <- merge(combine_annoStat, z[[i]]@annoStat, 
-                                  by = "Feature", all = T, sort = F)
+                                  by = "Feature", all = TRUE, sort = FALSE)
         combine_annoStat[is.na(combine_annoStat)] <- 0
         combine_annoStat <- combine_annoStat[order(combine_annoStat$Feature),]
     }
@@ -202,6 +220,12 @@ setMethod("vennpie", signature(x="csAnno"),
 #' @usage upsetplot(x, ...)
 #' @importFrom enrichplot upsetplot
 #' @exportMethod upsetplot
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' upsetplot(peakAnno)
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("upsetplot", signature(x="csAnno"),
           function(x, ...) {
@@ -242,6 +266,11 @@ as.data.frame.csAnno <- function(x, row.names=NULL, optional=FALSE, ...) {
 #' @importFrom methods show
 #' @exportMethod show
 #' @usage show(object)
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' show(peakfile)
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("show", signature(object="csAnno"),
           function(object) {

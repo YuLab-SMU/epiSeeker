@@ -41,6 +41,9 @@ getTagMatrix.internal(
 
 \item{ignore_strand}{ignore the strand information or not}
 }
+\value{
+matrix
+}
 \description{
 getTagMatrix internal function
 }

@@ -9,6 +9,9 @@ loadTxDb(TxDb)
 \arguments{
 \item{TxDb}{txdb.}
 }
+\value{
+txdb object
+}
 \description{
 load defaulst txdb
 }

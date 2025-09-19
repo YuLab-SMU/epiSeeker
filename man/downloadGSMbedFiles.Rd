@@ -11,8 +11,14 @@ downloadGSMbedFiles(GSM, destDir = getwd())
 
 \item{destDir}{destination folder}
 }
+\value{
+GEO data
+}
 \description{
 download BED supplementary files of a list of GSM accession numbers
+}
+\examples{
+gsm <- "GSM288348"
 }
 \author{
 G Yu

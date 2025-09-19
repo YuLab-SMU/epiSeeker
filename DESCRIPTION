@@ -13,7 +13,6 @@ Authors@R: c(
     person(given = "Zhougeng",    family = "Xu",       email = "xuzhougeng@163.com",           role  = "ctb"),
 	person(given = "Chun-Hui",    family = "Gao",      email="gaospecial@gmail.com",           role  = "ctb", comment=c(ORCID = "0000-0002-1445-7939"))
 	)
-Maintainer: Guangchuang Yu <guangchuangyu@gmail.com>
 Description: This package implements functions to analyzing multi-omics epigenetic data. 
     Data of fragment type and base type are supported by epiSeeker. 
     It provide function to retrieve the nearest genes around the peak, annotate genomic region of the peak, 
@@ -86,16 +85,15 @@ Suggests:
     RSQLite,
     testthat,
     TFBSTools,
-    TxDb.Hsapiens.UCSC.hg19.knownGene
-Remotes:
-    YuLab-SMU/enrichplot
+    TxDb.Hsapiens.UCSC.hg19.knownGene,
+    Vennerable
 URL: https://github.com/YuLab-SMU/epiSeeker
 BugReports: https://github.com/YuLab-SMU/epiSeeker/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
-ByteCompile: TRUE
+ByteCompile: true
 License: Artistic-2.0
-biocViews: Annotation, ChIPSeq, Software, Visualization, MultipleComparison
+biocViews: Annotation, ChIPSeq, Software, Visualization, MultipleComparison, Coverage, MotifAnnotation
 RoxygenNote: 7.3.2
-LazyData: TRUE
+LazyData: true
 LazyDataCompression: xz

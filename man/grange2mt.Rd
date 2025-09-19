@@ -11,6 +11,9 @@ grange2mt(gr_list, weightCol = NULL)
 
 \item{weightCol}{weight column of peak.}
 }
+\value{
+matrix
+}
 \description{
 change a list grange object to matrix
 }

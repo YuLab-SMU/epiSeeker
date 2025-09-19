@@ -13,6 +13,9 @@ check_bin(nbin, windows, verbose)
 
 \item{verbose}{show details or not}
 }
+\value{
+message or nothing
+}
 \description{
 check bin parameter method
 }

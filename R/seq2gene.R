@@ -1,23 +1,21 @@
-##' annotate genomic regions to genes in many-to-many mapping
-##'
-##' This funciton associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user specify distance).
-##' @title seq2gene
-##' @param seq genomic regions in GRanges object
-##' @param tssRegion TSS region
-##' @param flankDistance flanking search radius
-##' @param TxDb TranscriptDb object
-##' @param sameStrand logical whether find nearest/overlap gene in the same strand
-##' @return gene vector
-##' @export
-##' @examples
-##' \dontrun{
-##' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-##' TxDb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-##' file <- getSampleFiles()[[1]] # a bed file
-##' gr <- readPeakFile(file)
-##' genes <- seq2gene(gr, tssRegion=c(-1000, 1000), flankDistance = 3000, TxDb) 
-##' }
-##' @author Guangchuang Yu
+#' annotate genomic regions to genes in many-to-many mapping
+#'
+#' This funciton associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user specify distance).
+#' @title seq2gene
+#' @param seq genomic regions in GRanges object
+#' @param tssRegion TSS region
+#' @param flankDistance flanking search radius
+#' @param TxDb TranscriptDb object
+#' @param sameStrand logical whether find nearest/overlap gene in the same strand
+#' @return gene vector
+#' @export
+#' @examples
+#' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' TxDb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' file <- getSampleFiles()[[1]] # a bed file
+#' gr <- readPeakFile(file)
+#' genes <- seq2gene(gr, tssRegion=c(-1000, 1000), flankDistance = 3000, TxDb) 
+#' @author Guangchuang Yu
 seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {
     .epiSeekerEnv(TxDb)
     epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)

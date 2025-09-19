@@ -33,14 +33,13 @@ ggplot2 grammar e.g.(scale_fill_distiller()). And users can specify any details,
 text size and showing percentage or not, by inputting `...` extra parameters.
 }
 \examples{
-## example not run
-## require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-## txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-## peakfiles <- getSampleFiles()
-## peakAnnoList <- lapply(peakfiles, annotateSeq)
-## names(peakAnnoList) <- names(peakfiles)
-## genes= lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
-## vennplot(genes)
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfiles <- getSampleFiles()
+peakAnnoList <- lapply(peakfiles, annotateSeq)
+names(peakAnnoList) <- names(peakfiles)
+genes= lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
+vennplot(genes, by = "gplots")
 }
 \author{
 G Yu

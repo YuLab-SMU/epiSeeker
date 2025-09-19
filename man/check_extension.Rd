@@ -13,6 +13,9 @@ check_extension(upstream, downstream, type)
 
 \item{type}{one of "start_site", "end_site", "body".}
 }
+\value{
+message or null
+}
 \description{
 check upstream and downstream extension
 }

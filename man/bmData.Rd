@@ -32,6 +32,19 @@ bmData(
 
 \item{...}{other parameters from \code{\link[bsseq]{BSseq}}}
 }
+\value{
+bmData object
+}
 \description{
 This is constructor fo bmData objects.
+}
+\examples{
+data(Human_BSobj)
+tmp <- Human_BSobj[1:10,1]
+tmp_gr <- as.data.frame(tmp@rowRanges)
+bmData(value1 = assay(tmp, "M"),
+       value2 = assay(tmp, "cov"),
+       pos = tmp_gr$start,
+       chr = tmp_gr$seqnames)
+
 }

@@ -404,6 +404,7 @@ loadPeak <- function(peak, verbose=FALSE) {
 
 #' @title load defaulst txdb
 #' @param TxDb txdb.
+#' @return txdb object
 loadTxDb <- function(TxDb) {
 
     rlang::check_installed('TxDb.Hsapiens.UCSC.hg19.knownGene', reason = 'Default txdb...')
@@ -553,9 +554,6 @@ list_to_dataframe <- function(dataList) {
     return(res)
 }
 
-#' @importFrom GenomicRanges GRangesList
-#' @export
-GenomicRanges::GRangesList
 
 ## . function was from plyr package
 #' capture name of variable
@@ -579,6 +577,7 @@ GenomicRanges::GRangesList
 #' @param upstream upstream extension. One of actual number or rel() object.
 #' @param downstream downstream extension. One of actual number or rel() object.
 #' @param type one of "start_site", "end_site", "body".
+#' @return message or null
 #' @importFrom ggplot2 rel
 check_extension <- function(upstream, downstream, type){
 
@@ -609,7 +608,9 @@ check_extension <- function(upstream, downstream, type){
 
 
 #' @importFrom ggplot2 rel
-#' 
+#' @return function
+#' @examples
+#' rel(0.2)
 #' @export
 ggplot2::rel
 
@@ -617,6 +618,7 @@ ggplot2::rel
 #' @title check windows function
 #' @param windows windows
 #' @importFrom methods is
+#' @return message or null
 check_windows <- function(windows){
 
     if(!is(windows, "GRanges")) {stop("windows should be a GRanges object...")}
@@ -633,6 +635,7 @@ check_windows <- function(windows){
 #' @param nbin numbers of bin.
 #' @param windows a list of region in granges.
 #' @param verbose show details or not
+#' @return message or nothing
 check_bin <- function(nbin, windows, verbose){
 
     type <- attr(windows, 'type')
@@ -647,10 +650,7 @@ check_bin <- function(nbin, windows, verbose){
         if(!is.numeric(nbin)){stop('nbin should be NULL or numeric...')}
         
         is.binning <- TRUE
-    }else{
-
-        
-        
+    }else{        
         is.binning <- FALSE
     }
 
@@ -661,6 +661,7 @@ check_bin <- function(nbin, windows, verbose){
 #' 
 #' @param vec vector.
 #' @param nbin number of bin.
+#' @return bin list
 bin_vector <- function(vec, nbin = 800) {
     
   breaks <- seq(0, length(vec), length.out = nbin + 1) 
@@ -674,6 +675,7 @@ bin_vector <- function(vec, nbin = 800) {
 #' @param gr_list grange list object
 #' @param weightCol weight column of peak. 
 #' @importFrom stats reshape
+#' @return matrix
 #' @export 
 grange2mt <- function(gr_list, weightCol = NULL){
 
@@ -712,6 +714,7 @@ grange2mt <- function(gr_list, weightCol = NULL){
 
 #' @title parse peak str
 #' @param peak_str peak str
+#' @return data frame
 #' @export 
 parse_peak <- function(peak_str) {
   parts <- strsplit(peak_str, ":|-")[[1]]
@@ -823,13 +826,14 @@ loadBSgenome <- function(BSgenome){
 
     ## get the object from BSgenome
     BSgenome_name <- attr(BSgenome,"pkgname")
-    suppressMessages(require(BSgenome_name,character.only = TRUE))
-    text <- paste0("package:",BSgenome_name)
-    object <- ls(text)[grep("^[^BSgenome]",ls(text))]
-    command <- paste0(BSgenome_name,"::",object)
 
-    ## execute the command "pkg::object"
-    BSgenome <- eval(parse(text = command))
+    if (requireNamespace(BSgenome_name, quietly = TRUE, character.only = TRUE)){
+      text <- paste0("package:",BSgenome_name)
+      object <- ls(text)[grep("^[^BSgenome]",ls(text))]
+      command <- paste0(BSgenome_name,"::",object)
+      ## execute the command "pkg::object"
+      BSgenome <- eval(parse(text = command))
+    }    
   }
 
   return(BSgenome)
@@ -867,7 +871,7 @@ detect_strand_and_motif <- function(region,
 
 
   ## make the chromosome
-  region$chr <- gsub("chr","",region$chr,ignore.case = T)
+  region$chr <- gsub("chr","",region$chr,ignore.case = TRUE)
   region$chr <- as.numeric(region$chr)
 
   ## detect the positive and negative strand
@@ -957,6 +961,7 @@ detect_strand_and_motif <- function(region,
 #' create regex patterns in positive strand
 #'
 #' @param motif the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification
+#' @return regex pattern
 create_regex_patterns_positive <- function(motif){
 
   ## split the motif
@@ -1048,6 +1053,7 @@ create_regex_patterns_positive <- function(motif){
 #' create regex patterns in negative strand
 #'
 #' @param motif the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification
+#' @return regex pattern
 create_regex_patterns_negative <- function(motif){
 
   ## split the motif
@@ -1150,17 +1156,6 @@ create_regex_patterns_negative <- function(motif){
 }
 
 
-#' @importFrom DSS makeBSseqData
-#'
-#' @export
-DSS::makeBSseqData
-
-
-#' @importFrom bsseq BSseq
-#'
-#' @export
-bsseq::BSseq
-
 
 .check_valueNames <- function(valueNames, n0){
 
@@ -1217,55 +1212,4 @@ bsseq::BSseq
     return(TRUE)
   }
 
-}
-
-
-#' @importFrom SummarizedExperiment assays
-#'
-#' @export
-SummarizedExperiment::assays
-
-#' @importFrom SummarizedExperiment assay
-#'
-#' @export
-SummarizedExperiment::assay
-
-#' Get the sample bed files
-#' @export
-SamepleBedFiles <- function(){
-  dir <- system.file("extdata", "simulated_bed_file",package = "BMplot")
-  files <- list.files(dir)
-  protein <- gsub(pattern='GSM\\d+_(\\w+_\\w+)_.*', replacement='\\1',files)
-  protein <- sub("_Chip.+", "", protein)
-  res <- paste(dir, files, sep="/")
-  res <- as.list(res)
-  names(res) <- protein
-  return(res)
-}
-
-#' Get the sample txt files
-#'
-#' @export
-SamepleTxtFiles <- function(){
-  dir <- system.file("extdata", "simulated_txt_file",package = "BMplot")
-  files <- list.files(dir)
-  protein <- gsub(pattern='GSM\\d+_(\\w+_\\w+)_.*', replacement='\\1',files)
-  protein <- sub("_Chip.+", "", protein)
-  res <- paste(dir, files, sep="/")
-  res <- as.list(res)
-  names(res) <- protein
-  return(res)
-}
-
-#' get the sample file folder name
-#'
-#' @export
-SampleFileFolder <- function(){
-  dir <- system.file("extdata",package = "BMplot")
-  files <- list.files(dir)
-  protein <- gsub(pattern='\\w+_(\\w+_\\w+)', replacement='\\1',files)
-  res <- paste(dir, files, sep="/")
-  res <- as.list(res)
-  names(res) <- protein
-  return(res)
 }

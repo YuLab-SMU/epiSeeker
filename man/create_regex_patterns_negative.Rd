@@ -9,6 +9,9 @@ create_regex_patterns_negative(motif)
 \arguments{
 \item{motif}{the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification}
 }
+\value{
+regex pattern
+}
 \description{
 create regex patterns in negative strand
 }

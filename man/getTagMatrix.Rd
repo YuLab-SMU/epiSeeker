@@ -71,6 +71,13 @@ be passed to makeBioRegionFromGranges() to produce the 'windows'.
 In a word, 'TxDb' parameter getTagMatrix() is a reference information. 
 Users can pass txdb object or self-made granges into it.
 }
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peak <- readPeakFile(peakfile)
+mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
+}
 \author{
 G Yu
 }

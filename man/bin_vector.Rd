@@ -11,6 +11,9 @@ bin_vector(vec, nbin = 800)
 
 \item{nbin}{number of bin.}
 }
+\value{
+bin list
+}
 \description{
 bin vector function
 }

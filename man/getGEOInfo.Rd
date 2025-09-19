@@ -17,6 +17,9 @@ data.frame
 \description{
 get subset of GEO information by genome version keyword
 }
+\examples{
+hg19 <- getGEOInfo(genome="hg19", simplify=TRUE)
+}
 \author{
 G Yu
 }

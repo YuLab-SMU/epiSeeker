@@ -40,6 +40,16 @@
 #' @return ggplot object
 #' @importFrom aplot plot_list
 #' @importFrom methods is
+#' @examples 
+#' data(Human_BSobj)
+#' require(BSgenome.Hsapiens.UCSC.hg19)
+#' BSgenome_hg19 <- BSgenome.Hsapiens.UCSC.hg19
+#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr1", start = 894849, end = 895849),
+#'                         BSgenome = BSgenome_hg19,
+#'                         input = Human_BSobj[,c(1)],
+#'                         base = "C",
+#'                         motif = c("CG","CHH","CHG"))
+#' plotBmProf(bmMatrix)
 #' @export
 plotBmProf <- function(df,
                        motif_color = NULL,

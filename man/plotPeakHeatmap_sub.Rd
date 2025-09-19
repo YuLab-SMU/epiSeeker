@@ -32,6 +32,9 @@ plotPeakHeatmap_sub(
 
 \item{ncol}{ncol to place a number of fig.}
 }
+\value{
+ggplot object
+}
 \description{
 plot peak heatmap sub functino
 }

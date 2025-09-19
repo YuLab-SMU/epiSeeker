@@ -1,4 +1,4 @@
-##' @importFrom plotrix floating.pie
+#' @importFrom plotrix floating.pie
 vennpie.csAnno <- function(x, 
                            r = 0.2, 
                            cex = 1.2,

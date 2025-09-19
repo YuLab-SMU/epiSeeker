@@ -50,13 +50,11 @@
 #' @import S4Vectors GenomeInfoDb
 #' @importFrom methods new
 #' @examples
-#' \dontrun{
 #' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
 #' peakAnno
-#' }
 #' @seealso \code{\link{plotAnnoBar}} \code{\link{plotAnnoPie}} \code{\link{plotDistToTSS}}
 #' @export
 #' @author G Yu
@@ -305,6 +303,12 @@ annotateSeq <- function(peak,
 #' @param distanceToTSS_cutoff distance to TSS cutoff
 #' @return csAnno object
 #' @export
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' dropAnno(csAnno)
 #' @author Guangchuang Yu
 dropAnno <- function(csAnno, distanceToTSS_cutoff=10000) {
     idx <- which(abs(mcols(csAnno@anno)[["distanceToTSS"]]) < distanceToTSS_cutoff)
@@ -312,7 +316,7 @@ dropAnno <- function(csAnno, distanceToTSS_cutoff=10000) {
     csAnno@peakNum <- length(idx)
     if (csAnno@hasGenomicAnnotation) {
         csAnno@annoStat <- getGenomicAnnoStat(csAnno@anno)
-        csAnno@detailGenomicAnnotation = csAnno@detailGenomicAnnotation[idx,]
+        csAnno@detailGenomicAnnotation <- csAnno@detailGenomicAnnotation[idx,]
     }
     csAnno
 }

@@ -15,6 +15,9 @@ getTagMatrix_body_internal(peak.cov, windows, nbin, chr.idx)
 
 \item{chr.idx}{idx of chr.}
 }
+\value{
+matrix
+}
 \description{
 get tagmatrix internal function
 }

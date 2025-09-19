@@ -18,6 +18,23 @@
 #' @importFrom ggiraph opts_tooltip
 #' @importFrom ggiraph opts_zoom
 #' @importFrom dplyr ungroup
+#' @return ggplot object
+#' @examples 
+#' require(BSgenome.Dmelanogaster.UCSC.dm6)
+#' require(RSQLite)
+#' require(TFBSTools)
+#' ref_obj <- BSgenome.Dmelanogaster.UCSC.dm6
+#' opts_base <- list()
+#' opts_base[["collection"]] <- "CORE"
+#' opts_base[["all_versions"]] <- FALSE
+#' opts_base[["species"]] <- "Drosophila melanogaster"
+#' opts_base[["tax_group"]] <- "insects"
+#' sq24 <- RSQLite::dbConnect(RSQLite::SQLite(), db(JASPAR2024()))
+#' pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_base)
+#' motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr2R",
+#'                                                ranges = IRanges(start = 18398309, end = 18398450)), 
+#'                               pwm = pwm_obj, ref_obj = ref_obj)
+#  plotMotifProf(motifMatrix)
 #' @export 
 plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score", 
                           x_lab = NULL, interactive = FALSE, width_svg = 10, height_svg = 6){

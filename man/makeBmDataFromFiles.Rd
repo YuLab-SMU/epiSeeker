@@ -2,8 +2,7 @@
 % Please edit documentation in R/makeBmData.R
 \name{makeBmDataFromFiles}
 \alias{makeBmDataFromFiles}
-\title{This function makes bmData object from files. Users can input
-the name of a file or a file folder.}
+\title{make bmData from files}
 \usage{
 makeBmDataFromFiles(name, sampleNames = NULL, variablesNames = NULL)
 }
@@ -14,6 +13,9 @@ makeBmDataFromFiles(name, sampleNames = NULL, variablesNames = NULL)
 
 \item{variablesNames}{the names of the first two columns will be assigned c("chr","pos"),
 the names of the following columns will be assigned by variablesNames}
+}
+\value{
+bmData
 }
 \description{
 This function makes bmData object from files. Users can input

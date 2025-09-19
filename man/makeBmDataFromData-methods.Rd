@@ -24,6 +24,9 @@ makeBmDataFromData(data, sampleNames = NULL)
 
 \item{sampleNames}{the name of each samples}
 }
+\value{
+bmData
+}
 \description{
 makeBmDataFromData method generics
 

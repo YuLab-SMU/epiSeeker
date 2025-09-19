@@ -38,8 +38,19 @@ plotPeakProf(
 
 \item{...}{additional parameters}
 }
+\value{
+ggplot object
+}
 \description{
 plot peak profile
+}
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peak <- readPeakFile(peakfile)
+mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
+plotPeakProf(mt)
 }
 \author{
 G Yu; Y Yan

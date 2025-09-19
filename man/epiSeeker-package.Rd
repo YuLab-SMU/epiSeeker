@@ -11,7 +11,7 @@ This package implements functions to analyzing multi-omics epigenetic data. Data
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://yulab-smu.top/contribution-knowledge-mining/}
+  \item \url{https://github.com/YuLab-SMU/epiSeeker}
   \item Report bugs at \url{https://github.com/YuLab-SMU/epiSeeker/issues}
 }
 

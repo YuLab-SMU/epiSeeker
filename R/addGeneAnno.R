@@ -11,8 +11,10 @@
 #' @author G Yu
 getGeneAnno <- function(annoDb, geneID, type, columns){
     kk <- unlist(geneID)
-    require(annoDb, character.only = TRUE)
-    annoDb <- eval(parse(text=annoDb))
+
+    if (requireNamespace(annoDb, quietly = TRUE, character.only = TRUE)){
+        annoDb <- eval(parse(text=annoDb))
+    }
 
     if (type == "Entrez Gene ID") {
         kt <- "ENTREZID"

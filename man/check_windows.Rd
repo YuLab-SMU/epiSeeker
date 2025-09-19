@@ -9,6 +9,9 @@ check_windows(windows)
 \arguments{
 \item{windows}{windows}
 }
+\value{
+message or null
+}
 \description{
 check windows function
 }

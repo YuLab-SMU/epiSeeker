@@ -50,6 +50,11 @@ We take transcript region to expain the differences of these three regions (tx: 
 
 (3) end_site region with (upstream = upstream = 100) refers to 1300-1500bp.
 }
+\examples{
+require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+getBioRegion(txdb)
+}
 \author{
 Guangchuang Yu
 }

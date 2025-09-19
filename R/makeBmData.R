@@ -254,7 +254,7 @@ make_bmData_from_value1_and_value2 <- function(data, sampleNames){
 }
 
 
-##‘ make bmData from files
+#' make bmData from files
 #'
 #' This function makes bmData object from files. Users can input
 #' the name of a file or a file folder.
@@ -268,6 +268,7 @@ make_bmData_from_value1_and_value2 <- function(data, sampleNames){
 #' @details bed files and txt files are supported. Bed files can
 #'    only contain no more than two metadata, as it stands for value1/2. Txt files
 #'    should organize the columns as chr, pos, value1, value2(optional).
+#' @return bmData
 #' @export
 makeBmDataFromFiles <- function(name,
                                 sampleNames = NULL,

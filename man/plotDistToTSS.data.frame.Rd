@@ -39,15 +39,6 @@ TSS of the nearest gene.
 \description{
 plot feature distribution based on the distances to the TSS
 }
-\examples{
-\dontrun{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peakAnno <- annotateSeq(peakfile, TxDb=txdb)
-plotDistToTSS(peakAnno)
-}
-}
 \seealso{
 \code{\link{annotateSeq}}
 }

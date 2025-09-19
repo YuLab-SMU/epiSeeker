@@ -17,6 +17,9 @@ extend_gr(regions, upstream, downstream, by, type)
 
 \item{type}{one of "start_site", "end_site", "body".}
 }
+\value{
+grange object
+}
 \description{
 extend regions functions
 }

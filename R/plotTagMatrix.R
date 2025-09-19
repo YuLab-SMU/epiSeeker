@@ -8,6 +8,7 @@
 #' @param facet_label_text_size the size of facet label text
 #' @param nrow nrow to place a number of fig.
 #' @param ncol ncol to place a number of fig.
+#' @return ggplot object
 #' @importFrom aplot plot_list
 plotPeakHeatmap_sub <- function(tagMatrix,
                             xlab = "",
@@ -97,6 +98,7 @@ plotPeakHeatmap_sub <- function(tagMatrix,
 #' @param title title.
 #' @param palette palette to be filled in,details see \link[ggplot2]{scale_colour_brewer}.
 #' @param facet_label_text_size the size of facet label text
+#' @return ggplot object
 #' @importFrom yulab.utils mat2df
 #' @importFrom ggplot2 geom_tile
 #' @importFrom ggplot2 scale_fill_gradient2
@@ -231,6 +233,14 @@ plotPeakHeatmap_sub.internal <- function(tagMatrix,
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 geom_vline
 #' @importFrom ggplot2 scale_color_manual
+#' @return ggplot object
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
+#' plotPeakProf(mt)
 #' @export 
 plotPeakProf <- function(tagMatrix,
                          xlab="Genomic Region (5'->3')",
@@ -358,6 +368,14 @@ plotPeakProf <- function(tagMatrix,
 #' @param height_proportion the proportion of profiling picture and heatmap
 #' @param ... additional parameters
 #' @importFrom aplot insert_bottom
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
+#' plotPeakHeatmap(mt)
+#' @return ggplot object
 #' @export 
 plotPeakHeatmap <- function(tagMatrix,
                             plot_prof = TRUE,

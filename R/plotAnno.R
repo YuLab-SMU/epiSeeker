@@ -63,13 +63,11 @@ plotAnnoBar.data.frame <- function(anno.df,
 #' @param ... extra parameter
 #' @return pie plot of peak genomic feature annotation
 #' @examples
-#' \dontrun{
 #' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
 #' plotAnnoPie(peakAnno)
-#' }
 #' @seealso \code{\link{annotateSeq}} \code{\link{plotAnnoBar}}
 #' @export
 #' @author Guangchuang Yu \url{https://yulab-smu.top}
@@ -141,19 +139,17 @@ annoPie3D <- function(anno.df,
 
     ## anno.df <- getGenomicAnnoStat(peakAnno)
 
-    pkg <- "plotrix"
-    require(pkg, character.only=TRUE)
-    pie3D <- eval(parse(text="pie3D"))
-    pie3D(anno.df$Frequency,
-          labels=paste(
-              anno.df$Feature,
-              "(",
-              paste(round(anno.df$Frequency, ndigit), "%", sep=""),
-              ")",
-              sep=""),
-          labelcex=cex,
-          col=col,
-          ...)
+    if (requireNamespace("plotrix", quietly = TRUE)){
+        pie3D <- eval(parse(text="pie3D"))
+        pie3D(anno.df$Frequency,
+              labels=paste(anno.df$Feature,"(",
+                           paste(round(anno.df$Frequency, ndigit), "%", sep=""),
+                           ")", sep=""),
+               labelcex=cex,
+               col=col,
+               ...)
+    }
+    
 }
 
 getGenomicAnnoStat <- function(peakAnno) {
