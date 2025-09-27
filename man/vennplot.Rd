@@ -4,12 +4,10 @@
 \alias{vennplot}
 \title{vennplot}
 \usage{
-vennplot(Sets, by = "gplots", ...)
+vennplot(Sets, ...)
 }
 \arguments{
-\item{Sets}{a list of object, can be vector or GRanges object}
-
-\item{by}{one of gplots, ggVennDiagram or Vennerable}
+\item{Sets}{a list of object, can be vector or GRanges object.}
 
 \item{...}{extra parameters using ggVennDiagram. Details see \link[ggVennDiagram]{ggVennDiagram}}
 }
@@ -22,13 +20,7 @@ different peak files.
 plot the overlap of a list of object
 }
 \details{
-There are two ways to plot, which users can specify through `by`.
-
-The first way is to use `gplots` packages, by setting `by = gplots`. This method
-is default method. The venn plot produced through this way has no color.
-
-The second way is to use `ggVennDiagram` packages, by setting `by = ggVennDiagram`. 
-The venn plot produced through this way has colors which can be defined by users using
+venn plot produced through this way has colors which can be defined by users using
 ggplot2 grammar e.g.(scale_fill_distiller()). And users can specify any details, like digital number,
 text size and showing percentage or not, by inputting `...` extra parameters.
 }
@@ -36,10 +28,10 @@ text size and showing percentage or not, by inputting `...` extra parameters.
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfiles <- getSampleFiles()
-peakAnnoList <- lapply(peakfiles, annotateSeq)
+peakAnnoList <- lapply(peakfiles, annotateSeq, TxDb = txdb)
 names(peakAnnoList) <- names(peakfiles)
-genes= lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
-vennplot(genes, by = "gplots")
+genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
+vennplot(genes)
 }
 \author{
 G Yu

@@ -1,7 +1,7 @@
 Package: epiSeeker
 Type: Package
 Title: epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
-Version: 0.99.0
+Version: 0.99.1
 Authors@R: c( 
     person(given = "Guangchuang", family = "Yu",       email = "guangchuangyu@gmail.com",      role  = c("aut", "cre"), comment = c(ORCID = "0000-0002-6485-8781")),
     person(given = "Ming",        family = "Li",       email = "limiang929@gmail.com",         role = "ctb"),
@@ -37,7 +37,6 @@ Imports:
     GenomicRanges,
     GenomicFeatures,
     ggplot2,
-    gplots,
     graphics,
     grDevices,
     gtools,
