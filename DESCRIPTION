@@ -1,7 +1,7 @@
 Package: epiSeeker
 Type: Package
 Title: epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: c( 
     person(given = "Guangchuang", family = "Yu",       email = "guangchuangyu@gmail.com",      role  = c("aut", "cre"), comment = c(ORCID = "0000-0002-6485-8781")),
     person(given = "Ming",        family = "Li",       email = "limiang929@gmail.com",         role = "ctb"),
@@ -28,17 +28,25 @@ Depends:
 Imports:
     AnnotationDbi,
     aplot,
+    bsseq,
     BiocGenerics,
+    Biostrings,
+    BSgenome,
     boot,
+    data.table,
     dplyr,
+    DSS,
     enrichplot,
     IRanges,
     GenomeInfoDb,
     GenomicRanges,
     GenomicFeatures,
+    gginnards,
+    ggiraph,
     ggplot2,
     graphics,
     grDevices,
+    gridBase,
     gtools,
     magrittr,
     methods,
@@ -46,23 +54,18 @@ Imports:
     parallel,
     RColorBrewer,
     rlang,
+    RSQLite,
     rtracklayer,
     S4Vectors,
     scales,
     stats,
-    tibble,
-    utils,
-    yulab.utils (>= 0.2.0),
-    ggiraph,
-    BSgenome,
-    Biostrings,
-    DSS,
     SummarizedExperiment,
-    bsseq,
-    data.table,
-    gginnards,
+    tibble,
+    tidyselect,
     tidyr,
-    tidyselect
+    UpSetR,
+    utils,
+    yulab.utils (>= 0.2.0)
 Suggests:
     ape,
     BSgenome.Dmelanogaster.UCSC.dm6,
@@ -92,6 +95,6 @@ VignetteBuilder: knitr
 ByteCompile: true
 License: Artistic-2.0
 biocViews: Annotation, ChIPSeq, Software, Visualization, MultipleComparison, Coverage, MotifAnnotation
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 LazyData: true
 LazyDataCompression: xz
