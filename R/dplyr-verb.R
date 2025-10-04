@@ -1,8 +1,15 @@
-# extend filter to Peak (GRanges class object)
+#' @title extend filter to Peak (GRanges class object)
 #' @method filter GRanges
 #' @importFrom dplyr filter
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' filter(peak, fold_enrichment > 20)
+#' @return grange object
 #' @export
-filter.GRanges = function(.data, ..., .by = NULL, .preserve = FALSE) {
+filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
   dots = rlang::quos(...)
   as.data.frame(.data) |> 
     dplyr::filter(!!!dots, .by = .by, .preserve = .preserve) |> 
@@ -10,11 +17,18 @@ filter.GRanges = function(.data, ..., .by = NULL, .preserve = FALSE) {
     GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
 
-# extend mutate to Peak (GRanges class object)
+#' @title extend mutate to Peak (GRanges class object)
 #' @method mutate GRanges
 #' @importFrom dplyr mutate
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' mutate(peak, score = tags)
+#' @return grange object
 #' @export
-mutate.GRanges = function(.data, ..., .by = NULL, 
+mutate.GRanges <- function(.data, ..., .by = NULL, 
                            .keep = c("all", "used", "unused", "none"),
                            .before = NULL,
                            .after = NULL) {
@@ -39,21 +53,39 @@ mutate.GRanges = function(.data, ..., .by = NULL,
     GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
 
-# S4Vectors::rename
+#' @title rename granges object
+#' S4Vectors::rename
 #' @method rename GRanges
 #' @importFrom rlang quos
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' rename.GRanges(peak, tag = "tags")
+#' @return grange object
 #' @export
-rename.GRanges = function(x, ...){
+rename.GRanges <- function(x, ...){
   dots = rlang::quos(...)
-  as.data.frame(x) |> 
-    dplyr::rename(!!!dots) |> 
-    GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+  new <- as.data.frame(x) |> 
+          dplyr::rename(!!!dots) |> 
+          GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+
+  return(new)
 }
 
+#' @title arrange granges object
 #' @method arrange GRanges
 #' @importFrom dplyr arrange
+#' @examples 
+#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' arrange(peak, seqnames)
+#' @return grange object
 #' @export
-arrange.GRanges = function(.data, ..., .by_group = FALSE){
+arrange.GRanges <- function(.data, ..., .by_group = FALSE){
   dots = rlang::quos(...)
   as.data.frame(.data) |> 
     dplyr::arrange(!!!dots, .by_group = .by_group) |> 

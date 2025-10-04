@@ -4,6 +4,9 @@
 \name{bmData-class}
 \alias{bmData-class}
 \title{bmData Class}
+\value{
+bmData object
+}
 \description{
 This class added extra data to BSseq class. Change the assays by storing
     M/Cov to any value1/2

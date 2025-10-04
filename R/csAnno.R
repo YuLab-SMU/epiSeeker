@@ -20,6 +20,7 @@
 #' @exportClass csAnno
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 #' @seealso \code{\link{annotateSeq}}
+#' @return annotation object
 #' @keywords classes
 setClass("csAnno",
          representation=representation(

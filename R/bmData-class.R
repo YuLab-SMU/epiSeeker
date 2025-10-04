@@ -8,6 +8,7 @@
 #' @importClassesFrom SummarizedExperiment RangedSummarizedExperiment
 #' @importFrom methods setClass
 #' @keywords classes
+#' @return bmData object
 #' @seealso bmData class inherits RangedSummarizedExperiment class,
 #'     other slots see \linkS4class{RangedSummarizedExperiment}
 #' @exportClass bmData
@@ -36,6 +37,7 @@ setClass("bmData", contains = "RangedSummarizedExperiment")
 #' @importFrom S4Vectors SimpleList
 #' @return bmData object
 #' @examples 
+#' require(SummarizedExperiment)
 #' data(Human_BSobj)
 #' tmp <- Human_BSobj[1:10,1]
 #' tmp_gr <- as.data.frame(tmp@rowRanges)

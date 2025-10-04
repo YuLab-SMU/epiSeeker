@@ -12,6 +12,9 @@
 \alias{subset,csAnno-method}
 \title{Class "csAnno"
 This class represents the output of epiSeeker Annotation}
+\value{
+annotation object
+}
 \description{
 Class "csAnno"
 This class represents the output of epiSeeker Annotation

@@ -39,6 +39,7 @@ bmData object
 This is constructor fo bmData objects.
 }
 \examples{
+require(SummarizedExperiment)
 data(Human_BSobj)
 tmp <- Human_BSobj[1:10,1]
 tmp_gr <- as.data.frame(tmp@rowRanges)

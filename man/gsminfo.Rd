@@ -8,6 +8,9 @@
 \format{
 Data frame record ucsc genome version, precalcuated data and gsm information
 }
+\value{
+data frame
+}
 \description{
 ucsc genome version, precalcuated data and gsm information
 }

@@ -12,6 +12,7 @@
 #' @format Data frame record ucsc genome version, precalcuated data and gsm information
 #' @docType data
 #' @keywords datasets
+#' @return data frame
 NULL
 
 
@@ -40,5 +41,6 @@ NULL
 #'   \item{areaStat}{	The sum of the test statistics of all CpG sites within the DMR}
 #' }
 #' @name Human_dmR
+#' @import DSS
 #' @return data frame
 NULL

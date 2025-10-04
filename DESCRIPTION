@@ -65,7 +65,8 @@ Imports:
     tidyr,
     UpSetR,
     utils,
-    yulab.utils (>= 0.2.0)
+    yulab.utils (>= 0.2.0),
+    grid
 Suggests:
     ape,
     BSgenome.Dmelanogaster.UCSC.dm6,
