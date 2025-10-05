@@ -12,6 +12,8 @@
 #' @return list
 #' @import IRanges GenomicRanges
 #' @importFrom BiocGenerics unstrand
+#' @importFrom S4Vectors queryHits
+#' @importFrom S4Vectors subjectHits
 #' @author G Yu
 getNearestFeatureIndicesAndDistances <- function(peaks, features,
                                                  sameStrand = FALSE,

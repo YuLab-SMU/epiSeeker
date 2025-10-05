@@ -6,7 +6,20 @@
 \usage{
 \method{filter}{GRanges}(.data, ..., .by = NULL, .preserve = FALSE)
 }
+\arguments{
+\item{.data}{granges object}
+
+\item{...}{additional parameters}
+
+\item{.by}{Optional grouping variable(s) (column name or variable expression) 
+specifying which columns to group by when applying filters}
+
+\item{.preserve}{Logical value indicating whether to preserve the original grouping 
+structure when .by is specified. If TRUE, group order and identities are maintained}
+}
 \value{
+A filtered GRanges object containing only rows that meet the specified criteria
+
 grange object
 }
 \description{
@@ -17,5 +30,5 @@ require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
-filter(peak, fold_enrichment > 20)
+dplyr::filter(peak, fold_enrichment > 20)
 }

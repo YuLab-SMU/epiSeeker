@@ -2,22 +2,25 @@
 % Please edit documentation in R/dplyr-verb.R
 \name{rename.GRanges}
 \alias{rename.GRanges}
-\title{rename granges object
-S4Vectors::rename}
+\title{Rename columns of a GRanges object}
 \usage{
-\method{rename}{GRanges}(x, ...)
+\method{rename}{GRanges}(.data, ...)
+}
+\arguments{
+\item{.data}{A GRanges object.}
+
+\item{...}{Rename expressions in the form new_name = old_name.}
 }
 \value{
-grange object
+A GRanges object with renamed metadata columns.
 }
 \description{
-rename granges object
-S4Vectors::rename
+Rename columns of a GRanges object
 }
 \examples{
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
-rename.GRanges(peak, tag = "tags")
+dplyr::rename(peak, tag = tags)
 }

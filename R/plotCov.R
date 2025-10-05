@@ -61,6 +61,8 @@
 #' @importFrom stats dist
 #' @importFrom stats hclust
 #' @importFrom stats as.formula
+#' @importFrom S4Vectors head
+#' @importFrom S4Vectors tail
 #' @export
 #' @examples 
 #' files <- getSampleFiles()
@@ -355,10 +357,11 @@ plotCov <- function(peak, weightCol = NULL,
     return(all_p)
 }
 
-#' @import S4Vectors IRanges
+#' @import IRanges
 #' @importFrom dplyr group_by
 #' @importFrom dplyr summarise
 #' @importFrom magrittr %>%
+#' @importFrom S4Vectors runValue
 getChrCov <- function(peak, weightCol, chrs, xlim, lower=1) {
     if (is(peak, "GRanges")) {
         peak.gr <- peak

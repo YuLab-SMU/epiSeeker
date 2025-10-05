@@ -72,6 +72,9 @@ Suggests:
     BSgenome.Dmelanogaster.UCSC.dm6,
     BSgenome.Hsapiens.UCSC.hg19,
     clusterProfiler,
+    DBI,
+    GEOmetadb,
+    GEOquery,
     gggenes,
     ggimage,
     ggplotify,
@@ -85,7 +88,6 @@ Suggests:
     prettydoc,
     ReactomePA,
     rmarkdown,
-    RSQLite,
     testthat,
     TFBSTools,
     TxDb.Hsapiens.UCSC.hg19.knownGene

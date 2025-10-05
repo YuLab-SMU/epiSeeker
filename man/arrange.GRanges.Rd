@@ -6,6 +6,13 @@
 \usage{
 \method{arrange}{GRanges}(.data, ..., .by_group = FALSE)
 }
+\arguments{
+\item{.data}{granges object}
+
+\item{...}{additional parameters}
+
+\item{.by_group}{If TRUE, will sort first by grouping variable. Applies to grouped data frames only.}
+}
 \value{
 grange object
 }
@@ -17,5 +24,5 @@ require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
-arrange(peak, seqnames)
+dplyr::arrange(peak, seqnames)
 }

@@ -13,8 +13,24 @@
   .after = NULL
 )
 }
+\arguments{
+\item{.data}{granges object}
+
+\item{...}{additional parameters}
+
+\item{.by}{Optional grouping variable(s) (column name or variable expression) 
+specifying which columns to group by for operations}
+
+\item{.keep}{Character vector specifying which columns to retain. Possible values:
+"all" (retain all columns, default), "used" (retain only columns used in calculations),
+"unused" (retain only columns not used in calculations), "none" (retain only newly created columns)}
+
+\item{.before}{Column name or position index specifying where to insert new columns before}
+
+\item{.after}{Column name or position index specifying where to insert new columns after}
+}
 \value{
-grange object
+A processed GRanges object containing the added or modified columns
 }
 \description{
 extend mutate to Peak (GRanges class object)
@@ -24,5 +40,5 @@ require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
-mutate(peak, score = tags)
+dplyr::mutate(peak, score = tags)
 }

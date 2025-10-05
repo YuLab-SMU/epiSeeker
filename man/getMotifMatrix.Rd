@@ -31,10 +31,12 @@ opts_base[["collection"]] <- "CORE"
 opts_base[["all_versions"]] <- FALSE
 opts_base[["species"]] <- "Drosophila melanogaster"
 opts_base[["tax_group"]] <- "insects"
-sq24 <- RSQLite::dbConnect(RSQLite::SQLite(), db(JASPAR2024()))
+sq24 <- DBI::dbConnect(RSQLite::SQLite(), JASPAR2024::db(JASPAR2024::JASPAR2024()))
 pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_base)
-motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr2R",
-                                               ranges = IRanges(start = 18398309, end = 18398450)), 
+region_gr <- GenomicRanges::GRanges(seqnames = "chr2R",
+                                    ranges = IRanges::IRanges(start = 18398309, 
+                                                              end = 18398450))
+motifMatrix <- getMotifMatrix(region = region_gr, 
                               pwm = pwm_obj, ref_obj = ref_obj)
 
 }

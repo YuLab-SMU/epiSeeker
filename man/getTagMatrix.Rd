@@ -75,8 +75,10 @@ Users can pass txdb object or self-made granges into it.
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peak <- readPeakFile(peakfile)
-mt <- getTagMatrix(peak, type = "start_site", TxDb = txdb, nbin = 100)
+peak <- readPeakFile(getSampleFiles()[[4]])
+mt <- getTagMatrix(peak, type = "start_site", by = "gene", 
+                   upstream = 3000, downstream = 3000,
+                   TxDb = txdb, weightCol = "V5", nbin = 500)
 }
 \author{
 G Yu

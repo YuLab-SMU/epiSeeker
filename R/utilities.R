@@ -1,4 +1,5 @@
 #' @importFrom AnnotationDbi get
+#' @importFrom S4Vectors metadata
 .epiSeekerEnv <- function(TxDb) {
     pos <- 1
     envir <- as.environment(pos)
@@ -517,7 +518,7 @@ parse_targetPeak_Param <- function(targetPeak) {
     return(res)
 }
 
-
+#' @importFrom S4Vectors metadata
 IDType <- function(TxDb) {
     ##
     ## IDType <- metadata(TxDb)[8,2]

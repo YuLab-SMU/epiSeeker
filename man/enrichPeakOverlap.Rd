@@ -46,7 +46,7 @@ require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
-enrichPeakOverlap(peak, peak, txdb)
+enrichPeakOverlap(peak, peakfile, txdb, mc.cores = 1)
 }
 \author{
 G Yu

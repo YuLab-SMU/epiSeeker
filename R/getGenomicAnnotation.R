@@ -212,7 +212,9 @@ getGenomicAnnotation <- function(peaks,
 }
 
 
-#' @import S4Vectors IRanges
+#' @import IRanges
+#' @importFrom S4Vectors queryHits
+#' @importFrom S4Vectors subjectHits
 #' @importFrom BiocGenerics unstrand
 getGenomicAnnotation.internal <- function(peaks, genomicRegion, type, sameStrand=FALSE){
     GRegion <- unlist(genomicRegion)

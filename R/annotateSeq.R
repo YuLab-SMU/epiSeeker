@@ -47,7 +47,7 @@
 #' SYMBOL: gene symbol
 #'
 #' GENENAME: full gene name
-#' @import S4Vectors GenomeInfoDb
+#' @import GenomeInfoDb
 #' @importFrom methods new
 #' @examples
 #' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
@@ -308,7 +308,7 @@ annotateSeq <- function(peak,
 #' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
-#' dropAnno(csAnno)
+#' dropAnno(peakAnno)
 #' @author Guangchuang Yu
 dropAnno <- function(csAnno, distanceToTSS_cutoff=10000) {
     idx <- which(abs(mcols(csAnno@anno)[["distanceToTSS"]]) < distanceToTSS_cutoff)

@@ -57,7 +57,12 @@ vennplot.peakfile <- function(files, labels=NULL) {
         labels <- sub("\\.\\w+$", "", files)
     }
     names(peak.Sets) <- labels
-    vennplot(peak.Sets)
+    peak_set <- lapply(peak.Sets, function(i){
+        tmp_df <- as.data.frame(i)
+        return(paste(tmp_df$seqnames, tmp_df$start, tmp_df$end, sep = "_"))
+    })
+
+    vennplot(peak_set)
 }
 
 

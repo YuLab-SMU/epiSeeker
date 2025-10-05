@@ -37,12 +37,11 @@ setClass("bmData", contains = "RangedSummarizedExperiment")
 #' @importFrom S4Vectors SimpleList
 #' @return bmData object
 #' @examples 
-#' require(SummarizedExperiment)
 #' data(Human_BSobj)
 #' tmp <- Human_BSobj[1:10,1]
 #' tmp_gr <- as.data.frame(tmp@rowRanges)
-#' bmData(value1 = assay(tmp, "M"),
-#'        value2 = assay(tmp, "cov"),
+#' bmData(value1 = SummarizedExperiment::assay(tmp, "M"),
+#'        value2 = SummarizedExperiment::assay(tmp, "Cov"),
 #'        pos = tmp_gr$start,
 #'        chr = tmp_gr$seqnames)
 #' 

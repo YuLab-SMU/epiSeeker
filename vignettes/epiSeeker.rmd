@@ -686,7 +686,8 @@ enrichPeakOverlap(queryPeak     = files[[5]],
                   pAdjustMethod = "BH",
                   nShuffle      = 50,
                   chainFile     = NULL,
-                  verbose       = FALSE)
+                  verbose       = FALSE,
+                  mc.cores      = 1)
 ```
 
 Parameter _queryPeak_ is the query ChIP data, while _targetPeak_ is bed file name or a vector of bed file names from comparison; 
