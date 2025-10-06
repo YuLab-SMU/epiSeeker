@@ -72,7 +72,6 @@ Suggests:
     BSgenome.Dmelanogaster.UCSC.dm6,
     BSgenome.Hsapiens.UCSC.hg19,
     clusterProfiler,
-    DBI,
     GEOmetadb,
     GEOquery,
     gggenes,

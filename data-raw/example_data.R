@@ -13,7 +13,7 @@ opts_base[["collection"]] <- "CORE"
 opts_base[["all_versions"]] <- FALSE
 opts_base[["species"]] <- "Drosophila melanogaster"
 opts_base[["tax_group"]] <- "insects"
-sq24 <- DBI::dbConnect(RSQLite::SQLite(), JASPAR2024::db(JASPAR2024::JASPAR2024()))
+sq24 <- RSQLite::dbConnect(RSQLite::SQLite(), JASPAR2024::db(JASPAR2024::JASPAR2024()))
 pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_base)
 
 usethis::use_data(pwm_obj, overwrite = TRUE, compress = "xz")
@@ -30,7 +30,8 @@ usethis::use_data(tagMatrix, overwrite = TRUE, compress = "xz")
 
 library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfiles <- getSampleFiles()
-peakAnnoList <- lapply(peakfiles, annotateSeq, TxDb = txdb)
+files <- getSampleFiles()
+peakAnnoList <- lapply(files, annotateSeq, TxDb=txdb, annoDb="org.Hs.eg.db",
+                       tssRegion=c(-3000, 3000), verbose=FALSE)
 names(peakAnnoList) <- names(peakfiles)
 usethis::use_data(peakAnnoList, overwrite = TRUE, compress = "xz")
