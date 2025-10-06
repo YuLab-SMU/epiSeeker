@@ -17,7 +17,7 @@ upsetplot.csAnno <- function(x, order_by = "freq", vennpie=FALSE, vp = list(x=.6
     nn <- names(y)
     y <- as.matrix(y)
 
-    res <- tibble::tibble(anno = lapply(1:nrow(y), function(i) nn[y[i,]]))
+    res <- tibble::tibble(anno = lapply(seq_len(nrow(y)), function(i) nn[y[i,]]))
     g <- ggplot(res, aes_(x = ~anno)) + geom_bar() +
         xlab(NULL) + ylab(NULL) + theme_minimal() +
         ggupset::scale_x_upset(n_intersections = 20, order_by = order_by) 

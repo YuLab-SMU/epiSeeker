@@ -141,7 +141,7 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
         p.ol <- enrichOverlap.peak.internal(query.gr, target.gr, TxDb, nShuffle,
                                             mc.cores=mc.cores,verbose=verbose)
     } else {
-        res_list <- lapply(1:length(target.gr), function(i) {
+        res_list <- lapply(seq_len(length(target.gr)), function(i) {
             enrichPeakOverlap(queryPeak = queryPeak,
                               targetPeak = target.gr[i],
                               TxDb = TxDb,
@@ -218,7 +218,7 @@ shuffle <- function(peak.gr, TxDb) {
     jj <- order(names(nnt))
     nnt <- nnt[jj]
     chrLens <- chrLens[jj]
-    ss <- unlist(lapply(1:length(nnt), function(i) sample(chrLens[i],nnt[i])))
+    ss <- unlist(lapply(seq_len(length(nnt)), function(i) sample(chrLens[i],nnt[i])))
 
     res <- GRanges(seqnames=nn[ii], ranges=IRanges(ss, width=w[ii]), strand="*")
     return(res)
@@ -238,7 +238,7 @@ enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle=1000
             format(Sys.time(), "%Y-%m-%d %X"), "\n")
     }
 
-    idx <- sample(1:length(target.gr), nShuffle, replace=TRUE)
+    idx <- sample(seq_len(length(target.gr)), nShuffle, replace=TRUE)
     len <- unlist(lapply(target.gr, length))
 
     if(Sys.info()[1] == "Windows") {

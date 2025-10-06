@@ -144,7 +144,7 @@ combine_csAnno <- function(x, ...){
     
     combine_annoStat <- data.frame(Feature=feature)
     
-    for(i in 1:length(z)){
+    for(i in seq_len(length(z))){
         combine_annoStat <- merge(combine_annoStat, z[[i]]@annoStat, 
                                   by = "Feature", all = TRUE, sort = FALSE)
         combine_annoStat[is.na(combine_annoStat)] <- 0
@@ -155,7 +155,7 @@ combine_csAnno <- function(x, ...){
     combine_annoStat$sum <- rowSums(combine_annoStat[, 2:ncol(combine_annoStat)])
     
     
-    for (i in 1:length(combine_annoStat$sum)) {
+    for (i in seq_len(length(combine_annoStat$sum))) {
         combine_annoStat$result[i] <- (combine_annoStat$sum[i]/total)*100
     }
     

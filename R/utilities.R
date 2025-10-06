@@ -76,7 +76,7 @@ getCols <- function(n) {
               "#6a3d9a", "#ffff99", "#b15928")
 
     ## colorRampPalette(brewer.pal(12, "Set3"))(n)
-    col3[1:n]
+    col3[seq_len(n)]
 }
 
 getPalette <- function(n){
@@ -85,7 +85,7 @@ getPalette <- function(n){
                "RdYlBu", "PiYG", "PRGn",
                "PuOr", "BrBG", "RdGy")
   
-  palette[1:n]
+  palette[seq_len(n)]
   
 }
 
@@ -1171,7 +1171,7 @@ create_regex_patterns_negative <- function(motif){
 .check_valueNames <- function(valueNames, n0){
 
   if(is.null(valueNames)){
-    valueNames <- paste0("value",1:n0)
+    valueNames <- paste0("value",seq_len(n0))
   }
 
   ## check the coordination of valueNames and value1/2
@@ -1192,7 +1192,7 @@ create_regex_patterns_negative <- function(motif){
   }
 
   if(is.null(sampleNames)){
-    sampleNames <- paste("sample", 1:n0, sep="")
+    sampleNames <- paste("sample", seq_len(n0), sep="")
     return(sampleNames)
   }
 

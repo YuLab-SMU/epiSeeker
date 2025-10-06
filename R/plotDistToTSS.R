@@ -44,7 +44,7 @@ generate_colors <- function(palette = NULL, n) {
   }
   
   if (length(brewer_cols) >= n) {
-    cols <- brewer_cols[1:length(brewer_cols)]
+    cols <- brewer_cols[seq_len(length(brewer_cols))]
   } else {
     cols <- grDevices::colorRampPalette(brewer_cols)(n)
   }

@@ -227,7 +227,7 @@ prepareGSMInfo <- function() {
     tryCatch(utils::data("ucsc_release", package="epiSeeker"))
     ucsc_release <- get("ucsc_release")
 
-    genVer <- lapply(1:nrow(gsminfo), function(i)
+    genVer <- lapply(seq_len(nrow(gsminfo)), function(i)
                      getGenomicVersion(ucsc_release,
                                        gsminfo[i, "data_processing"],
                                        gsminfo[i, "organism"],
@@ -246,7 +246,7 @@ prepareGSMInfo <- function() {
     gsminfo <- merge(gsminfo, pm, by.x="series_id", by.y="gse", all.x=TRUE)
 
     ## remove non-ASCII characters
-    for(i in 1:ncol(gsminfo)) {
+    for(i in seq_len(ncol(gsminfo))) {
         gsminfo[,i] <- iconv(gsminfo[,i], "latin1", "ASCII", sub="")
     }
     gsminfo2 <- gsminfo

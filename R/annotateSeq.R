@@ -173,8 +173,8 @@ annotateSeq <- function(peak,
     names(nearestFeatures) <- NULL
     nearestFeatures.df <- as.data.frame(nearestFeatures)
     if (is_GRanges_of_TxDb) {
-        colnames(nearestFeatures.df)[1:5] <- c("geneChr", "geneStart", "geneEnd",
-                                          "geneLength", "geneStrand")
+        colnames(nearestFeatures.df)[seq_len(5)] <- c("geneChr", "geneStart", "geneEnd",
+                                                      "geneLength", "geneStrand")
     } else if (level == "transcript") {
         if (is(TxDb, "EnsDb")) {
             nearestFeatures.df <- nearestFeatures.df[, c("seqnames", "start",
@@ -223,7 +223,7 @@ annotateSeq <- function(peak,
             n <- length(peak.gr)
             if (n > 100)
                 n <- 100
-            sampleID <- peak.gr$geneId[1:n]
+            sampleID <- peak.gr$geneId[seq_len(n)]
 
             if (all(grepl('^ENS', sampleID))) {
                 .idtype <- "Ensembl Gene ID"

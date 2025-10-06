@@ -447,8 +447,8 @@ plotBmProf.internal <- function(df,
     positive_strand_temp_value[ncol_tmp+1] <- negative_strand_temp_value[ncol_tmp+1] <- 0
     positive_strand_temp_value[ncol_tmp+2] <- negative_strand_temp_value[ncol_tmp+2] <- value2_max
 
-    rescale_positive_strand <- rescale(positive_strand_temp_value,c(0,value1_max))[1:ncol_tmp]
-    rescale_negative_strand <- rescale(negative_strand_temp_value,c(0,(-1)*value1_max))[1:ncol_tmp]
+    rescale_positive_strand <- rescale(positive_strand_temp_value,c(0,value1_max))[seq_len(ncol_tmp)]
+    rescale_negative_strand <- rescale(negative_strand_temp_value,c(0,(-1)*value1_max))[seq_len(ncol_tmp)]
 
     positive_strand_temp$value <- rescale_positive_strand
     negative_strand_temp$value <- rescale_negative_strand

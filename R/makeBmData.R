@@ -123,7 +123,7 @@ setMethod("makeBmDataFromData", signature(data="data.frame"),
 
             if(is.null(colnames(data))){
               n0 <- ncol(data)-2
-              colnames(data) <- paste0("value",1:n0)
+              colnames(data) <- paste0("value",seq_len(n0))
             }
 
             data_list <- list(data)
@@ -178,11 +178,11 @@ makeBmDataFromData.internal <- function(data,
 make_bmData_from_value1 <- function(data, sampleNames){
 
   n0 <- length(data)
-  allDat <- data.frame(data[[1]][,c(1:2)])
+  allDat <- data.frame(data[[1]][,seq_len(2)])
   valueNames <- colnames(data[[1]])[3]
 
   ## merge data
-  for(i in 1:n0){
+  for(i in seq_len(n0)){
     allDat <- data.frame(allDat, data[[i]][,3])
   }
 
@@ -210,21 +210,21 @@ make_bmData_from_value1 <- function(data, sampleNames){
 make_bmData_from_value1_and_value2 <- function(data, sampleNames){
 
   n0 <- length(data)
-  allDat_value1 <- data.frame(data[[1]][,c(1:2)])
-  allDat_value2 <- data.frame(data[[1]][,c(1:2)])
+  allDat_value1 <- data.frame(data[[1]][,seq_len(2)])
+  allDat_value2 <- data.frame(data[[1]][,seq_len(2)])
   value1_name <- colnames(data[[1]])[3]
   value2_name <- colnames(data[[1]])[4]
   colnames(data[[1]])[3] <- paste0(value1_name, ".1")
   colnames(data[[1]])[4] <- paste0(value2_name, ".1")
 
   ## merge data
-  for(i in 1:n0){
+  for(i in seq_len(n0)){
 
     colnames(data[[i]])[3] <- paste0(value1_name, ".",i)
     colnames(data[[i]])[4] <- paste0(value2_name, ".",i)
 
-    allDat_value1 <- merge(allDat_value1,data[[i]][,c(1:2,3)], all = TRUE)
-    allDat_value2 <- merge(allDat_value2,data[[i]][,c(1:2,4)], all = TRUE)
+    allDat_value1 <- merge(allDat_value1,data[[i]][,c(1,2,3)], all = TRUE)
+    allDat_value2 <- merge(allDat_value2,data[[i]][,c(1,2,4)], all = TRUE)
   }
 
   colnames(allDat_value1) <- c("chr","pos",sampleNames)
@@ -327,7 +327,7 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
 
       if(is.null(variablesNames)){
         n0 <- length(names(mcols(tmp)))
-        variablesNames <- paste0("value",1:n0)
+        variablesNames <- paste0("value",seq_len(n0))
       }
 
       names(mcols(tmp)) <- variablesNames
@@ -347,7 +347,7 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
 
     if(is.null(variablesNames)){
       n0 <- ncol(tmp)-2
-      variablesNames <- paste0("value",1:n0)
+      variablesNames <- paste0("value",seq_len(n0))
     }
 
     colnames(tmp) <- c('chr', 'pos' ,variablesNames)
@@ -380,7 +380,7 @@ makeBmDataFromFiles.file <- function(name, variablesNames){
 
     if(is.null(variablesNames)){
       n0 <- length(names(mcols(data)))
-      variablesNames <- paste0("value",1:n0)
+      variablesNames <- paste0("value",seq_len(n0))
     }
 
     names(mcols(data)) <- variablesNames
@@ -393,7 +393,7 @@ makeBmDataFromFiles.file <- function(name, variablesNames){
 
   if(is.null(variablesNames)){
     n0 <- ncol(data)-2
-    variablesNames <- paste0("value",1:n0)
+    variablesNames <- paste0("value",seq_len(n0))
   }
 
   colnames(data) <- c('chr', 'pos' ,variablesNames)

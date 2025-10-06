@@ -500,7 +500,7 @@ getTagMatrix_site <- function(peak.cov,
   tagMatrix <- do.call("rbind", tagMatrixList)
   
   # get the index of windows, that are reorganized by as(windows, "IntegerRangesList")
-  idx.list <- split(1:length(windows),  as.factor(seqnames(windows)))
+  idx.list <- split(seq_len(length(windows)),  as.factor(seqnames(windows)))
   idx <- do.call("c", idx.list)
   
   rownames(tagMatrix) <- idx
@@ -808,7 +808,7 @@ getTagMatrix_body_internal <- function(peak.cov, windows, nbin, chr.idx){
     }
     
     # get the index of windows, that are reorganized by as(windows, "IntegerRangesList")
-    idx.list <- split(1:length(windows),  as.factor(seqnames(windows)))
+    idx.list <- split(seq_len(length(windows)),  as.factor(seqnames(windows)))
     idx <- do.call("c", idx.list)
 
     rownames(tagMatrix) <- idx

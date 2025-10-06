@@ -110,8 +110,8 @@ getGenomicAnnotation <- function(peaks,
 
             pm <- max(abs(tssRegion))
             if (pm/1000 >= 2) {
-                dd <- seq(1:ceiling(pm/1000))*1000
-                for (i in 1:length(dd)) {
+                dd <- seq_len(ceiling(pm/1000))*1000
+                for (i in seq_len(length(dd))) {
                     if (i == 1) {
                         lbs <- paste("Promoter", " (<=", dd[i]/1000, "kb)", sep="")
                         annotation[abs(distance) <= dd[i] &
@@ -184,7 +184,7 @@ getGenomicAnnotation <- function(peaks,
     }else{
         
         ## downstream within 0-dsd/1000 kb
-        for(i in 1:(dsd/1000)){
+        for(i in seq_len((dsd/1000))){
             j <- which(annotation == "Intergenic" & abs(dd2) <= i*1000 & dd2 != 0)
             if (length(j) > 0){
                 if (i == 1){

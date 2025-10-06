@@ -390,7 +390,7 @@ getChrCov <- function(peak, weightCol, chrs, xlim, lower=1) {
 
     chr <- start <- end <- cnt <- NULL
     
-    ldf <- lapply(1:length(cov), function(i) {
+    ldf <- lapply(seq_len(length(cov)), function(i) {
         x <- cov[[i]]
         if (length(x@ranges) == 0) {
             msg <- paste0(names(cov[i]),
