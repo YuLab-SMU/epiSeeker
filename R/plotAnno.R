@@ -100,7 +100,7 @@ annoPie <- function(anno.df, ndigit=2, cex=0.8, col=NA, legend.position, radius=
     }
 
     if (legend.position == "rightside") {
-        labels=paste(anno.df$Feature, " (",
+        labels <- paste(anno.df$Feature, " (",
             round(anno.df$Frequency/sum(anno.df$Frequency)*100, ndigit),
             "%)", sep="")
 

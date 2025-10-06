@@ -247,7 +247,7 @@ prepareGSMInfo <- function() {
 
     ## remove non-ASCII characters
     for(i in 1:ncol(gsminfo)) {
-        gsminfo[,i] = iconv(gsminfo[,i], "latin1", "ASCII", sub="")
+        gsminfo[,i] <- iconv(gsminfo[,i], "latin1", "ASCII", sub="")
     }
     gsminfo2 <- gsminfo
     rm(gsminfo)
@@ -270,9 +270,9 @@ getGenomicVersion <- function(ucsc_release, data_processing, organism, supplemen
     gs <- subset(ucsc_release, subset = species == organism)
     if (nrow(gs) == 0) return(NA)
 
-    genMatch <- unlist(sapply(gs$ucsc_version, grep, data_processing))
+    genMatch <- unlist(lapply(gs$ucsc_version, grep, data_processing))
     if (length(genMatch) == 0) {
-        genMatch <- unlist(sapply(gs$ucsc_version, grep, supplementary_file))
+        genMatch <- unlist(lapply(gs$ucsc_version, grep, supplementary_file))
         if (length(genMatch) == 0) {
             return(NA)
         }
@@ -329,7 +329,7 @@ getGSMsuppFile <- function(GSM) {
 
     
 
-    destdir="geo_soft"
+    destdir <- "geo_soft"
     if (!file.exists(destdir)) {
         dir.create(destdir)
     }

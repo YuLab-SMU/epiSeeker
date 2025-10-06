@@ -185,12 +185,20 @@ getTagCiMatrix <- function(tagMatrix, conf = 0.95, resample=500,
     }
     cat(">> Running bootstrapping for tag matrix...\t\t",
         format(Sys.time(), "%Y-%m-%d %X"), "\n")
-    tagMxBootCi <- sapply(seq_len(trackLen), function(i) {
-                        bootCiToken <- boot.ci(tagMxBoot, type = "perc", index = i)
-                        ## parse boot.ci results
-                        return(parseBootCiPerc(bootCiToken))
-                        }
-                    )
+    # tagMxBootCi <- sapply(seq_len(trackLen), function(i) {
+    #                     bootCiToken <- boot.ci(tagMxBoot, type = "perc", index = i)
+    #                     ## parse boot.ci results
+    #                     return(parseBootCiPerc(bootCiToken))
+    #                     }
+    #                 )
+    tagMxBootCi <- vapply(
+        X = seq_len(trackLen), 
+        FUN = function(i) {
+            bootCiToken <- boot.ci(tagMxBoot, type = "perc", index = i)
+            parseBootCiPerc(bootCiToken) 
+        }, 
+        FUN.VALUE = numeric(2)  
+    )
     row.names(tagMxBootCi) <- c("Lower", "Upper")
     return(tagMxBootCi)
 }
@@ -280,7 +288,8 @@ TXID2TXEG <- function(txid) {
     } else {
         txdb <- get("TXDB", envir=epiSeekerEnv)
         txidinfo <- transcripts(txdb, columns=c("tx_id", "tx_name", "gene_id"))
-        idx <- which(sapply(txidinfo$gene_id, length) == 0)
+        # idx <- which(sapply(txidinfo$gene_id, length) == 0)
+        idx <- which(vapply(txidinfo$gene_id, FUN = length, FUN.VALUE = integer(1)) == 0)
         txidinfo[idx,]$gene_id <- txidinfo[idx,]$tx_name
         txid2geneid <- paste(mcols(txidinfo)[["tx_name"]],
                              mcols(txidinfo)[["gene_id"]],
@@ -301,7 +310,8 @@ TXID2EGID <- function(txid) {
     } else {
         txdb <- get("TXDB", envir=epiSeekerEnv)
         txidinfo <- transcripts(txdb, columns=c("tx_id", "tx_name", "gene_id"))
-        idx <- which(sapply(txidinfo$gene_id, length) == 0)
+        # idx <- which(sapply(txidinfo$gene_id, length) == 0)
+        idx <- which(vapply(txidinfo$gene_id, FUN = length, FUN.VALUE = integer(1)) == 0)
         txidinfo[idx,]$gene_id <- txidinfo[idx,]$tx_name
         txid2geneid <- as.character(mcols(txidinfo)[["gene_id"]])
 
@@ -349,14 +359,14 @@ overlap <- function(Sets) {
             for (ii in idx) {
                 ##print(ii)
                 len <- getIntersectLength(Sets, as.logical(w[ii,]))
-                ww = w[ii,]
+                ww <- w[ii,]
                 jj <- which(ww == 0)
                 pp <- permutations(2, length(jj), 0:1, repeats.allowed=TRUE)
 
                 for (aa in 2:nrow(pp)) {
                     ## 1st row is all 0, abondoned
                     xx <- jj[as.logical(pp[aa,])]
-                    ww[xx] =ww[xx] +1
+                    ww[xx] <- ww[xx] +1
                     bb <-  t(apply(w, 1, function(i) i == ww))
                     wd$n[rowSums(bb) == length(ww) ]
                          ww <- w[ii,]
@@ -367,7 +377,7 @@ overlap <- function(Sets) {
             }
         }
     }
-    colnames(wd) = c(names(Sets), "Weight")
+    colnames(wd) <- c(names(Sets), "Weight")
     return(wd)
 }
 
@@ -376,7 +386,7 @@ getIntersectLength <- function(Sets, idx) {
     ## only use intersect and length methods in this function
     ## works fine with GRanges object
     ## and easy to extend to other objects.
-    ss= Sets[idx]
+    ss <- Sets[idx]
     ol <- ss[[1]]
 
     if (sum(idx) == 1) {
@@ -493,7 +503,7 @@ parse_targetPeak_Param <- function(targetPeak) {
     if (length(targetPeak) == 1) {
         if (is.dir(targetPeak)) {
             files <- list.files(path=targetPeak)
-            idx <- unlist(sapply(c("bed", "bedGraph", "Peak"), grep, x=files))
+            idx <- unlist(lapply(c("bed", "bedGraph", "Peak"), grep, x=files))
             idx <- sort(unique(idx))
             files <- files[idx]
             targetPeak <- sub("/$", "", targetPeak)
@@ -540,8 +550,8 @@ list_to_dataframe <- function(dataList) {
     cn <- lapply(dataList, colnames) %>% unlist %>% unique
     cn <- c('.id', cn)
     dataList2 <- lapply(seq_along(dataList), function(i) {
-        data = dataList[[i]]
-        data$.id = names(dataList)[i]
+        data <- dataList[[i]]
+        data$.id <- names(dataList)[i]
         idx <- ! cn %in% colnames(data)
         if (sum(idx) > 0) {
             for (i in cn[idx]) {

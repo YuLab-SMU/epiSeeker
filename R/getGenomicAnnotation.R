@@ -203,7 +203,7 @@ getGenomicAnnotation <- function(peaks,
             annotation[z] <- lbs
         }
     }
-    annotation[which(annotation == "Intergenic")] = "Distal Intergenic"
+    annotation[which(annotation == "Intergenic")] <- "Distal Intergenic"
 
     downstreamIndex <- dd2 > 0 & dd2 < dsd
     detailGenomicAnnotation[downstreamIndex, "downstream"] <- TRUE

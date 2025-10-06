@@ -5,16 +5,16 @@
 #' @importFrom BiocGenerics unstrand
 #' @importFrom S4Vectors queryHits
 #' @importFrom S4Vectors subjectHits
-getAllFlankingGene <- function(peak.gr, features, level="transcript", distance=5000) {
+getAllFlankingGene <- function(peak.gr, features, level = "transcript", distance=5000) {
     peak.gr2 <- peak.gr
-    start(ranges(peak.gr)) = start(ranges(peak.gr)) - distance
-    end(ranges(peak.gr)) = end(ranges(peak.gr)) + distance
+    start(ranges(peak.gr)) <- start(ranges(peak.gr)) - distance
+    end(ranges(peak.gr)) <- end(ranges(peak.gr)) + distance
     hit <- findOverlaps(peak.gr, BiocGenerics::unstrand(features))
     qh <- queryHits(hit)
     sh <- subjectHits(hit)
     
     featureHit <- features[sh]
-    names(featureHit)=NULL
+    names(featureHit) <- NULL
     hitInfo <- as.data.frame(featureHit)
 
     if (level == "transcript") {

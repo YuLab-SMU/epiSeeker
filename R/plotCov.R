@@ -158,9 +158,9 @@ plotCov <- function(peak, weightCol = NULL,
         ## p <- p + geom_segment(aes(x=start, y=0, xend=end, yend= value))
         if (isList) {
             if (length(fill_color) == length(peak) && all(is_valid_color(fill_color))){
-                cols = fill_color
+                cols <- fill_color
             } else {
-                cols = generate_colors(fill_color, n = length(peak))
+                cols <- generate_colors(fill_color, n = length(peak))
             }
 
             if(interactive){
@@ -382,7 +382,8 @@ getChrCov <- function(peak, weightCol, chrs, xlim, lower=1) {
 
     get.runValue <- function(x) {
         y <- runValue(x)
-        sapply(y@listData, mean)
+        # sapply(y@listData, mean)
+        vapply(y@listData, mean, FUN.VALUE = numeric(1))
         ## value <- x@subject@values
         ## value[value != 0]
     }

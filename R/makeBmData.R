@@ -323,7 +323,7 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
 
       cat(">> reading",x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
-      tmp=readPeakFile(file.path(name,x))
+      tmp <- readPeakFile(file.path(name,x))
 
       if(is.null(variablesNames)){
         n0 <- length(names(mcols(tmp)))
@@ -343,14 +343,14 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
   data_list <- lapply(list.files(name),function(x){
 
     cat(">> reading",x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-    tmp=fread(file.path(name,x))
+    tmp <- fread(file.path(name,x))
 
     if(is.null(variablesNames)){
       n0 <- ncol(tmp)-2
       variablesNames <- paste0("value",1:n0)
     }
 
-    colnames(tmp)=c('chr', 'pos' ,variablesNames)
+    colnames(tmp) <- c('chr', 'pos' ,variablesNames)
     return(tmp)
   })
 
@@ -376,7 +376,7 @@ makeBmDataFromFiles.file <- function(name, variablesNames){
 
     cat(">> reading",name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
-    data=readPeakFile(name)
+    data <- readPeakFile(name)
 
     if(is.null(variablesNames)){
       n0 <- length(names(mcols(data)))
@@ -389,14 +389,14 @@ makeBmDataFromFiles.file <- function(name, variablesNames){
   }
 
   cat(">> reading",name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-  data=fread(name)
+  data <- fread(name)
 
   if(is.null(variablesNames)){
     n0 <- ncol(data)-2
     variablesNames <- paste0("value",1:n0)
   }
 
-  colnames(data)=c('chr', 'pos' ,variablesNames)
+  colnames(data) <- c('chr', 'pos' ,variablesNames)
   return(data)
 
 }

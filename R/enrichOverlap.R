@@ -218,7 +218,7 @@ shuffle <- function(peak.gr, TxDb) {
     jj <- order(names(nnt))
     nnt <- nnt[jj]
     chrLens <- chrLens[jj]
-    ss <- unlist(sapply(1:length(nnt), function(i) sample(chrLens[i],nnt[i])))
+    ss <- unlist(lapply(1:length(nnt), function(i) sample(chrLens[i],nnt[i])))
 
     res <- GRanges(seqnames=nn[ii], ranges=IRanges(ss, width=w[ii]), strand="*")
     return(res)

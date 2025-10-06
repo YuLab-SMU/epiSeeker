@@ -15,7 +15,7 @@
 #' @return grange object
 #' @export
 filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
-  dots = rlang::quos(...)
+  dots <- rlang::quos(...)
   as.data.frame(.data) |> 
     dplyr::filter(!!!dots, .by = .by, .preserve = .preserve) |> 
     droplevels() |> 
@@ -44,21 +44,21 @@ mutate.GRanges <- function(.data, ..., .by = NULL,
                            .keep = c("all", "used", "unused", "none"),
                            .before = NULL,
                            .after = NULL) {
-  dots = rlang::quos(...)
-  df = as.data.frame(.data)
+  dots <- rlang::quos(...)
+  df <- as.data.frame(.data)
   
   if (!is.null(.before) && !is.null(.after)) {
     stop("You can't supply both `.before` and `.after`.")
   }
   
   if (!is.null(.before)) {
-    df = df |> 
+    df <- df |> 
       dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .before = .before)
   } else if (!is.null(.after)) {
-    df = df |> 
+    df <- df |> 
       dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .after = .after)
   } else {
-    df = df |> dplyr::mutate(!!!dots, .by = .by, .keep = .keep)
+    df <- df |> dplyr::mutate(!!!dots, .by = .by, .keep = .keep)
   }
   
   df |> 
@@ -100,7 +100,7 @@ rename.GRanges <- function(.data, ...){
 #' @return grange object
 #' @export
 arrange.GRanges <- function(.data, ..., .by_group = FALSE){
-  dots = rlang::quos(...)
+  dots <- rlang::quos(...)
   as.data.frame(.data) |> 
     dplyr::arrange(!!!dots, .by_group = .by_group) |> 
     GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)

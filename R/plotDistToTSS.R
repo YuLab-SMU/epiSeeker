@@ -1,4 +1,4 @@
-merge_two_si = function(x1, x2){
+merge_two_si <- function(x1, x2){
   if (length(unique(gsub("^[0-9]+","",c(x1, x2)))) == 1){
     return(paste0(gsub("[^0-9]*$","",x1), "-", x2))
   } else {
@@ -6,57 +6,57 @@ merge_two_si = function(x1, x2){
   }
 }
 
-generate_break_lbs = function(breaks) {
-  lbs = c()
+generate_break_lbs <- function(breaks) {
+  lbs <- c()
   
   # break labels
-  break_labels = scales::label_number(scale_cut = scales::cut_si(unit = "b"))(breaks)
-  break_labels = gsub(" b$"," bp", break_labels)
+  break_labels <- scales::label_number(scale_cut = scales::cut_si(unit = "b"))(breaks)
+  break_labels <- gsub(" b$"," bp", break_labels)
 
   # category labels
   for (i in 2:length(breaks)) {
     if (i == length(breaks)) {
-      lbs = c(lbs, paste0(">", break_labels[i-1]))
+      lbs <- c(lbs, paste0(">", break_labels[i-1]))
     } else {
-      lbs = c(lbs, merge_two_si(break_labels[i-1], break_labels[i]))
+      lbs <- c(lbs, merge_two_si(break_labels[i-1], break_labels[i]))
     }
   }
   
   return(lbs)
 }
 
-generate_colors = function(palette = NULL, n) {
+generate_colors <- function(palette = NULL, n) {
   # old color in version <= 1.41.1
-  old_color = c("#9ecae1", "#3182bd", "#C7A76C", "#86B875", "#39BEB1", "#CD99D8")
+  old_color <- c("#9ecae1", "#3182bd", "#C7A76C", "#86B875", "#39BEB1", "#CD99D8")
   if (is.null(palette)){
-    brewer_cols = old_color
+    brewer_cols <- old_color
   } else if (length(palette) == 1 && is_valid_palette(palette)){
-    brewer_cols = RColorBrewer::brewer.pal(
+    brewer_cols <- RColorBrewer::brewer.pal(
       name = palette, 
       n = RColorBrewer::brewer.pal.info[palette, "maxcolors"]
     ) |> rev()     
   } else if (all(is_valid_color(palette))){
-    brewer_cols = palette
+    brewer_cols <- palette
   }
   else {
     warning("Your palette is non-valid, switching to default...")
-    brewer_cols = old_color
+    brewer_cols <- old_color
   }
   
   if (length(brewer_cols) >= n) {
-    cols = brewer_cols[1:length(brewer_cols)]
+    cols <- brewer_cols[1:length(brewer_cols)]
   } else {
-    cols = grDevices::colorRampPalette(brewer_cols)(n)
+    cols <- grDevices::colorRampPalette(brewer_cols)(n)
   }
   
   return(cols)
 }
 
-is_valid_palette = function(palette){
+is_valid_palette <- function(palette){
   palette %in% rownames(RColorBrewer::brewer.pal.info)
 }
 
-is_valid_color = function(color){
+is_valid_color <- function(color){
   tryCatch({
     grDevices::col2rgb(color)
     TRUE
@@ -109,13 +109,13 @@ plotDistToTSS.data.frame <- function(peakDist,
                                      title="Distribution of transcription factor-binding loci relative to TSS",
                                      categoryColumn = ".id") {
 
-    distanceBreaks = sort(distanceBreaks)
-    hasZero = sum(distanceBreaks == 0)
-    if (!hasZero) distanceBreaks = c(0, distanceBreaks)
-    hasInf = sum(is.infinite(distanceBreaks))
-    if (!hasInf) distanceBreaks = c(distanceBreaks, Inf)
-    lbs = generate_break_lbs(distanceBreaks)
-    peakDist$Feature = cut(abs(peakDist[[distanceColumn]]), 
+    distanceBreaks <- sort(distanceBreaks)
+    hasZero <- sum(distanceBreaks == 0)
+    if (!hasZero) distanceBreaks <- c(0, distanceBreaks)
+    hasInf <- sum(is.infinite(distanceBreaks))
+    if (!hasInf) distanceBreaks <- c(distanceBreaks, Inf)
+    lbs <- generate_break_lbs(distanceBreaks)
+    peakDist$Feature <- cut(abs(peakDist[[distanceColumn]]), 
                            breaks = distanceBreaks,
                            labels = lbs,
                            include.lowest = TRUE)
@@ -125,11 +125,11 @@ plotDistToTSS.data.frame <- function(peakDist,
 
     ## count frequencies
     if (categoryColumn == 1) {
-      peakDist = peakDist |> 
+      peakDist <- peakDist |> 
         summarise(freq = length(.data$Feature), .by = c("Feature", "sign")) |> 
         mutate(freq = .data$freq/sum(.data$freq) * 100)
     } else {
-      peakDist = peakDist |> 
+      peakDist <- peakDist |> 
         summarise(freq = length(.data$Feature), .by = c(categoryColumn, "Feature", "sign")) |> 
         mutate(freq = .data$freq/sum(.data$freq) * 100, .by = categoryColumn)
     }
@@ -158,10 +158,10 @@ plotDistToTSS.data.frame <- function(peakDist,
 
 
     ## preparing ylim and y tick labels
-    ds = max(totalFreq$total[totalFreq$sign == 1])
-    dslim = ceiling(ds/10) * 10
-    us = max(totalFreq$total[totalFreq$sign == -1])
-    uslim = ceiling(us/10) * 10
+    ds <- max(totalFreq$total[totalFreq$sign == 1])
+    dslim <- ceiling(ds/10) * 10
+    us <- max(totalFreq$total[totalFreq$sign == -1])
+    uslim <- ceiling(us/10) * 10
     ybreaks <- seq(-uslim, dslim, by=10)
     ylbs <- abs(ybreaks)
     ylbs[ylbs == 0] <- "TSS"

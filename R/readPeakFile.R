@@ -23,7 +23,7 @@ readPeakFile <- function(peakfile, as="GRanges", ...) {
 }
 
 peakDF2GRanges <- function(peak.df) {
-    peak.gr=GRanges(seqnames=peak.df[,1],
+    peak.gr <- GRanges(seqnames=peak.df[,1],
         ranges=IRanges(peak.df[,2], peak.df[,3]))
     cn <- colnames(peak.df)
     if (length(cn) > 3) {
