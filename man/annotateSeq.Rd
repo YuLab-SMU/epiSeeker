@@ -95,7 +95,8 @@ Annotate peaks
 require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+peak <- readPeakFile(peakfile)[1:10]
+peakAnno <- annotateSeq(peak, tssRegion=c(-3000, 3000), TxDb=txdb)
 peakAnno
 }
 \seealso{

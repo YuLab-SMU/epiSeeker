@@ -26,8 +26,6 @@ grange object
 extend filter to Peak (GRanges class object)
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::filter(peak, fold_enrichment > 20)

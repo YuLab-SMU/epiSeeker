@@ -25,11 +25,7 @@ ggplot2 grammar e.g.(scale_fill_distiller()). And users can specify any details,
 text size and showing percentage or not, by inputting `...` extra parameters.
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfiles <- getSampleFiles()
-peakAnnoList <- lapply(peakfiles, annotateSeq, TxDb = txdb)
-names(peakAnnoList) <- names(peakfiles)
+data(peakAnnoList)
 genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 vennplot(genes)
 }

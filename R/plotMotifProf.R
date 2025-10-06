@@ -21,16 +21,8 @@
 #' @return ggplot object
 #' @examples 
 #' require(BSgenome.Dmelanogaster.UCSC.dm6)
-#' require(RSQLite)
-#' require(TFBSTools)
+#' data(pwm_obj)
 #' ref_obj <- BSgenome.Dmelanogaster.UCSC.dm6
-#' opts_base <- list()
-#' opts_base[["collection"]] <- "CORE"
-#' opts_base[["all_versions"]] <- FALSE
-#' opts_base[["species"]] <- "Drosophila melanogaster"
-#' opts_base[["tax_group"]] <- "insects"
-#' sq24 <- DBI::dbConnect(RSQLite::SQLite(), JASPAR2024::db(JASPAR2024::JASPAR2024()))
-#' pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_base)
 #' region_gr <- GenomicRanges::GRanges(seqnames = "chr2R",
 #'                                     ranges = IRanges::IRanges(start = 18398309, 
 #'                                                               end = 18398450))

@@ -11,11 +11,7 @@
 #' from different experiments or gene annotation from
 #' different peak files.
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfiles <- getSampleFiles()
-#' peakAnnoList <- lapply(peakfiles, annotateSeq, TxDb = txdb)
-#' names(peakAnnoList) <- names(peakfiles)
+#' data(peakAnnoList)
 #' genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 #' vennplot(genes)
 #' @export

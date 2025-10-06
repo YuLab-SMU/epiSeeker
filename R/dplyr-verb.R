@@ -9,8 +9,6 @@
 #' @return A filtered GRanges object containing only rows that meet the specified criteria
 #' @importFrom dplyr filter
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::filter(peak, fold_enrichment > 20)
@@ -38,8 +36,6 @@ filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 #' @return A processed GRanges object containing the added or modified columns
 #' @importFrom dplyr mutate
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::mutate(peak, score = tags)
@@ -77,8 +73,6 @@ mutate.GRanges <- function(.data, ..., .by = NULL,
 #' @importFrom dplyr rename
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::rename(peak, tag = tags)
@@ -100,8 +94,6 @@ rename.GRanges <- function(.data, ...){
 #' @param ... additional parameters
 #' @param .by_group If TRUE, will sort first by grouping variable. Applies to grouped data frames only.
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::arrange(peak, seqnames)

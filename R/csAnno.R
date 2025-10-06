@@ -41,10 +41,7 @@ setClass("csAnno",
 #' @return GRanges object
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' data(peakAnno)
 #' as.GRanges(peakAnno)
 #' @export
 as.GRanges <- function(x) {
@@ -60,10 +57,7 @@ as.GRanges <- function(x) {
 #' @param x csAnno object
 #' @return data frame
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' data(peakAnno)
 #' getAnnoStat(peakAnno)
 #' @export
 getAnnoStat <- function(x) {
@@ -83,10 +77,7 @@ getAnnoStat <- function(x) {
 #' @param ... csAnno objects
 #' @return csAnno object
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' data(peakAnno)
 #' combine_csAnno(peakAnno, peakAnno)
 #' @importFrom methods new 
 #' @export
@@ -222,10 +213,7 @@ setMethod("vennpie", signature(x="csAnno"),
 #' @importFrom enrichplot upsetplot
 #' @exportMethod upsetplot
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' data(peakAnno)
 #' upsetplot(peakAnno)
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
 setMethod("upsetplot", signature(x="csAnno"),
@@ -268,8 +256,6 @@ as.data.frame.csAnno <- function(x, row.names=NULL, optional=FALSE, ...) {
 #' @exportMethod show
 #' @usage show(object)
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' show(peakfile)
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}

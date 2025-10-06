@@ -24,6 +24,35 @@ NULL
 #' @return bsseq object
 NULL
 
+#' Example data of peak annotation
+#'
+#' Peak annotation result. See data-raw/example_data.R
+#' @name peakAnno
+#' @return csAnno object
+NULL
+
+#' Example data of a list of peak annotation
+#'
+#' A list of peak annotation result. See data-raw/example_data.R
+#' @name peakAnnoList
+#' @return list of csAnno object
+NULL
+
+#' Example data of tagMatrix
+#'
+#' tagMatrix result. See data-raw/example_data.R
+#' @name tagMatrix
+#' @return matrix
+NULL
+
+#' motif reference for Drosophila melanogaster
+#'
+#' motif reference result. See data-raw/example_data.R
+#' @name pwm_obj
+#' @return pwm_obj
+NULL
+
+
 #' Different methylation region created by DSS
 #'
 #' A data set contains information of different methylation region

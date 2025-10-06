@@ -5,10 +5,7 @@
 #' @name vennpie
 #' @rdname vennpie-methods
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' data(peakAnno)
 #' vennpie(peakAnno)
 #' @export
 setGeneric("vennpie", 
@@ -24,10 +21,7 @@ setGeneric("vennpie",
 #' @name plotDistToTSS
 #' @rdname plotDistToTSS-methods
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+#' data(peakAnno)
 #' plotDistToTSS(peakAnno)
 #' @export
 setGeneric("plotDistToTSS", 
@@ -46,10 +40,7 @@ setGeneric("plotDistToTSS",
 #' @name plotAnnoBar
 #' @rdname plotAnnoBar-methods
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+#' data(peakAnno)
 #' plotAnnoBar(peakAnno)
 #' @export
 setGeneric("plotAnnoBar", 

@@ -115,8 +115,8 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 #' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peak <- readPeakFile(peakfile)
-#' enrichPeakOverlap(peak, peakfile, txdb, mc.cores = 1)
+#' peak <- readPeakFile(peakfile)[1:10]
+#' enrichPeakOverlap(peak, peakfile, txdb, mc.cores = 1, nShuffle = 20)
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver
 #' @author G Yu

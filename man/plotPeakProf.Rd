@@ -45,14 +45,8 @@ ggplot object
 plot peak profile
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peak <- readPeakFile(getSampleFiles()[[4]])
-mt <- getTagMatrix(peak, type = "start_site", by = "gene", 
-                   upstream = 3000, downstream = 3000,
-                   TxDb = txdb, weightCol = "V5", nbin = 500)
-plotPeakProf(mt)
+data(tagMatrix)
+plotPeakProf(tagMatrix)
 }
 \author{
 G Yu; Y Yan

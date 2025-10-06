@@ -65,9 +65,9 @@
 #' @importFrom S4Vectors tail
 #' @export
 #' @examples 
-#' files <- getSampleFiles()
-#' peak <- readPeakFile(files[[4]])
-#' plotCov(peak, weightCol="V5", chrs=c("chr17", "chr18"), xlim=c(4.5e7, 5e7))
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' peak <- readPeakFile(peakfile)
+#' plotCov(peak)
 #' @author G Yu
 plotCov <- function(peak, weightCol = NULL,
                     facet_level = NULL,

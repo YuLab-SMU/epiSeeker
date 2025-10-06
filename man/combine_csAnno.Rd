@@ -21,9 +21,6 @@ Combine csAnno Object
 https://github.com/YuLab-SMU/ChIPseeker/issues/157
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peakAnno <- annotateSeq(peakfile, tssRegion=c(-3000, 3000), TxDb=txdb)
+data(peakAnno)
 combine_csAnno(peakAnno, peakAnno)
 }

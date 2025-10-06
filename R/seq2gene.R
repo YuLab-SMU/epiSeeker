@@ -12,8 +12,8 @@
 #' @examples
 #' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' TxDb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' file <- getSampleFiles()[[1]] # a bed file
-#' gr <- readPeakFile(file)
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' gr <- readPeakFile(peakfile)[1:20]
 #' genes <- seq2gene(gr, tssRegion=c(-1000, 1000), flankDistance = 3000, TxDb) 
 #' @author Guangchuang Yu
 seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {

@@ -36,8 +36,6 @@ A processed GRanges object containing the added or modified columns
 extend mutate to Peak (GRanges class object)
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::mutate(peak, score = tags)
