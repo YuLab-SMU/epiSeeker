@@ -1,4 +1,4 @@
-# epiSeeker 0.99.4
+# epiSeeker 0.99.5
 
 + fixed R check (2025-10-05, Sun)
 + remove dependent of `Vennerable` package (2025-09-27, Sat)
@@ -9,4 +9,3 @@
     - epiSeeekr provides interactive function for user to explore data
     - epiSeeker provides functions to plot gene structure, base modification and motif
     - see more on <https://github.com/YuLab-SMU/ChIPseeker/blob/devel/NEWS.md>
-    
