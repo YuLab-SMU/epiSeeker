@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Visualization of motif | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</title>
+  <meta name="description" content="5 Visualization of motif | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Visualization of motif | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Visualization of motif | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  
+  
+  
+
+
+
+<meta name="date" content="2025-10-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="visualization-of-gene-track.html"/>
+<link rel="next" href="peak-annotation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/d3-bundle-5.16.0/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso-0.0.5/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush-4.4.0/flatbush.min.js"></script>
+<link href="libs/ggiraphjs-0.8.10/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs-0.8.10/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding-0.9.0/girafe.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-profiling.html"><a href="data-profiling.html"><i class="fa fa-check"></i><b>2</b> Data profiling</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-profiling.html"><a href="data-profiling.html#coverage-plot"><i class="fa fa-check"></i><b>2.1</b> Coverage plot</a></li>
+<li class="chapter" data-level="2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-data-in-specific-regions"><i class="fa fa-check"></i><b>2.2</b> Profile of data in specific regions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.1</b> Profile of one sample of one reference region</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.2</b> Profile of one sample of multiple reference regions</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.3</b> Profile of multiple samples of one reference region</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.4</b> Profile of multiple samples of multiple reference regions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-of-base-modification.html"><a href="visualization-of-base-modification.html"><i class="fa fa-check"></i><b>3</b> Visualization of base modification</a></li>
+<li class="chapter" data-level="4" data-path="visualization-of-gene-track.html"><a href="visualization-of-gene-track.html"><i class="fa fa-check"></i><b>4</b> Visualization of gene track</a></li>
+<li class="chapter" data-level="5" data-path="visualization-of-motif.html"><a href="visualization-of-motif.html"><i class="fa fa-check"></i><b>5</b> Visualization of motif</a></li>
+<li class="chapter" data-level="6" data-path="peak-annotation.html"><a href="peak-annotation.html"><i class="fa fa-check"></i><b>6</b> Peak Annotation</a><ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-genomic-annotation"><i class="fa fa-check"></i><b>6.1</b> Visualize Genomic Annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-distribution-of-tf-binding-loci-relative-to-tss"><i class="fa fa-check"></i><b>6.2</b> Visualize distribution of TF-binding loci relative to TSS</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functional-enrichment-analysis.html"><a href="functional-enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Functional enrichment analysis</a></li>
+<li class="chapter" data-level="8" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html"><i class="fa fa-check"></i><b>8</b> ChIP peak data set comparison</a><ul>
+<li class="chapter" data-level="8.1" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#chip-peak-annotation-comparision"><i class="fa fa-check"></i><b>8.1</b> ChIP peak annotation comparision</a></li>
+<li class="chapter" data-level="8.2" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#functional-profiles-comparison"><i class="fa fa-check"></i><b>8.2</b> Functional profiles comparison</a></li>
+<li class="chapter" data-level="8.3" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#overlap-of-peaks-and-annotated-genes"><i class="fa fa-check"></i><b>8.3</b> Overlap of peaks and annotated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html"><i class="fa fa-check"></i><b>9</b> Statistical testing of ChIP seq overlap</a><ul>
+<li class="chapter" data-level="9.1" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#shuffle-genome-coordination"><i class="fa fa-check"></i><b>9.1</b> Shuffle genome coordination</a></li>
+<li class="chapter" data-level="9.2" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#peak-overlap-enrichment-analysis"><i class="fa fa-check"></i><b>9.2</b> Peak overlap enrichment analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html"><i class="fa fa-check"></i><b>10</b> Data Mining with ChIP seq data deposited in GEO</a><ul>
+<li class="chapter" data-level="10.1" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#geo-data-collection"><i class="fa fa-check"></i><b>10.1</b> GEO data collection</a></li>
+<li class="chapter" data-level="10.2" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#download-geo-chip-data-sets"><i class="fa fa-check"></i><b>10.2</b> Download GEO ChIP data sets</a></li>
+<li class="chapter" data-level="10.3" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#overlap-significant-testing"><i class="fa fa-check"></i><b>10.3</b> Overlap significant testing</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="need-helps.html"><a href="need-helps.html"><i class="fa fa-check"></i><b>11</b> Need helps?</a></li>
+<li class="chapter" data-level="12" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>12</b> Session Information</a></li>
+<li class="chapter" data-level="13" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>13</b> References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualization-of-motif" class="section level1 hasAnchor">
+<h1><span class="header-section-number">5</span> Visualization of motif<a href="visualization-of-motif.html#visualization-of-motif" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>epiSeeker provide functions to visualize the motif in a specific region.
+Users should input a <code>Granges</code> object to <code>region</code> to specify the region.
+Sequence reference and motif reference are also necessary.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="co"># sequence reference for Drosophila</span></a>
+<a class="sourceLine" id="cb18-3" title="3">ref_obj &lt;-<span class="st"> </span>BSgenome.Dmelanogaster.UCSC.dm6</a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co"># motif reference of position-specific weight matrix</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="co"># opts_base &lt;- list()</span></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="co"># opts_base[[&quot;collection&quot;]] &lt;- &quot;CORE&quot;</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="co"># opts_base[[&quot;all_versions&quot;]] &lt;- FALSE</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="co"># opts_base[[&quot;species&quot;]] &lt;- &quot;Drosophila melanogaster&quot;</span></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="co"># opts_base[[&quot;tax_group&quot;]] &lt;- &quot;insects&quot;</span></a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="co"># sq24 &lt;- RSQLite::dbConnect(RSQLite::SQLite(), db(JASPAR2024()))</span></a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="co"># pwm_obj &lt;- getMatrixSet(sq24, opts_base)</span></a>
+<a class="sourceLine" id="cb18-13" title="13"></a>
+<a class="sourceLine" id="cb18-14" title="14"><span class="kw">data</span>(pwm_obj)</a>
+<a class="sourceLine" id="cb18-15" title="15">motifMatrix &lt;-<span class="st"> </span><span class="kw">getMotifMatrix</span>(<span class="dt">region =</span> <span class="kw">GRanges</span>(<span class="dt">seqnames =</span> <span class="st">&quot;chr2R&quot;</span>,</a>
+<a class="sourceLine" id="cb18-16" title="16">                                               <span class="dt">ranges =</span> <span class="kw">IRanges</span>(<span class="dt">start =</span> <span class="dv">18398309</span>, <span class="dt">end =</span> <span class="dv">18398450</span>)), </a>
+<a class="sourceLine" id="cb18-17" title="17">                              <span class="dt">pwm =</span> pwm_obj, <span class="dt">ref_obj =</span> ref_obj)</a>
+<a class="sourceLine" id="cb18-18" title="18"></a>
+<a class="sourceLine" id="cb18-19" title="19"><span class="co"># Interactive function is also supported by interactive parameter</span></a>
+<a class="sourceLine" id="cb18-20" title="20"><span class="kw">plotMotifProf</span>(motifMatrix, <span class="dt">interactive =</span> <span class="ot">TRUE</span>)                     </a></code></pre></div>
+<div class="girafe html-widget html-fill-item" id="htmlwidget-f83a3d40a5a15b0dcba4" style="width:960px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-f83a3d40a5a15b0dcba4">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='graphics-document' id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6' viewBox='0 0 720 432'>\n <defs id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_defs'>\n  <clipPath id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_c1'>\n   <rect x='0' y='0' width='720' height='432'/>\n  <\/clipPath>\n  <clipPath id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_c2'>\n   <rect x='37.83' y='5.48' width='585.5' height='394.82'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_c1)'>\n   <rect x='0' y='0' width='720' height='432' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n   <rect x='0' y='0' width='720' height='432' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='round'/>\n  <\/g>\n  <g clip-path='url(#svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_c2)'>\n   <rect x='37.83' y='5.48' width='585.5' height='394.82' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e1' points='423.06,101.98 426.84,101.98 430.61,101.98 434.39,101.98 438.16,101.98' fill='none' stroke='#F8766D' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='ara' title='Motif: ara&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: +&amp;lt;br/&amp;gt;start: 18398404&amp;lt;br/&amp;gt;end: 18398408&amp;lt;br/&amp;gt;score: 9.559'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e2' points='332.46,305.80 336.24,305.80 340.01,305.80 343.79,305.80 347.56,305.80 351.34,305.80' fill='none' stroke='#D89000' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='br_3' title='Motif: br_3&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398380&amp;lt;br/&amp;gt;end: 18398385&amp;lt;br/&amp;gt;score: -9.748'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e3' points='113.51,357.38 117.29,357.38 121.06,357.38 124.84,357.38 128.61,357.38 132.39,357.38 136.16,357.38 139.94,357.38 143.71,357.38 147.49,357.38 151.26,357.38 155.04,357.38 158.81,357.38 162.59,357.38' fill='none' stroke='#A3A500' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='cnc::maf-S' title='Motif: cnc::maf-S&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398322&amp;lt;br/&amp;gt;end: 18398335&amp;lt;br/&amp;gt;score: -14.635'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e4' points='102.19,281.07 105.96,281.07 109.74,281.07 113.51,281.07 117.29,281.07' fill='none' stroke='#39B600' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='Deaf1' title='Motif: Deaf1&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398319&amp;lt;br/&amp;gt;end: 18398323&amp;lt;br/&amp;gt;score: -7.406'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e5' points='423.06,98.55 426.84,98.55 430.61,98.55 434.39,98.55 438.16,98.55' fill='none' stroke='#00BF7D' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='mirr' title='Motif: mirr&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: +&amp;lt;br/&amp;gt;start: 18398404&amp;lt;br/&amp;gt;end: 18398408&amp;lt;br/&amp;gt;score: 9.883'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e6' points='513.66,313.95 517.44,313.95 521.21,313.95 524.99,313.95 528.76,313.95' fill='none' stroke='#00BFC4' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='Optix' title='Motif: Optix&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398428&amp;lt;br/&amp;gt;end: 18398432&amp;lt;br/&amp;gt;score: -10.521'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e7' points='509.89,317.68 513.66,317.68 517.44,317.68 521.21,317.68 524.99,317.68 528.76,317.68' fill='none' stroke='#00B0F6' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='Six4' title='Motif: Six4&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398427&amp;lt;br/&amp;gt;end: 18398432&amp;lt;br/&amp;gt;score: -10.874'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e8' points='468.36,28.22 472.14,28.22 475.91,28.22 479.69,28.22 483.46,28.22 487.24,28.22 491.01,28.22 494.79,28.22' fill='none' stroke='#9590FF' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='slp2' title='Motif: slp2&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: +&amp;lt;br/&amp;gt;start: 18398416&amp;lt;br/&amp;gt;end: 18398423&amp;lt;br/&amp;gt;score: 16.546'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e9' points='509.89,325.70 513.66,325.70 517.44,325.70 521.21,325.70 524.99,325.70 528.76,325.70' fill='none' stroke='#E76BF3' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='so' title='Motif: so&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: -&amp;lt;br/&amp;gt;start: 18398427&amp;lt;br/&amp;gt;end: 18398432&amp;lt;br/&amp;gt;score: -11.633'/>\n   <polyline id='svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_e10' points='204.11,108.33 207.89,108.33 211.66,108.33 215.44,108.33 219.21,108.33 222.99,108.33 226.76,108.33 230.54,108.33 234.31,108.33' fill='none' stroke='#FF62BC' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt' data-id='TfAP-2' title='Motif: TfAP-2&amp;lt;br/&amp;gt;chr: chr2R&amp;lt;br/&amp;gt;strand: +&amp;lt;br/&amp;gt;start: 18398346&amp;lt;br/&amp;gt;end: 18398354&amp;lt;br/&amp;gt;score: 8.958'/>\n   <line x1='37.83' y1='202.89' x2='623.32' y2='202.89' stroke='#000000' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n  <\/g>\n  <g clip-path='url(#svg_ee143ece_5c23_448d_847e_3d0c6484a6a6_c1)'>\n   <polyline points='37.83,400.29 37.83,5.48' fill='none' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='18.53' y='385.56' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>-17<\/text>\n   <text x='24.12' y='290.55' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>-8<\/text>\n   <text x='27.3' y='206.09' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>0<\/text>\n   <text x='27.3' y='121.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>8<\/text>\n   <text x='21.7' y='26.63' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>17<\/text>\n   <polyline points='35.09,382.35 37.83,382.35' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='35.09,287.34 37.83,287.34' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='35.09,202.89 37.83,202.89' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='35.09,118.43 37.83,118.43' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='35.09,23.43 37.83,23.43' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='37.83,400.29 623.32,400.29' fill='none' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='64.44,403.03 64.44,400.29' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='196.56,403.03 196.56,400.29' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='332.46,403.03 332.46,400.29' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='464.59,403.03 464.59,400.29' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='596.71,403.03 596.71,400.29' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='42.06' y='411.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>18398309<\/text>\n   <text x='174.19' y='411.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>18398344<\/text>\n   <text x='310.08' y='411.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>18398380<\/text>\n   <text x='442.21' y='411.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>18398415<\/text>\n   <text x='574.33' y='411.64' font-size='6.6pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>18398450<\/text>\n   <text x='237.02' y='424.23' font-size='8.25pt' font-family='DejaVu Sans'>peak chr2R:18398309~18398450<\/text>\n   <text transform='translate(13.50,233.76) rotate(-90.00)' font-size='8.25pt' font-family='DejaVu Sans'>motif score<\/text>\n   <rect x='634.28' y='103.11' width='80.24' height='199.55' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <text x='639.76' y='117.76' font-size='8.25pt' font-family='DejaVu Sans'>motif<\/text>\n   <rect x='639.76' y='124.38' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='133.02' x2='655.31' y2='133.02' stroke='#F8766D' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='141.66' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='150.3' x2='655.31' y2='150.3' stroke='#D89000' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='158.94' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='167.58' x2='655.31' y2='167.58' stroke='#A3A500' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='176.22' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='184.86' x2='655.31' y2='184.86' stroke='#39B600' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='193.5' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='202.14' x2='655.31' y2='202.14' stroke='#00BF7D' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='210.78' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='219.42' x2='655.31' y2='219.42' stroke='#00BFC4' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='228.06' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='236.7' x2='655.31' y2='236.7' stroke='#00B0F6' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='245.34' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='253.98' x2='655.31' y2='253.98' stroke='#9590FF' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='262.62' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='271.26' x2='655.31' y2='271.26' stroke='#E76BF3' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <rect x='639.76' y='279.9' width='17.28' height='17.28' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <line x1='641.49' y1='288.54' x2='655.31' y2='288.54' stroke='#FF62BC' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='662.52' y='136.23' font-size='6.6pt' font-family='DejaVu Sans'>ara<\/text>\n   <text x='662.52' y='153.51' font-size='6.6pt' font-family='DejaVu Sans'>br_3<\/text>\n   <text x='662.52' y='170.79' font-size='6.6pt' font-family='DejaVu Sans'>cnc::maf-S<\/text>\n   <text x='662.52' y='188.07' font-size='6.6pt' font-family='DejaVu Sans'>Deaf1<\/text>\n   <text x='662.52' y='205.35' font-size='6.6pt' font-family='DejaVu Sans'>mirr<\/text>\n   <text x='662.52' y='222.63' font-size='6.6pt' font-family='DejaVu Sans'>Optix<\/text>\n   <text x='662.52' y='239.91' font-size='6.6pt' font-family='DejaVu Sans'>Six4<\/text>\n   <text x='662.52' y='257.19' font-size='6.6pt' font-family='DejaVu Sans'>slp2<\/text>\n   <text x='662.52' y='274.47' font-size='6.6pt' font-family='DejaVu Sans'>so<\/text>\n   <text x='662.52' y='291.75' font-size='6.6pt' font-family='DejaVu Sans'>TfAP-2<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_ee143ece_5c23_448d_847e_3d0c6484a6a6","ratio":1.666666666666667,"settings":{"tooltip":{"css":".tooltip_SVGID_ { background-color: white; border: 1px solid #333; padding: 8px; border-radius: 4px; font-size: 12px; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":0,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { stroke: orange; stroke-width: 2px; cursor: pointer; }","reactive":false,"nearest_distance":null},"hover_inv":{"css":".hover_inv_SVGID_ { opacity: 0.5; }"},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":0.5,"max":5,"duration":300},"toolbar":{"position":"topright","pngname":"diagram","tooltips":null,"fixed":false,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":1}}},"evals":[],"jsHooks":[]}</script>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualization-of-gene-track.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="peak-annotation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

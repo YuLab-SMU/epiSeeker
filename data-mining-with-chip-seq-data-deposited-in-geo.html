@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10 Data Mining with ChIP seq data deposited in GEO | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</title>
+  <meta name="description" content="10 Data Mining with ChIP seq data deposited in GEO | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10 Data Mining with ChIP seq data deposited in GEO | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10 Data Mining with ChIP seq data deposited in GEO | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  
+  
+  
+
+
+
+<meta name="date" content="2025-10-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="statistical-testing-of-chip-seq-overlap.html"/>
+<link rel="next" href="need-helps.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/d3-bundle-5.16.0/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso-0.0.5/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush-4.4.0/flatbush.min.js"></script>
+<link href="libs/ggiraphjs-0.8.10/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs-0.8.10/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding-0.9.0/girafe.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-profiling.html"><a href="data-profiling.html"><i class="fa fa-check"></i><b>2</b> Data profiling</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-profiling.html"><a href="data-profiling.html#coverage-plot"><i class="fa fa-check"></i><b>2.1</b> Coverage plot</a></li>
+<li class="chapter" data-level="2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-data-in-specific-regions"><i class="fa fa-check"></i><b>2.2</b> Profile of data in specific regions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.1</b> Profile of one sample of one reference region</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.2</b> Profile of one sample of multiple reference regions</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.3</b> Profile of multiple samples of one reference region</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.4</b> Profile of multiple samples of multiple reference regions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-of-base-modification.html"><a href="visualization-of-base-modification.html"><i class="fa fa-check"></i><b>3</b> Visualization of base modification</a></li>
+<li class="chapter" data-level="4" data-path="visualization-of-gene-track.html"><a href="visualization-of-gene-track.html"><i class="fa fa-check"></i><b>4</b> Visualization of gene track</a></li>
+<li class="chapter" data-level="5" data-path="visualization-of-motif.html"><a href="visualization-of-motif.html"><i class="fa fa-check"></i><b>5</b> Visualization of motif</a></li>
+<li class="chapter" data-level="6" data-path="peak-annotation.html"><a href="peak-annotation.html"><i class="fa fa-check"></i><b>6</b> Peak Annotation</a><ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-genomic-annotation"><i class="fa fa-check"></i><b>6.1</b> Visualize Genomic Annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-distribution-of-tf-binding-loci-relative-to-tss"><i class="fa fa-check"></i><b>6.2</b> Visualize distribution of TF-binding loci relative to TSS</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functional-enrichment-analysis.html"><a href="functional-enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Functional enrichment analysis</a></li>
+<li class="chapter" data-level="8" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html"><i class="fa fa-check"></i><b>8</b> ChIP peak data set comparison</a><ul>
+<li class="chapter" data-level="8.1" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#chip-peak-annotation-comparision"><i class="fa fa-check"></i><b>8.1</b> ChIP peak annotation comparision</a></li>
+<li class="chapter" data-level="8.2" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#functional-profiles-comparison"><i class="fa fa-check"></i><b>8.2</b> Functional profiles comparison</a></li>
+<li class="chapter" data-level="8.3" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#overlap-of-peaks-and-annotated-genes"><i class="fa fa-check"></i><b>8.3</b> Overlap of peaks and annotated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html"><i class="fa fa-check"></i><b>9</b> Statistical testing of ChIP seq overlap</a><ul>
+<li class="chapter" data-level="9.1" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#shuffle-genome-coordination"><i class="fa fa-check"></i><b>9.1</b> Shuffle genome coordination</a></li>
+<li class="chapter" data-level="9.2" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#peak-overlap-enrichment-analysis"><i class="fa fa-check"></i><b>9.2</b> Peak overlap enrichment analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html"><i class="fa fa-check"></i><b>10</b> Data Mining with ChIP seq data deposited in GEO</a><ul>
+<li class="chapter" data-level="10.1" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#geo-data-collection"><i class="fa fa-check"></i><b>10.1</b> GEO data collection</a></li>
+<li class="chapter" data-level="10.2" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#download-geo-chip-data-sets"><i class="fa fa-check"></i><b>10.2</b> Download GEO ChIP data sets</a></li>
+<li class="chapter" data-level="10.3" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#overlap-significant-testing"><i class="fa fa-check"></i><b>10.3</b> Overlap significant testing</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="need-helps.html"><a href="need-helps.html"><i class="fa fa-check"></i><b>11</b> Need helps?</a></li>
+<li class="chapter" data-level="12" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>12</b> Session Information</a></li>
+<li class="chapter" data-level="13" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>13</b> References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-mining-with-chip-seq-data-deposited-in-geo" class="section level1 hasAnchor">
+<h1><span class="header-section-number">10</span> Data Mining with ChIP seq data deposited in GEO<a href="data-mining-with-chip-seq-data-deposited-in-geo.html#data-mining-with-chip-seq-data-deposited-in-geo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>There are many ChIP seq data sets that have been published and deposited in GEO database.
+We can compare our own dataset to those deposited in GEO to search for significant overlap data.
+Significant overlap of ChIP seq data by different binding proteins may be used to infer cooperative regulation and
+thus can be used to generate hypotheses.</p>
+<p>We collect about <strong>17,000</strong> bed files deposited in GEO, user can use <code>getGEOspecies</code> to get a summary based on speices.</p>
+<div id="geo-data-collection" class="section level2 hasAnchor">
+<h2><span class="header-section-number">10.1</span> GEO data collection<a href="data-mining-with-chip-seq-data-deposited-in-geo.html#geo-data-collection" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">getGEOspecies</span>() <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="co">##                                               species Freq</span></a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="co">## 1                     Actinobacillus pleuropneumoniae    1</span></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="co">## 2 Actinobacillus pleuropneumoniae serovar 3 str. JL03    1</span></a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="co">## 3                                       Aedes aegypti   11</span></a>
+<a class="sourceLine" id="cb34-6" title="6"><span class="co">## 4                                            Anabaena    6</span></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="co">## 5                                 Anolis carolinensis    7</span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="co">## 6                                   Anopheles gambiae    2</span></a></code></pre></div>
+<p>The summary can also based on genome version as illustrated below:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">getGEOgenomeVersion</span>() <span class="op">|</span><span class="er">&gt;</span><span class="st"> </span><span class="kw">head</span>()</a>
+<a class="sourceLine" id="cb35-2" title="2"></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="co">##                 organism genomeVersion Freq</span></a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="co">## 1    Anolis carolinensis       anoCar2    7</span></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="co">## 2             Bos taurus       bosTau4    2</span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="co">## 3             Bos taurus       bosTau6   33</span></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="co">## 4             Bos taurus       bosTau7    2</span></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="co">## 5 Canis lupus familiaris       canFam3   10</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="co">## 6 Caenorhabditis elegans          ce10  328</span></a></code></pre></div>
+<p>User can access the detail information by <code>getGEOInfo</code>, for each genome version.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">hg19 &lt;-<span class="st"> </span><span class="kw">getGEOInfo</span>(<span class="dt">genome=</span><span class="st">&quot;hg19&quot;</span>, <span class="dt">simplify=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="kw">head</span>(hg19)</a>
+<a class="sourceLine" id="cb36-3" title="3"></a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="co">##     series_id        gsm     organism</span></a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="co">## 111  GSE16256  GSM521889 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="co">## 112  GSE16256  GSM521887 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="co">## 113  GSE16256  GSM521883 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="co">## 114  GSE16256 GSM1010966 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="co">## 115  GSE16256  GSM896166 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-10" title="10"><span class="co">## 116  GSE16256  GSM910577 Homo sapiens</span></a>
+<a class="sourceLine" id="cb36-11" title="11"><span class="co">##                                                                                                       title</span></a>
+<a class="sourceLine" id="cb36-12" title="12"><span class="co">## 111          Reference Epigenome: ChIP-Seq Analysis of H3K27me3 in IMR90 Cells; renlab.H3K27me3.IMR90-02.01</span></a>
+<a class="sourceLine" id="cb36-13" title="13"><span class="co">## 112            Reference Epigenome: ChIP-Seq Analysis of H3K27ac in IMR90 Cells; renlab.H3K27ac.IMR90-03.01</span></a>
+<a class="sourceLine" id="cb36-14" title="14"><span class="co">## 113            Reference Epigenome: ChIP-Seq Analysis of H3K14ac in IMR90 Cells; renlab.H3K14ac.IMR90-02.01</span></a>
+<a class="sourceLine" id="cb36-15" title="15"><span class="co">## 114                      polyA RNA sequencing of STL003 Pancreas Cultured Cells; polyA-RNA-seq_STL003PA_r1a</span></a>
+<a class="sourceLine" id="cb36-16" title="16"><span class="co">## 115          Reference Epigenome: ChIP-Seq Analysis of H4K8ac in hESC H1 Cells; renlab.H4K8ac.hESC.H1.01.01</span></a>
+<a class="sourceLine" id="cb36-17" title="17"><span class="co">## 116 Reference Epigenome: ChIP-Seq Analysis of H3K4me1 in Human Spleen Tissue; renlab.H3K4me1.STL003SX.01.01</span></a>
+<a class="sourceLine" id="cb36-18" title="18"><span class="co">##                                                                                                     supplementary_file</span></a>
+<a class="sourceLine" id="cb36-19" title="19"><span class="co">## 111         ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521889/suppl/GSM521889_UCSD.IMR90.H3K27me3.SK05.bed.gz</span></a>
+<a class="sourceLine" id="cb36-20" title="20"><span class="co">## 112          ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521887/suppl/GSM521887_UCSD.IMR90.H3K27ac.YL58.bed.gz</span></a>
+<a class="sourceLine" id="cb36-21" title="21"><span class="co">## 113          ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521883/suppl/GSM521883_UCSD.IMR90.H3K14ac.SK17.bed.gz</span></a>
+<a class="sourceLine" id="cb36-22" title="22"><span class="co">## 114 ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1010nnn/GSM1010966/suppl/GSM1010966_UCSD.Pancreas.mRNA-Seq.STL003.bed.gz</span></a>
+<a class="sourceLine" id="cb36-23" title="23"><span class="co">## 115              ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM896nnn/GSM896166/suppl/GSM896166_UCSD.H1.H4K8ac.AY17.bed.gz</span></a>
+<a class="sourceLine" id="cb36-24" title="24"><span class="co">## 116       ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM910nnn/GSM910577/suppl/GSM910577_UCSD.Spleen.H3K4me1.STL003.bed.gz</span></a>
+<a class="sourceLine" id="cb36-25" title="25"><span class="co">##     genomeVersion pubmed_id</span></a>
+<a class="sourceLine" id="cb36-26" title="26"><span class="co">## 111          hg19  19829295</span></a>
+<a class="sourceLine" id="cb36-27" title="27"><span class="co">## 112          hg19  19829295</span></a>
+<a class="sourceLine" id="cb36-28" title="28"><span class="co">## 113          hg19  19829295</span></a>
+<a class="sourceLine" id="cb36-29" title="29"><span class="co">## 114          hg19  19829295</span></a>
+<a class="sourceLine" id="cb36-30" title="30"><span class="co">## 115          hg19  19829295</span></a>
+<a class="sourceLine" id="cb36-31" title="31"><span class="co">## 116          hg19  19829295</span></a></code></pre></div>
+<p>If <em>simplify</em> is set to <em>FALSE</em>, extra information including <em>source_name</em>, <em>extract_protocol</em>, <em>description</em>, <em>data_processing</em>
+and <em>submission_date</em> will be incorporated.</p>
+</div>
+<div id="download-geo-chip-data-sets" class="section level2 hasAnchor">
+<h2><span class="header-section-number">10.2</span> Download GEO ChIP data sets<a href="data-mining-with-chip-seq-data-deposited-in-geo.html#download-geo-chip-data-sets" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="http://bioconductor.org/packages/ChIPseeker">ChIPseeker</a> provide function <code>downloadGEObedFiles</code> to download all the bed files of a particular genome.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">downloadGEObedFiles</span>(<span class="dt">genome=</span><span class="st">&quot;hg19&quot;</span>, <span class="dt">destDir=</span><span class="st">&quot;hg19&quot;</span>)</a></code></pre></div>
+<p>Or a vector of GSM accession number by <code>downloadGSMbedFiles</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">gsm &lt;-<span class="st"> </span>hg19<span class="op">$</span>gsm[<span class="kw">sample</span>(<span class="kw">nrow</span>(hg19), <span class="dv">10</span>)]</a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="kw">downloadGSMbedFiles</span>(gsm, <span class="dt">destDir=</span><span class="st">&quot;hg19&quot;</span>)</a></code></pre></div>
+</div>
+<div id="overlap-significant-testing" class="section level2 hasAnchor">
+<h2><span class="header-section-number">10.3</span> Overlap significant testing<a href="data-mining-with-chip-seq-data-deposited-in-geo.html#overlap-significant-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After download the bed files from GEO, we can pass them to <code>enrichPeakOverlap</code> for testing the significant of overlap.
+Parameter <em>targetPeak</em> can be the folder, <em>e.g.</em> hg19, that containing bed files. <code>enrichPeakOverlap</code> will parse the folder and
+compare all the bed files. It is possible to test the overlap with bed files that are mapping to different genome or
+different genome versions, <code>enrichPeakOverlap</code> provide a parameter <em>chainFile</em> that can pass a chain file and liftOver the <em>targetPeak</em>
+to the genome version consistent with <em>queryPeak</em>. Signifcant overlap can be use to generate hypothesis of cooperative regulation.
+By mining the data deposited in GEO, we can identify some putative complex or interacted regulators in gene expression regulation or
+chromsome remodelling for further validation.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="statistical-testing-of-chip-seq-overlap.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="need-helps.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

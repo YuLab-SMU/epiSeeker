@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Data profiling | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</title>
+  <meta name="description" content="2 Data profiling | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Data profiling | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Data profiling | epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data" />
+  
+  
+  
+
+
+
+<meta name="date" content="2025-10-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="visualization-of-base-modification.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/d3-bundle-5.16.0/d3-bundle.min.js"></script>
+<script src="libs/d3-lasso-0.0.5/d3-lasso.min.js"></script>
+<script src="libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script>
+<script src="libs/flatbush-4.4.0/flatbush.min.js"></script>
+<link href="libs/ggiraphjs-0.8.10/ggiraphjs.min.css" rel="stylesheet" />
+<script src="libs/ggiraphjs-0.8.10/ggiraphjs.min.js"></script>
+<script src="libs/girafe-binding-0.9.0/girafe.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-profiling.html"><a href="data-profiling.html"><i class="fa fa-check"></i><b>2</b> Data profiling</a><ul>
+<li class="chapter" data-level="2.1" data-path="data-profiling.html"><a href="data-profiling.html#coverage-plot"><i class="fa fa-check"></i><b>2.1</b> Coverage plot</a></li>
+<li class="chapter" data-level="2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-data-in-specific-regions"><i class="fa fa-check"></i><b>2.2</b> Profile of data in specific regions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.1</b> Profile of one sample of one reference region</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-one-sample-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.2</b> Profile of one sample of multiple reference regions</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-one-reference-region"><i class="fa fa-check"></i><b>2.2.3</b> Profile of multiple samples of one reference region</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-profiling.html"><a href="data-profiling.html#profile-of-multiple-samples-of-multiple-reference-regions"><i class="fa fa-check"></i><b>2.2.4</b> Profile of multiple samples of multiple reference regions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visualization-of-base-modification.html"><a href="visualization-of-base-modification.html"><i class="fa fa-check"></i><b>3</b> Visualization of base modification</a></li>
+<li class="chapter" data-level="4" data-path="visualization-of-gene-track.html"><a href="visualization-of-gene-track.html"><i class="fa fa-check"></i><b>4</b> Visualization of gene track</a></li>
+<li class="chapter" data-level="5" data-path="visualization-of-motif.html"><a href="visualization-of-motif.html"><i class="fa fa-check"></i><b>5</b> Visualization of motif</a></li>
+<li class="chapter" data-level="6" data-path="peak-annotation.html"><a href="peak-annotation.html"><i class="fa fa-check"></i><b>6</b> Peak Annotation</a><ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-genomic-annotation"><i class="fa fa-check"></i><b>6.1</b> Visualize Genomic Annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotation.html"><a href="peak-annotation.html#visualize-distribution-of-tf-binding-loci-relative-to-tss"><i class="fa fa-check"></i><b>6.2</b> Visualize distribution of TF-binding loci relative to TSS</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functional-enrichment-analysis.html"><a href="functional-enrichment-analysis.html"><i class="fa fa-check"></i><b>7</b> Functional enrichment analysis</a></li>
+<li class="chapter" data-level="8" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html"><i class="fa fa-check"></i><b>8</b> ChIP peak data set comparison</a><ul>
+<li class="chapter" data-level="8.1" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#chip-peak-annotation-comparision"><i class="fa fa-check"></i><b>8.1</b> ChIP peak annotation comparision</a></li>
+<li class="chapter" data-level="8.2" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#functional-profiles-comparison"><i class="fa fa-check"></i><b>8.2</b> Functional profiles comparison</a></li>
+<li class="chapter" data-level="8.3" data-path="chip-peak-data-set-comparison.html"><a href="chip-peak-data-set-comparison.html#overlap-of-peaks-and-annotated-genes"><i class="fa fa-check"></i><b>8.3</b> Overlap of peaks and annotated genes</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html"><i class="fa fa-check"></i><b>9</b> Statistical testing of ChIP seq overlap</a><ul>
+<li class="chapter" data-level="9.1" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#shuffle-genome-coordination"><i class="fa fa-check"></i><b>9.1</b> Shuffle genome coordination</a></li>
+<li class="chapter" data-level="9.2" data-path="statistical-testing-of-chip-seq-overlap.html"><a href="statistical-testing-of-chip-seq-overlap.html#peak-overlap-enrichment-analysis"><i class="fa fa-check"></i><b>9.2</b> Peak overlap enrichment analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html"><i class="fa fa-check"></i><b>10</b> Data Mining with ChIP seq data deposited in GEO</a><ul>
+<li class="chapter" data-level="10.1" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#geo-data-collection"><i class="fa fa-check"></i><b>10.1</b> GEO data collection</a></li>
+<li class="chapter" data-level="10.2" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#download-geo-chip-data-sets"><i class="fa fa-check"></i><b>10.2</b> Download GEO ChIP data sets</a></li>
+<li class="chapter" data-level="10.3" data-path="data-mining-with-chip-seq-data-deposited-in-geo.html"><a href="data-mining-with-chip-seq-data-deposited-in-geo.html#overlap-significant-testing"><i class="fa fa-check"></i><b>10.3</b> Overlap significant testing</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="need-helps.html"><a href="need-helps.html"><i class="fa fa-check"></i><b>11</b> Need helps?</a></li>
+<li class="chapter" data-level="12" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>12</b> Session Information</a></li>
+<li class="chapter" data-level="13" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>13</b> References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-profiling" class="section level1 hasAnchor">
+<h1><span class="header-section-number">2</span> Data profiling<a href="data-profiling.html#data-profiling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The datasets <em>CBX6</em> and <em>CBX7</em> in this vignettes were downloaded
+from <em>GEO (GSE40740)</em><span class="citation">(Pemberton et al. <a href="#ref-pemberton_genome-wide_2014">2014</a>)</span> while <em>ARmo_0M</em>, <em>ARmo_1nM</em> and <em>ARmo_100nM</em> were
+downloaded from <em>GEO (GSE48308)</em><span class="citation">(Urbanucci et al. <a href="#ref-urbanucci_overexpression_2012">2012</a>)</span> .
+<a href="http://bioconductor.org/packages/ChIPseeker">ChIPseeker</a> provides <code>readPeakFile</code> to load the peak and store in <code>GRanges</code> object.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">files &lt;-<span class="st"> </span><span class="kw">getSampleFiles</span>()</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">print</span>(files)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co">#&gt; $ARmo_0M</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; [1] &quot;/share/Users/liming/.RLib64/epiSeeker/extdata/GEO_sample_data/GSM1174480_ARmo_0M_peaks.bed.gz&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; $ARmo_1nM</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt; [1] &quot;/share/Users/liming/.RLib64/epiSeeker/extdata/GEO_sample_data/GSM1174481_ARmo_1nM_peaks.bed.gz&quot;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; $ARmo_100nM</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; [1] &quot;/share/Users/liming/.RLib64/epiSeeker/extdata/GEO_sample_data/GSM1174482_ARmo_100nM_peaks.bed.gz&quot;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; $CBX6_BF</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt; [1] &quot;/share/Users/liming/.RLib64/epiSeeker/extdata/GEO_sample_data/GSM1295076_CBX6_BF_ChipSeq_mergedReps_peaks.bed.gz&quot;</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="co">#&gt; $CBX7_BF</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="co">#&gt; [1] &quot;/share/Users/liming/.RLib64/epiSeeker/extdata/GEO_sample_data/GSM1295077_CBX7_BF_ChipSeq_mergedReps_peaks.bed.gz&quot;</span></a>
+<a class="sourceLine" id="cb1-17" title="17">peak &lt;-<span class="st"> </span><span class="kw">readPeakFile</span>(files[[<span class="dv">4</span>]])</a>
+<a class="sourceLine" id="cb1-18" title="18">peak</a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt; GRanges object with 1331 ranges and 2 metadata columns:</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt;          seqnames              ranges strand |             V4        V5</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;             &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |    &lt;character&gt; &lt;numeric&gt;</span></a>
+<a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt;      [1]     chr1       815093-817883      * |    MACS_peak_1    295.76</span></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt;      [2]     chr1     1243288-1244338      * |    MACS_peak_2     63.19</span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt;      [3]     chr1     2979977-2981228      * |    MACS_peak_3    100.16</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt;      [4]     chr1     3566182-3567876      * |    MACS_peak_4    558.89</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt;      [5]     chr1     3816546-3818111      * |    MACS_peak_5     57.57</span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt;      ...      ...                 ...    ... .            ...       ...</span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt;   [1327]     chrX 135244783-135245821      * | MACS_peak_1327     55.54</span></a>
+<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt;   [1328]     chrX 139171964-139173506      * | MACS_peak_1328    270.19</span></a>
+<a class="sourceLine" id="cb1-30" title="30"><span class="co">#&gt;   [1329]     chrX 139583954-139586126      * | MACS_peak_1329    918.73</span></a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt;   [1330]     chrX 139592002-139593238      * | MACS_peak_1330    210.88</span></a>
+<a class="sourceLine" id="cb1-32" title="32"><span class="co">#&gt;   [1331]     chrY   13845134-13845777      * | MACS_peak_1331     58.39</span></a>
+<a class="sourceLine" id="cb1-33" title="33"><span class="co">#&gt;   -------</span></a>
+<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt;   seqinfo: 24 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
+<div id="coverage-plot" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.1</span> Coverage plot<a href="data-profiling.html#coverage-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After peak calling, we would like to know the peak locations over the whole genome, <code>plotCov</code> function calculates the
+coverage of peak regions over chromosomes and
+generate a figure to visualize. <a href="https://guangchuangyu.github.io/2016/02/covplot-supports-grangeslist">GRangesList</a> is also
+supported and can be used to compare coverage of multiple bed files.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">plotCov</span>(peak, <span class="dt">weightCol=</span><span class="st">&quot;V5&quot;</span>)</a></code></pre></div>
+<p><img src="fig/chrCoverage.png" /></p>
+<p>Interactive function is also supported by epiSeeker. When the user hovers the mouse over the corresponding element,
+it can display the position and value of the peak.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">plotCov</span>(peak, <span class="dt">weightCol=</span><span class="st">&quot;V5&quot;</span>, <span class="dt">chrs=</span><span class="kw">c</span>(<span class="st">&quot;chr17&quot;</span>, <span class="st">&quot;chr18&quot;</span>), <span class="dt">xlim=</span><span class="kw">c</span>(<span class="fl">4.5e7</span>, <span class="fl">5e7</span>), <span class="dt">interactive =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="girafe html-widget html-fill-item" id="htmlwidget-2634dbb8e9cca9ad549b" style="width:960px;height:576px;"></div>
+<script type="application/json" data-for="htmlwidget-2634dbb8e9cca9ad549b">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='ggiraph-svg' role='graphics-document' id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110' viewBox='0 0 720 432'>\n <defs id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_defs'>\n  <clipPath id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c1'>\n   <rect x='0' y='0' width='720' height='432'/>\n  <\/clipPath>\n  <clipPath id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c2'>\n   <rect x='48.92' y='23.32' width='628.16' height='185.18'/>\n  <\/clipPath>\n  <clipPath id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c3'>\n   <rect x='48.92' y='213.98' width='628.16' height='185.18'/>\n  <\/clipPath>\n  <clipPath id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c4'>\n   <rect x='677.08' y='23.32' width='37.44' height='185.18'/>\n  <\/clipPath>\n  <clipPath id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c5'>\n   <rect x='677.08' y='213.98' width='37.44' height='185.18'/>\n  <\/clipPath>\n <\/defs>\n <g id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_rootg' class='ggiraph-svg-rootg'>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c1)'>\n   <rect x='0' y='0' width='720' height='432' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round' class='ggiraph-svg-bg'/>\n   <rect x='0' y='0' width='720' height='432' fill='#FFFFFF' fill-opacity='1' stroke='#FFFFFF' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='round'/>\n  <\/g>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c2)'>\n   <rect x='48.92' y='23.32' width='628.16' height='185.18' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e1' x='176.34' y='197.1' width='0.15' height='11.4' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 45865623&amp;lt;br/&amp;gt;peak end: 45866903&amp;lt;br/&amp;gt;peak value: 161.23' data-id='chr17_45865623_45866903' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e2' x='183.56' y='119.38' width='0.25' height='89.13' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 45928895&amp;lt;br/&amp;gt;peak end: 45931081&amp;lt;br/&amp;gt;peak value: 1260.54' data-id='chr17_45928895_45931081' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e3' x='216.99' y='203.66' width='0.11' height='4.84' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46221620&amp;lt;br/&amp;gt;peak end: 46222547&amp;lt;br/&amp;gt;peak value: 68.5' data-id='chr17_46221620_46222547' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e4' x='217.49' y='158.31' width='0.65' height='50.19' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46226002&amp;lt;br/&amp;gt;peak end: 46231726&amp;lt;br/&amp;gt;peak value: 709.9' data-id='chr17_46226002_46231726' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e5' x='272.07' y='188.34' width='0.56' height='20.16' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46703895&amp;lt;br/&amp;gt;peak end: 46708778&amp;lt;br/&amp;gt;peak value: 285.14' data-id='chr17_46703895_46708778' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e6' x='272.7' y='178.03' width='0.42' height='30.47' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46709360&amp;lt;br/&amp;gt;peak end: 46713022&amp;lt;br/&amp;gt;peak value: 430.94' data-id='chr17_46709360_46713022' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e7' x='273.67' y='196.08' width='0.24' height='12.42' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46717897&amp;lt;br/&amp;gt;peak end: 46720021&amp;lt;br/&amp;gt;peak value: 175.71' data-id='chr17_46717897_46720021' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e8' x='282.3' y='50.04' width='0.48' height='158.46' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46793389&amp;lt;br/&amp;gt;peak end: 46797627&amp;lt;br/&amp;gt;peak value: 2241.17' data-id='chr17_46793389_46797627' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e9' x='283.09' y='171.3' width='0.46' height='37.2' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46800301&amp;lt;br/&amp;gt;peak end: 46804359&amp;lt;br/&amp;gt;peak value: 526.11' data-id='chr17_46800301_46804359' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e10' x='284.16' y='192.96' width='0.24' height='15.54' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46809711&amp;lt;br/&amp;gt;peak end: 46811827&amp;lt;br/&amp;gt;peak value: 219.77' data-id='chr17_46809711_46811827' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e11' x='284.87' y='195.46' width='0.2' height='13.05' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46815915&amp;lt;br/&amp;gt;peak end: 46817694&amp;lt;br/&amp;gt;peak value: 184.53' data-id='chr17_46815915_46817694' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e12' x='285.45' y='202.81' width='0.14' height='5.69' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46821038&amp;lt;br/&amp;gt;peak end: 46822288&amp;lt;br/&amp;gt;peak value: 80.45' data-id='chr17_46821038_46822288' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e13' x='285.79' y='37.92' width='0.62' height='170.58' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46824006&amp;lt;br/&amp;gt;peak end: 46829415&amp;lt;br/&amp;gt;peak value: 2412.54' data-id='chr17_46824006_46829415' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e14' x='286.5' y='202.91' width='0.36' height='5.59' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 46830216&amp;lt;br/&amp;gt;peak end: 46833351&amp;lt;br/&amp;gt;peak value: 79.06' data-id='chr17_46830216_46833351' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e15' x='313.52' y='23.32' width='1.81' height='185.18' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 47066791&amp;lt;br/&amp;gt;peak end: 47082661&amp;lt;br/&amp;gt;peak value: 2619.06' data-id='chr17_47066791_47082661' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e16' x='371.59' y='202.99' width='0.17' height='5.51' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 47575227&amp;lt;br/&amp;gt;peak end: 47576752&amp;lt;br/&amp;gt;peak value: 77.99' data-id='chr17_47575227_47576752' nearest='true'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e17' x='424.73' y='92.97' width='0.28' height='115.53' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 48040544&amp;lt;br/&amp;gt;peak end: 48043003&amp;lt;br/&amp;gt;peak value: 1634.02' data-id='chr17_48040544_48043003' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c3)'>\n   <rect x='48.92' y='213.98' width='628.16' height='185.18' fill='#FFFFFF' fill-opacity='1' stroke='none'/>\n   <rect id='svg_9120522b_d0e3_4145_88f7_a3a90ef68110_e18' x='184.45' y='213.98' width='0.15' height='185.18' fill='#000000' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='miter' stroke-linecap='butt' title='peak start: 45936686&amp;lt;br/&amp;gt;peak end: 45937970&amp;lt;br/&amp;gt;peak value: 82.75' data-id='chr18_45936686_45937970' nearest='true'/>\n  <\/g>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c4)'>\n   <rect x='677.08' y='23.32' width='37.44' height='185.18' fill='#FFFFFF' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='round'/>\n   <text transform='translate(681.46,119.56) rotate(-360.00)' font-size='7.5pt' font-family='DejaVu Sans' fill='#1A1A1A' fill-opacity='1'>chr17<\/text>\n  <\/g>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c5)'>\n   <rect x='677.08' y='213.98' width='37.44' height='185.18' fill='#FFFFFF' fill-opacity='1' stroke='#000000' stroke-opacity='1' stroke-width='2.13' stroke-linejoin='round' stroke-linecap='round'/>\n   <text transform='translate(681.46,310.22) rotate(-360.00)' font-size='7.5pt' font-family='DejaVu Sans' fill='#1A1A1A' fill-opacity='1'>chr18<\/text>\n  <\/g>\n  <g clip-path='url(#svg_9120522b_d0e3_4145_88f7_a3a90ef68110_c1)'>\n   <polyline points='48.92,399.16 677.08,399.16' fill='none' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='77.47,401.90 77.47,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='191.68,401.90 191.68,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='305.89,401.90 305.89,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='420.10,401.90 420.10,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='534.31,401.90 534.31,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='648.52,401.90 648.52,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='55.88' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>4.5e+07<\/text>\n   <text x='170.09' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>4.6e+07<\/text>\n   <text x='284.3' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>4.7e+07<\/text>\n   <text x='398.51' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>4.8e+07<\/text>\n   <text x='512.72' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>4.9e+07<\/text>\n   <text x='626.93' y='411.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>5.0e+07<\/text>\n   <polyline points='48.92,208.50 48.92,23.32' fill='none' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='37.62' y='212.15' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>0<\/text>\n   <text x='24.89' y='176.8' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>500<\/text>\n   <text x='18.53' y='141.44' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>1000<\/text>\n   <text x='18.53' y='106.09' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>1500<\/text>\n   <text x='18.53' y='70.74' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>2000<\/text>\n   <text x='18.53' y='35.39' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>2500<\/text>\n   <polyline points='46.18,208.50 48.92,208.50' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,173.15 48.92,173.15' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,137.80 48.92,137.80' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,102.44 48.92,102.44' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,67.09 48.92,67.09' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,31.74 48.92,31.74' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='48.92,399.16 48.92,213.98' fill='none' stroke='#000000' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='37.62' y='402.81' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>0<\/text>\n   <text x='31.26' y='358.05' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>20<\/text>\n   <text x='31.26' y='313.3' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>40<\/text>\n   <text x='31.26' y='268.54' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>60<\/text>\n   <text x='31.26' y='223.78' font-size='7.5pt' font-family='DejaVu Sans' fill='#4D4D4D' fill-opacity='1'>80<\/text>\n   <polyline points='46.18,399.16 48.92,399.16' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,354.41 48.92,354.41' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,309.65 48.92,309.65' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,264.89 48.92,264.89' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='46.18,220.14 48.92,220.14' fill='none' stroke='#333333' stroke-opacity='1' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='300.4' y='424.23' font-size='8.25pt' font-family='DejaVu Sans'>Chromosome Size (bp)<\/text>\n   <text x='48.92' y='15.1' font-size='9.9pt' font-family='DejaVu Sans'>ChIP Peaks over Chromosomes<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_9120522b_d0e3_4145_88f7_a3a90ef68110","ratio":1.666666666666667,"settings":{"tooltip":{"css":".tooltip_SVGID_ { background-color: white; border: 1px solid black; padding: 5px; border-radius: 3px; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","opacity":0.9,"offx":10,"offy":0,"use_cursor_pos":true,"use_fill":false,"use_stroke":false,"delay_over":200,"delay_out":500},"hover":{"css":".hover_data_SVGID_ { fill: orange; stroke: black; stroke-width: 2px; }","reactive":false,"nearest_distance":null},"hover_inv":{"css":".hover_inv_SVGID_ { opacity: 0.5; }"},"hover_key":{"css":".hover_key_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_key_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_key_SVGID_ { fill:orange;stroke:black; }\nline.hover_key_SVGID_, polyline.hover_key_SVGID_ { fill:none;stroke:orange; }\nrect.hover_key_SVGID_, polygon.hover_key_SVGID_, path.hover_key_SVGID_ { fill:orange;stroke:none; }\nimage.hover_key_SVGID_ { stroke:orange; }","reactive":true},"hover_theme":{"css":".hover_theme_SVGID_ { fill:orange;stroke:black;cursor:pointer; }\ntext.hover_theme_SVGID_ { stroke:none;fill:orange; }\ncircle.hover_theme_SVGID_ { fill:orange;stroke:black; }\nline.hover_theme_SVGID_, polyline.hover_theme_SVGID_ { fill:none;stroke:orange; }\nrect.hover_theme_SVGID_, polygon.hover_theme_SVGID_, path.hover_theme_SVGID_ { fill:orange;stroke:none; }\nimage.hover_theme_SVGID_ { stroke:orange; }","reactive":true},"select":{"css":".select_data_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_data_SVGID_ { stroke:none;fill:red; }\ncircle.select_data_SVGID_ { fill:red;stroke:black; }\nline.select_data_SVGID_, polyline.select_data_SVGID_ { fill:none;stroke:red; }\nrect.select_data_SVGID_, polygon.select_data_SVGID_, path.select_data_SVGID_ { fill:red;stroke:none; }\nimage.select_data_SVGID_ { stroke:red; }","type":"multiple","only_shiny":true,"selected":[]},"select_inv":{"css":""},"select_key":{"css":".select_key_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_key_SVGID_ { stroke:none;fill:red; }\ncircle.select_key_SVGID_ { fill:red;stroke:black; }\nline.select_key_SVGID_, polyline.select_key_SVGID_ { fill:none;stroke:red; }\nrect.select_key_SVGID_, polygon.select_key_SVGID_, path.select_key_SVGID_ { fill:red;stroke:none; }\nimage.select_key_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"select_theme":{"css":".select_theme_SVGID_ { fill:red;stroke:black;cursor:pointer; }\ntext.select_theme_SVGID_ { stroke:none;fill:red; }\ncircle.select_theme_SVGID_ { fill:red;stroke:black; }\nline.select_theme_SVGID_, polyline.select_theme_SVGID_ { fill:none;stroke:red; }\nrect.select_theme_SVGID_, polygon.select_theme_SVGID_, path.select_theme_SVGID_ { fill:red;stroke:none; }\nimage.select_theme_SVGID_ { stroke:red; }","type":"single","only_shiny":true,"selected":[]},"zoom":{"min":0.5,"max":5,"duration":300},"toolbar":{"position":"topright","pngname":"diagram","tooltips":null,"fixed":false,"hidden":[],"delay_over":200,"delay_out":500},"sizing":{"rescale":true,"width":1}}},"evals":[],"jsHooks":[]}</script>
+<p>Hierarchical clustering and co-accessibility relationships and will emerge in the process of analyzing the
+peak coverage of multiple samples. Here we provide function to plot the hierarchical clustering tree based on the input peak data.
+Co-accessibility is also supported to be visualized in the picture by showing the peak pairs with the highest positive correlation
+scores and the highest negative correlation scores.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Details of the dataset and pre-processing we used here can be found from xxxx</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co"># We only show usage here for demonstration</span></a>
+<a class="sourceLine" id="cb4-3" title="3">pancancer_atac &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;./data/pancancer_atac.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5">fill_color &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#a10589&quot;</span>, <span class="st">&quot;#fce364&quot;</span>, <span class="st">&quot;#854d23&quot;</span>, <span class="st">&quot;#c0b742&quot;</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">                <span class="st">&quot;#1c670d&quot;</span>, <span class="st">&quot;#3ec486&quot;</span>, <span class="st">&quot;#f7bbff&quot;</span>, <span class="st">&quot;#ee0700&quot;</span>,</a>
+<a class="sourceLine" id="cb4-7" title="7">                <span class="st">&quot;#172ec5&quot;</span>, <span class="st">&quot;#f56103&quot;</span>, <span class="st">&quot;#3f3a95&quot;</span>, <span class="st">&quot;#7a7875&quot;</span>,</a>
+<a class="sourceLine" id="cb4-8" title="8">                <span class="st">&quot;#e06cdc&quot;</span>, <span class="st">&quot;#7effff&quot;</span>, <span class="st">&quot;#f9b250&quot;</span>, <span class="st">&quot;#af1e18&quot;</span>,</a>
+<a class="sourceLine" id="cb4-9" title="9">                <span class="st">&quot;#997f69&quot;</span>, <span class="st">&quot;#9d82ed&quot;</span>, <span class="st">&quot;#40bcf5&quot;</span>, <span class="st">&quot;#f28582&quot;</span>,</a>
+<a class="sourceLine" id="cb4-10" title="10">                <span class="st">&quot;#97be8c&quot;</span>, <span class="st">&quot;#7b2ed0&quot;</span>, <span class="st">&quot;#81f75b&quot;</span>)</a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12">design &lt;-<span class="st"> &quot;AAAB</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="st">           AAAB</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="st">           AAAB</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="st">           CCC#&quot;</span></a>
+<a class="sourceLine" id="cb4-16" title="16"></a>
+<a class="sourceLine" id="cb4-17" title="17">atac_p &lt;-<span class="st"> </span><span class="kw">plotCov</span>(pancancer_atac, <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>, </a>
+<a class="sourceLine" id="cb4-18" title="18">                  <span class="dt">chrs =</span> <span class="st">&quot;chr8&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb4-19" title="19">                  <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">126712193</span>, <span class="dv">128412193</span>),</a>
+<a class="sourceLine" id="cb4-20" title="20">                  <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">fill_col =</span> fill_color,</a>
+<a class="sourceLine" id="cb4-21" title="21">                  <span class="dt">legend_position =</span> <span class="st">&#39;none&#39;</span>, <span class="dt">facet_var =</span> <span class="st">&quot;.id~.&quot;</span>,</a>
+<a class="sourceLine" id="cb4-22" title="22">                  <span class="dt">add_cluster_tree =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-23" title="23">                  <span class="dt">add_coaccess =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-24" title="24">                  <span class="dt">design =</span> design)</a></code></pre></div>
+<p><img src="fig/pancancer.png" /></p>
+<p>When <code>peak</code> is a <code>GRangsList</code> object, user can set the colors directly or by passing a palette to <code>fill_color</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">peaks &lt;-<span class="st"> </span><span class="kw">lapply</span>(files[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>], readPeakFile)</a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw">plotCov</span>(peaks, <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>, <span class="dt">fill_color =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;inside&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" title="5">        <span class="dt">legend.position.inside =</span> <span class="kw">c</span>(<span class="fl">0.8</span>,<span class="fl">0.2</span>))</a></code></pre></div>
+<p><img src="fig/multi_coverage.png" /></p>
+</div>
+<div id="profile-of-data-in-specific-regions" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.2</span> Profile of data in specific regions<a href="data-profiling.html#profile-of-data-in-specific-regions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First of all, for calculating the profile of data in specific region, we should align the data that are mapping to these regions,
+and generate the tagMatrix. Following parameters control what kinds of matrix can be derived.</p>
+<ol style="list-style-type: decimal">
+<li>Region parameters: two parameters to control which region to plot: (1) <code>by</code>: users can select one of gene,
+transcript, exon, intron, 3UTR, 5UTR, and UTR. This parameter control which type of region to be showed.</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li><code>type</code>: users can select one of start_site, end_site and body.
+This parameter controls the start site or end site or body region to be showed.</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>Mode parameters: users can use two modes to get the tagMatrix: (1) normal mode: each region of interest will be visualized by
+original resolution, which means one figure in the picture represents one base pairs in the genome.</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>binning mode: Users can input <code>nbin</code> parameter to turn on this mode, each region of interest will be visualized in a binning
+resolution, which means one point in the figure may represent several base pairs(e.g. 100 bp). Using this mode can speed up the function.
+The most important is that if users select the body region to visualize, binning mode is necessary to align all the body region.</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Extension parameters: we provides <code>upstream</code> and <code>downstream</code> parameters to extend the region of interest.
+If we want to visualize the gene region, start_site mode will return region of (TSS – upstream, TSS + downstream),
+end_site mode will return region of (TES –upstream, TES + downstream),
+and body mode will region region of (TSS – upstream, TES + downstream).
+If user select body mode, upstream and downstream parameters can also be a rel object(e.g. rel(0.2)),
+which means upstream and downstream parameter be length(region) * 0.2.</p></li>
+<li><p>Reference parameters: users can input <code>TxDb</code> object as reference.
+If users do not want to methods above to get the region of interest, users can provide a granges through windows parameters.</p></li>
+</ol>
+<p>Since tagMatrix has been derived, epiSeeker provide two functions to visualize it:
+(1) <code>plotPeakProfile()</code> function: visualize tagMatrix in a line graph.
+(2)<code>plotPeakHeatmap()</code> function: visualize the tagMatrix in a heatmap.
+We also provide <code>plot_prof</code> parameter in <code>plotPeakHeatmap()</code> that can plot the line graph and heatmap in a figure.</p>
+<p>There are two crucial mode in visualizing tagMatrix.
+(1) <code>missingDataAsZero</code>: this parameter determine how to treat the area that do not have signal.
+For example, users specific a region of 6,000 bp, but the peak only have a region of 200 bp, the rest region is the missing data.
+If <code>missingDataAsZero</code> is TRUE, then all the missing value will be set to 0.
+If this value is FALSE, then the missing value will be NULL, and will be filtered in the following visualization.
+(2) <code>statistic_method</code> : tagMatrix is a matrix that contains many regions of the same type, for example, all the TSS region.
+<code>statistic_method</code> parameter determine how to combine these regions in the figure.
+We use mean method as default, which means we will calculate the mean signal of each point.</p>
+<div id="profile-of-one-sample-of-one-reference-region" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.2.1</span> Profile of one sample of one reference region<a href="data-profiling.html#profile-of-one-sample-of-one-reference-region" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Here we show the usage of one sample. <code>by = "transcript"</code> means we visualize data in transcript region.
+<code>type = "start_site"</code> means plot the start site region, here is the transcript start site(TSS).
+<code>upstream = 3000, downstream = 3000</code> means the extension of start site, here is the region of (TSS - 3000 bp, TSS + 3000 bp).</p>
+<p><code>plotPeakHeatmap()</code> can be used to visualize the tagMatrix, with <code>plot_prof</code> can plot the heatmap and line graph in a single figure.
+<code>statistic_method = "mean"</code> means that this function aggregate multiple region by mean methods.
+<code>missingDataAsZero = TRUE</code> means that we treat missing data as zero that will not be filtered in the following analysis.
+<code>conf = 0.95, resample = 1000</code> means in the line plot using 95% confidence interval and resample 1000 times.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">tssTagMatrix &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peak, <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>, <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>,</a>
+<a class="sourceLine" id="cb6-2" title="2">                             <span class="dt">type =</span> <span class="st">&quot;start_site&quot;</span>, <span class="dt">by =</span> <span class="st">&quot;transcript&quot;</span>, <span class="dt">TxDb =</span> txdb)</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co"># plot_prof = FALSE will plot only heatmap</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">plotPeakHeatmap</span>(tssTagMatrix, <span class="dt">plot_prof =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-6" title="6">                <span class="dt">statistic_method =</span> <span class="st">&quot;mean&quot;</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">                <span class="dt">missingDataAsZero =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb6-8" title="8">                <span class="dt">conf =</span> <span class="fl">0.95</span>, <span class="dt">resample =</span> <span class="dv">1000</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/tssTagMatrix.png" /></p>
+</div>
+<p>If users want to plot line graph only, can use <code>plotPeakProf()</code> to plot.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">plotPeakProf</span>(tssTagMatrix, <span class="dt">conf =</span> <span class="fl">0.95</span>, <span class="dt">resample =</span> <span class="dv">1000</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/tssTagMatrix_prof.png" /></p>
+</div>
+<p>If users want to speed up function, users can use <code>nbin</code> parameter.
+Using binning mode <code>nbin = 1000</code> to plot TSS region of 6000 bp, this means a point in figure represents 6 bp in genomic.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">tssTagMatrix_nbin &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peak, <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>, </a>
+<a class="sourceLine" id="cb8-2" title="2">                                  <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>,</a>
+<a class="sourceLine" id="cb8-3" title="3">                                  <span class="dt">nbin =</span> <span class="dv">1000</span>, <span class="co"># set nbin paramter to turn on binning mode</span></a>
+<a class="sourceLine" id="cb8-4" title="4">                                  <span class="dt">type =</span> <span class="st">&quot;start_site&quot;</span>, <span class="dt">by =</span> <span class="st">&quot;transcript&quot;</span>, </a>
+<a class="sourceLine" id="cb8-5" title="5">                                  <span class="dt">TxDb =</span> txdb)</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw">plotPeakHeatmap</span>(tssTagMatrix_nbin, <span class="dt">plot_prof =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-8" title="8">                <span class="dt">statistic_method =</span> <span class="st">&quot;mean&quot;</span>,</a>
+<a class="sourceLine" id="cb8-9" title="9">                <span class="dt">missingDataAsZero =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb8-10" title="10">                <span class="dt">conf =</span> <span class="fl">0.95</span>, <span class="dt">resample =</span> <span class="dv">1000</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/tssTagMatrix_bin.png" /></p>
+</div>
+<p>Body region is an important region to be analyzed, users can select body region through <code>type</code> parameter.</p>
+<p>In this example, show the visualization of gene body region with actual number(3000 bp) extension.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">geneBodyTagMatrix &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peak, </a>
+<a class="sourceLine" id="cb9-2" title="2">                                  <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>, </a>
+<a class="sourceLine" id="cb9-3" title="3">                                  <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;body&quot;</span>, </a>
+<a class="sourceLine" id="cb9-4" title="4">                                  <span class="dt">by =</span> <span class="st">&quot;gene&quot;</span>, <span class="dt">TxDb =</span> txdb, <span class="dt">nbin =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">plotPeakHeatmap</span>(geneBodyTagMatrix, <span class="dt">conf =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/geneBodyTagMatrix.png" /></p>
+</div>
+<p>Extension can also be rel object, here rel(0.2), means the extension is 20% of each gene length.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">geneBodyTagMatrix_rel &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peak, </a>
+<a class="sourceLine" id="cb10-2" title="2">                                      <span class="dt">upstream =</span> <span class="kw">rel</span>(<span class="fl">0.2</span>), <span class="dt">downstream =</span> <span class="kw">rel</span>(<span class="fl">0.2</span>),</a>
+<a class="sourceLine" id="cb10-3" title="3">                                      <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;body&quot;</span>, </a>
+<a class="sourceLine" id="cb10-4" title="4">                                      <span class="dt">by =</span> <span class="st">&quot;gene&quot;</span>, <span class="dt">TxDb =</span> txdb, <span class="dt">nbin =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="kw">plotPeakHeatmap</span>(geneBodyTagMatrix_rel, <span class="dt">conf =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/geneBodyTagMatrix_rel.png" /></p>
+</div>
+</div>
+<div id="profile-of-one-sample-of-multiple-reference-regions" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.2.2</span> Profile of one sample of multiple reference regions<a href="data-profiling.html#profile-of-one-sample-of-multiple-reference-regions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Users can visualize data profile in different types of regions by providing multiple values to <code>by</code>.
+This example show the start site region of gene and intron.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">gene_intron_tssTagMatrix &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peak, </a>
+<a class="sourceLine" id="cb11-2" title="2">                                         <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>, </a>
+<a class="sourceLine" id="cb11-3" title="3">                                         <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>,</a>
+<a class="sourceLine" id="cb11-4" title="4">                                         <span class="dt">type =</span> <span class="st">&quot;start_site&quot;</span>, </a>
+<a class="sourceLine" id="cb11-5" title="5">                                         <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;gene&#39;</span>, <span class="st">&#39;intron&#39;</span>), <span class="dt">TxDb =</span> txdb)</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">plotPeakHeatmap</span>(gene_intron_tssTagMatrix, <span class="dt">conf =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/gene_intron_tssTagMatrix.png" /></p>
+</div>
+</div>
+<div id="profile-of-multiple-samples-of-one-reference-region" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.2.3</span> Profile of multiple samples of one reference region<a href="data-profiling.html#profile-of-multiple-samples-of-one-reference-region" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Users can input a <code>GrangeList</code> object to visualize multiple samples.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">tssTagMatrix_list &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> peaks, </a>
+<a class="sourceLine" id="cb12-2" title="2">                                  <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>,</a>
+<a class="sourceLine" id="cb12-3" title="3">                                  <span class="dt">type =</span> <span class="st">&quot;start_site&quot;</span>, <span class="dt">by =</span> <span class="st">&quot;transcript&quot;</span>, </a>
+<a class="sourceLine" id="cb12-4" title="4">                                  <span class="dt">TxDb =</span> txdb)</a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="kw">plotPeakHeatmap</span>(tssTagMatrix_list, <span class="dt">conf =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/tssTagMatrix_list.png" /></p>
+</div>
+</div>
+<div id="profile-of-multiple-samples-of-multiple-reference-regions" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.2.4</span> Profile of multiple samples of multiple reference regions<a href="data-profiling.html#profile-of-multiple-samples-of-multiple-reference-regions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Users can input a <code>GrangeList</code> object and different values to <code>by</code> parameter to profile multiple samples of multiple reference regions.
+<code>peak</code> parameter in getTagMatrix can not only recept <code>Grange/GrangeList</code> object but also bed file path.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">gene_intron_tssTagMatrix_list &lt;-<span class="st"> </span><span class="kw">getTagMatrix</span>(<span class="dt">peak =</span> files[<span class="dv">4</span><span class="op">:</span><span class="dv">5</span>], </a>
+<a class="sourceLine" id="cb13-2" title="2">                                              <span class="dt">upstream =</span> <span class="dv">3000</span>, <span class="dt">downstream =</span> <span class="dv">3000</span>, </a>
+<a class="sourceLine" id="cb13-3" title="3">                                              <span class="dt">weightCol =</span> <span class="st">&quot;V5&quot;</span>,</a>
+<a class="sourceLine" id="cb13-4" title="4">                                              <span class="dt">type =</span> <span class="st">&quot;start_site&quot;</span>, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&#39;gene&#39;</span>, <span class="st">&#39;intron&#39;</span>), <span class="dt">TxDb =</span> txdb)</a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="kw">plotPeakHeatmap</span>(gene_intron_tssTagMatrix_list, <span class="dt">conf =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div style="text-align: center;">
+<p><img src="fig/gene_intron_tssTagMatrix_list.png" /></p>
+</div>
+
+</div>
+</div>
+</div>
+<h3> References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references">
+<div id="ref-pemberton_genome-wide_2014">
+<p>Pemberton, Helen, Emma Anderton, Harshil Patel, Sharon Brookes, Hollie Chandler, Richard Palermo, Julie Stock, et al. 2014. “Genome-Wide Co-Localization of Polycomb Orthologs and Their Effects on Gene Expression in Human Fibroblasts.” <em>Genome Biology</em> 15 (2): R23. <a href="https://doi.org/10.1186/gb-2014-15-2-r23">https://doi.org/10.1186/gb-2014-15-2-r23</a>.</p>
+</div>
+<div id="ref-urbanucci_overexpression_2012">
+<p>Urbanucci, A, B Sahu, J Seppälä, A Larjo, L M Latonen, K K Waltering, T L J Tammela, et al. 2012. “Overexpression of Androgen Receptor Enhances the Binding of the Receptor to the Chromatin in Prostate Cancer.” <em>Oncogene</em> 31 (17): 2153–63. <a href="https://doi.org/10.1038/onc.2011.401">https://doi.org/10.1038/onc.2011.401</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualization-of-base-modification.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
