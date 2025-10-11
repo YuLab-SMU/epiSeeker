@@ -1,0 +1,100 @@
+# Data Mining with ChIP seq data deposited in GEO
+
+There are many ChIP seq data sets that have been published and deposited in GEO database. 
+We can compare our own dataset to those deposited in GEO to search for significant overlap data. 
+Significant overlap of ChIP seq data by different binding proteins may be used to infer cooperative regulation and 
+thus can be used to generate hypotheses.
+
+We collect about **17,000** bed files deposited in GEO, user can use `getGEOspecies` to get a summary based on speices.
+
+## GEO data collection
+
+```{r eval = FALSE}
+getGEOspecies() |> head()
+##                                               species Freq
+## 1                     Actinobacillus pleuropneumoniae    1
+## 2 Actinobacillus pleuropneumoniae serovar 3 str. JL03    1
+## 3                                       Aedes aegypti   11
+## 4                                            Anabaena    6
+## 5                                 Anolis carolinensis    7
+## 6                                   Anopheles gambiae    2
+```
+
+
+The summary can also based on genome version as illustrated below:
+
+```{r eval = FALSE}
+getGEOgenomeVersion() |> head()
+
+##                 organism genomeVersion Freq
+## 1    Anolis carolinensis       anoCar2    7
+## 2             Bos taurus       bosTau4    2
+## 3             Bos taurus       bosTau6   33
+## 4             Bos taurus       bosTau7    2
+## 5 Canis lupus familiaris       canFam3   10
+## 6 Caenorhabditis elegans          ce10  328
+```
+
+User can access the detail information by `getGEOInfo`, for each genome version.
+
+```{r eval = FALSE}
+hg19 <- getGEOInfo(genome="hg19", simplify=TRUE)
+head(hg19)
+
+##     series_id        gsm     organism
+## 111  GSE16256  GSM521889 Homo sapiens
+## 112  GSE16256  GSM521887 Homo sapiens
+## 113  GSE16256  GSM521883 Homo sapiens
+## 114  GSE16256 GSM1010966 Homo sapiens
+## 115  GSE16256  GSM896166 Homo sapiens
+## 116  GSE16256  GSM910577 Homo sapiens
+##                                                                                                       title
+## 111          Reference Epigenome: ChIP-Seq Analysis of H3K27me3 in IMR90 Cells; renlab.H3K27me3.IMR90-02.01
+## 112            Reference Epigenome: ChIP-Seq Analysis of H3K27ac in IMR90 Cells; renlab.H3K27ac.IMR90-03.01
+## 113            Reference Epigenome: ChIP-Seq Analysis of H3K14ac in IMR90 Cells; renlab.H3K14ac.IMR90-02.01
+## 114                      polyA RNA sequencing of STL003 Pancreas Cultured Cells; polyA-RNA-seq_STL003PA_r1a
+## 115          Reference Epigenome: ChIP-Seq Analysis of H4K8ac in hESC H1 Cells; renlab.H4K8ac.hESC.H1.01.01
+## 116 Reference Epigenome: ChIP-Seq Analysis of H3K4me1 in Human Spleen Tissue; renlab.H3K4me1.STL003SX.01.01
+##                                                                                                     supplementary_file
+## 111         ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521889/suppl/GSM521889_UCSD.IMR90.H3K27me3.SK05.bed.gz
+## 112          ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521887/suppl/GSM521887_UCSD.IMR90.H3K27ac.YL58.bed.gz
+## 113          ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM521nnn/GSM521883/suppl/GSM521883_UCSD.IMR90.H3K14ac.SK17.bed.gz
+## 114 ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM1010nnn/GSM1010966/suppl/GSM1010966_UCSD.Pancreas.mRNA-Seq.STL003.bed.gz
+## 115              ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM896nnn/GSM896166/suppl/GSM896166_UCSD.H1.H4K8ac.AY17.bed.gz
+## 116       ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM910nnn/GSM910577/suppl/GSM910577_UCSD.Spleen.H3K4me1.STL003.bed.gz
+##     genomeVersion pubmed_id
+## 111          hg19  19829295
+## 112          hg19  19829295
+## 113          hg19  19829295
+## 114          hg19  19829295
+## 115          hg19  19829295
+## 116          hg19  19829295
+```
+
+If _simplify_ is set to _FALSE_, extra information including _source\_name_, _extract\_protocol_, _description_, _data\_processing_ 
+and _submission\_date_ will be incorporated.
+
+## Download GEO ChIP data sets
+
+`r Biocpkg("ChIPseeker")` provide function `downloadGEObedFiles` to download all the bed files of a particular genome.
+
+```{r eval=FALSE}
+downloadGEObedFiles(genome="hg19", destDir="hg19")
+```
+
+Or a vector of GSM accession number by `downloadGSMbedFiles`.
+```{r eval=FALSE}
+gsm <- hg19$gsm[sample(nrow(hg19), 10)]
+downloadGSMbedFiles(gsm, destDir="hg19")
+```
+
+
+## Overlap significant testing
+
+After download the bed files from GEO, we can pass them to `enrichPeakOverlap` for testing the significant of overlap. 
+Parameter _targetPeak_ can be the folder, _e.g._ hg19, that containing bed files. `enrichPeakOverlap` will parse the folder and 
+compare all the bed files. It is possible to test the overlap with bed files that are mapping to different genome or 
+different genome versions, `enrichPeakOverlap` provide a parameter _chainFile_ that can pass a chain file and liftOver the _targetPeak_ 
+to the genome version consistent with _queryPeak_. Signifcant overlap can be use to generate hypothesis of cooperative regulation. 
+By mining the data deposited in GEO, we can identify some putative complex or interacted regulators in gene expression regulation or 
+chromsome remodelling for further validation.
