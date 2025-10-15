@@ -23,6 +23,8 @@ updateGenomicAnnotation <- function(peaks, genomicRegion, type, anno, sameStrand
 #' @importFrom GenomicFeatures threeUTRsByTranscript
 #' @importFrom GenomicFeatures fiveUTRsByTranscript
 #' @importFrom BiocGenerics unstrand
+#' @importFrom yulab.utils get_cache_element
+#' @importFrom yulab.utils update_cache_item
 #' @return character vector
 #' @author G Yu
 getGenomicAnnotation <- function(peaks,
@@ -50,8 +52,8 @@ getGenomicAnnotation <- function(peaks,
 
 
 
-    .epiSeekerEnv(TxDb)
-    epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
+    .epiSeekerEnv(TxDb, item = epiSeekerCache)
+    # epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
 
 
     annotation <- rep(NA, length(distance))
@@ -75,29 +77,44 @@ getGenomicAnnotation <- function(peaks,
     for (AP in genomicAnnotationPriority) {
         if (AP == "Intron") {
             ## Introns
-            intronList <- get_intronList(epiSeekerEnv)
+            # intronList <- get_intronList(epiSeekerEnv)
+            intronList <- get_intronList(item = epiSeekerCache)
             anno <- updateGenomicAnnotation(peaks, intronList, "Intron", anno, sameStrand=sameStrand)
         } else if (AP == "Exon") {
             ## Exons
-            exonList <- get_exonList(epiSeekerEnv)
+            # exonList <- get_exonList(epiSeekerEnv)
+            exonList <- get_exonList(item = epiSeekerCache)
             anno <- updateGenomicAnnotation(peaks, exonList, "Exon", anno, sameStrand=sameStrand)
         } else if (AP == "3UTR") {
             ## 3' UTR Exons
-            if ( exists("threeUTRList", envir=epiSeekerEnv, inherits=FALSE) ) {
-                threeUTRList <- get("threeUTRList", envir=epiSeekerEnv)
-            } else {
+            # if ( exists("threeUTRList", envir=epiSeekerEnv, inherits=FALSE) ) {
+            #     threeUTRList <- get("threeUTRList", envir=epiSeekerEnv)
+            # } else {
+            #     threeUTRList <- threeUTRsByTranscript(TxDb)
+            #     assign("threeUTRList", threeUTRList, envir=epiSeekerEnv)
+            # }
+            threeUTRList <- get_cache_element(item = epiSeekerCache, elements = "threeUTRList")
+            if(is.null(threeUTRList)){
                 threeUTRList <- threeUTRsByTranscript(TxDb)
-                assign("threeUTRList", threeUTRList, envir=epiSeekerEnv)
+                update_cache_item(item = epiSeekerCache, list("threeUTRList" = threeUTRList))
             }
+
             anno <- updateGenomicAnnotation(peaks, threeUTRList, "threeUTR", anno, sameStrand=sameStrand)
         } else if (AP == "5UTR") {
             ## 5' UTR Exons
-            if ( exists("fiveUTRList", envir=epiSeekerEnv, inherits=FALSE) ) {
-                fiveUTRList <- get("fiveUTRList", envir=epiSeekerEnv)
-            } else {
+            # if ( exists("fiveUTRList", envir=epiSeekerEnv, inherits=FALSE) ) {
+            #     fiveUTRList <- get("fiveUTRList", envir=epiSeekerEnv)
+            # } else {
+            #     fiveUTRList <- fiveUTRsByTranscript(TxDb)
+            #     assign("fiveUTRList", fiveUTRList, envir=epiSeekerEnv)
+            # }
+            fiveUTRList <- get_cache_element(item = epiSeekerCache, elements = "fiveUTRList")
+
+            if(is.null(fiveUTRList)){
                 fiveUTRList <- fiveUTRsByTranscript(TxDb)
-                assign("fiveUTRList", fiveUTRList, envir=epiSeekerEnv)
+                update_cache_item(item = epiSeekerCache, list("fiveUTRList" = fiveUTRList))
             }
+
             anno <- updateGenomicAnnotation(peaks, fiveUTRList, "fiveUTR", anno, sameStrand=sameStrand)
         } else if (AP == "Promoter") {
             annotation <- anno[["annotation"]]

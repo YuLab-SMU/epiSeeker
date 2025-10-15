@@ -73,3 +73,8 @@ NULL
 #' @import DSS
 #' @return data frame
 NULL
+
+
+#' Name of the epiSeeker cache environment (internal static variable)
+#' @format character vector 
+epiSeekerCache <- "epiSeekerEnv"

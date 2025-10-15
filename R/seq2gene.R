@@ -15,27 +15,41 @@
 #' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 #' gr <- readPeakFile(peakfile)[1:20]
 #' genes <- seq2gene(gr, tssRegion=c(-1000, 1000), flankDistance = 3000, TxDb) 
+#' @importFrom yulab.utils get_cache_element
+#' @importFrom yulab.utils update_cache_item
 #' @author Guangchuang Yu
 seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {
-    .epiSeekerEnv(TxDb)
-    epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
+    .epiSeekerEnv(TxDb, item = epiSeekerCache)
+    # epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
     
     ## Exons
-    if ( exists("exonList", envir=epiSeekerEnv, inherits=FALSE) ) {
-        exonList <- get("exonList", envir=epiSeekerEnv)
-    } else {
+    # if ( exists("exonList", envir=epiSeekerEnv, inherits=FALSE) ) {
+    #     exonList <- get("exonList", envir=epiSeekerEnv)
+    # } else {
+    #     exonList <- exonsBy(TxDb)
+    #     assign("exonList", exonList, envir=epiSeekerEnv)
+    # }
+    exonList <- get_cache_element(item = epiSeekerCache, elements = "exonList")
+    if(is.null(exonList)){
         exonList <- exonsBy(TxDb)
-        assign("exonList", exonList, envir=epiSeekerEnv)
+        update_cache_item(item = epiSeekerCache, list("exonList" = exonList))
     }
     exons <- getGenomicAnnotation.internal(seq, exonList, type = "Exon", sameStrand=sameStrand)
     
     ## Introns
-    if ( exists("intronList", envir=epiSeekerEnv, inherits=FALSE) ) {
-        intronList <- get("intronList", envir=epiSeekerEnv)
-    } else {
+    # if ( exists("intronList", envir=epiSeekerEnv, inherits=FALSE) ) {
+    #     intronList <- get("intronList", envir=epiSeekerEnv)
+    # } else {
+    #     intronList <- intronsByTranscript(TxDb)
+    #     assign("intronList", intronList, envir=epiSeekerEnv)
+    # }
+    intronList <- get_cache_element(item = epiSeekerCache, elements = "intronList")
+
+    if(is.null(intronList)){
         intronList <- intronsByTranscript(TxDb)
-        assign("intronList", intronList, envir=epiSeekerEnv)
+        update_cache_item(item = epiSeekerCache, list("intronList" = intronList))
     }
+
     introns <- getGenomicAnnotation.internal(seq, intronList, type="Intron", sameStrand=sameStrand)
     
     genes <- c(exons$gene, introns$gene)

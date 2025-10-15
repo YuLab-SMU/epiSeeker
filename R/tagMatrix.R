@@ -112,6 +112,7 @@ extend_gr <- function(regions, upstream, downstream, by, type){
 #' @param type one of "start_site", "end_site", "body".
 #' @return GRanges object
 #' @import IRanges GenomicRanges
+#' @importFrom yulab.utils get_cache_item
 #' @examples 
 #' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
@@ -140,20 +141,22 @@ getBioRegion <- function(TxDb = NULL,
     by <- match.arg(by, c('gene', 'transcript', 'exon', 'intron' , '3UTR' , '5UTR','UTR'))
   
     TxDb <- loadTxDb(TxDb)
-    .epiSeekerEnv(TxDb)
-    epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
+    .epiSeekerEnv(TxDb, item = epiSeekerCache)
+    # epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
     
     if(by == 'gene' || by == 'transcript'){
       regions <- getGene(TxDb, by)
     }
     
     if (by == "exon") {
-      exonList <- get_exonList(epiSeekerEnv)
+      # exonList <- get_exonList(epiSeekerEnv)
+      exonList <- get_exonList(item = epiSeekerCache)
       regions <-  unlist(exonList)
     }
     
     if (by == "intron") {
-      intronList <- get_intronList(epiSeekerEnv)
+      # intronList <- get_intronList(epiSeekerEnv)
+      intronList <- get_intronList(item = epiSeekerCache)
       regions <- unlist(intronList)
     }
     

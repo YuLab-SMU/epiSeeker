@@ -19,8 +19,11 @@
 #' enrichAnnoOverlap(peakfile, peakfile, txdb)
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver
+#' @importFrom yulab.utils get_cache_element
+#' @importFrom yulab.utils update_cache_item
 #' @author G Yu
 enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="BH", chainFile=NULL, distanceToTSS_cutoff=NULL) {
+
     TxDb <- loadTxDb(TxDb)
 
     query.anno <- annotateSeq(queryPeak, TxDb=TxDb,
@@ -49,13 +52,20 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
         target.anno <- lapply(target.anno, dropAnno, distanceToTSS_cutoff = distanceToTSS_cutoff)
     }
 
-    epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
-    if ( exists("Transcripts", envir=epiSeekerEnv, inherits=FALSE) ) {
-        features <- get("Transcripts", envir=epiSeekerEnv)
-    } else {
+    # epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
+    # if ( exists("Transcripts", envir=epiSeekerEnv, inherits=FALSE) ) {
+    #     features <- get("Transcripts", envir=epiSeekerEnv)
+    # } else {
+    #     features <- transcriptsBy(TxDb)
+    #     features <- unlist(features)
+    #     assign("Transcripts", features, envir=epiSeekerEnv)
+    # }
+
+    features <- get_cache_element(item = epiSeekerCache, elements = "Transcripts")
+    if(is.null(features)){
         features <- transcriptsBy(TxDb)
         features <- unlist(features)
-        assign("Transcripts", features, envir=epiSeekerEnv)
+        update_cache_item(item = epiSeekerCache, list("Transcripts" = features))
     }
 
     ol <- lapply(target.anno, function(i) unique(intersect(as.GRanges(query.anno)$geneId, as.GRanges(i)$geneId)))
