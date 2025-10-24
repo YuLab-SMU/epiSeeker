@@ -19,6 +19,7 @@
     # if there is no TXDB cached, write in cache
     if (is.null(cache_item$TXDB)) {
         update_cache_item(item = item, list(TXDB = TxDb))
+        cat(">> Using Genome:", get_env_genome(),"...\n")
         return(invisible(NULL))
     }
 
@@ -28,6 +29,8 @@
         rm_cache_item(item)           
         initial_cache_item(item)      
         update_cache_item(item, list(TXDB = TxDb))  
+        cat(">> Using Genome:", get_env_genome(),"...\n")
+        return(invisible(NULL))
     }
 
     # if exist TXDB
@@ -36,13 +39,16 @@
     m2 <- tryCatch(unlist(metadata(TxDb)),  error = function(e) NULL)
     if (!is.null(m1)) m1 <- m1[!is.na(m1)]
     if (!is.null(m2)) m2 <- m2[!is.na(m2)]
+    txdb_flag <- is.character(all.equal(TXDB, TxDb))
 
-    if (is.null(m1) || is.null(m2) || length(m1) != length(m2) || any(m1 != m2)) {
+    if (is.null(m1) || is.null(m2) || length(m1) != length(m2) || any(m1 != m2) || txdb_flag) {
         cat(">> Update txdb in cache...\n")
         rm_cache_item(item)           
         initial_cache_item(item)      
         update_cache_item(item, list(TXDB = TxDb))  
     }
+
+    cat(">> Using Genome:", get_env_genome(),"...\n")
 
     invisible(NULL)
 
@@ -1344,4 +1350,16 @@ create_regex_patterns_negative <- function(motif){
     return(TRUE)
   }
 
+}
+
+#' @importFrom yulab.utils get_cache_ite
+get_env_genome <- function(){
+
+    current_env <- get_cache_item(item = epiSeekerCache)
+
+    env_txdb <- current_env$TXDB
+    env_txdb_meta <- S4Vectors::metadata(env_txdb)
+    env_txdb_version <- env_txdb_meta[grep("Genome",env_txdb_meta[,1]),2]
+
+    return(env_txdb_version)
 }
