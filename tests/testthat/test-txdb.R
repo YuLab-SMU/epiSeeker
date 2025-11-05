@@ -21,7 +21,13 @@ test_that("txdb", {
     txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
     epiSeeker:::.epiSeekerEnv(txdb)
     expect_equal(epiSeeker:::IDType(txdb), "Entrez Gene ID")
-    expect_equal(epiSeeker:::TXID2EG("70455"), "uc002qsd.4/1")
-    expect_equal(epiSeeker:::TXID2EG("70455", geneIdOnly=TRUE), "1")
+
+    if(packageVersion("TxDb.Hsapiens.UCSC.hg19.knownGene") > "3.22"){
+        expect_equal(epiSeeker:::TXID2EG("70455"), "ENST00000487630.1_3/ENST00000487630.1_3")
+        expect_equal(epiSeeker:::TXID2EG("70455", geneIdOnly=TRUE), "ENST00000487630.1_3")
+    }else{
+        expect_equal(epiSeeker:::TXID2EG("70455"), "uc002qsd.4/1")
+        expect_equal(epiSeeker:::TXID2EG("70455", geneIdOnly=TRUE), "1")
+    }
 })
 
