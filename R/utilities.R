@@ -419,7 +419,7 @@ TXID2TXEG <- function(txid) {
   if (is.null(txid2geneid)) {
     txdb <- get_cache_element(item = epiSeekerCache, elements = "TXDB")
     txidinfo <- transcripts(txdb, columns = c("tx_id", "tx_name", "gene_id"))
-    idx <- which(sapply(txidinfo$gene_id, length) == 0)
+    idx <- which(vapply(txidinfo$gene_id, length, integer(1)) == 0)
     txidinfo[idx, ]$gene_id <- txidinfo[idx, ]$tx_name
     txid2geneid <- paste(
       mcols(txidinfo)[["tx_name"]],
@@ -461,7 +461,7 @@ TXID2EGID <- function(txid) {
   if (is.null(txid2geneid)) {
     txdb <- get_cache_element(item = epiSeekerCache, elements = "TXDB")
     txidinfo <- transcripts(txdb, columns = c("tx_id", "tx_name", "gene_id"))
-    idx <- which(sapply(txidinfo$gene_id, length) == 0)
+    idx <- which(vapply(txidinfo$gene_id, length, integer(1)) == 0)
     txidinfo[idx, ]$gene_id <- txidinfo[idx, ]$tx_name
     txid2geneid <- as.character(mcols(txidinfo)[["gene_id"]])
 
