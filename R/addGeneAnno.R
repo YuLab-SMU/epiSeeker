@@ -28,10 +28,10 @@ getGeneAnno <- function(annoDb, geneID, type, columns){
     i <- which(!is.na(kk))
     kk <- gsub("\\.\\d+$", "", kk)
     ann <- tryCatch(
-        suppressWarnings(select(annoDb,
-                                keys=unique(kk[i]),
-                                keytype=kt,
-                                columns=columns)),
+        select(annoDb,
+               keys=unique(kk[i]),
+               keytype=kt,
+               columns=columns),
         error = function(e) NULL)
 
     if (is.null(ann)) {

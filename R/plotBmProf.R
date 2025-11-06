@@ -550,31 +550,31 @@ plotBmProf.internal <- function(df,
                                                fill = motif,color = motif,
                                                tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
                                                data_id = coordinate),size = 1)+
-            suppressMessages(scale_y_continuous(breaks = c((-1)*value1_max, 
-                                                          (-0.5)*value1_max, 
-                                                          0, 
-                                                          (0.5)*value1_max, 
-                                                          value1_max),
-                                                labels = c(paste0("(3'->5') ", value1_max), 
-                                                          (0.5)*value1_max, 
-                                                          0, 
-                                                          (0.5)*value1_max, 
-                                                          paste0("(5'->3') ",value1_max))))
+            scale_y_continuous(breaks = c((-1)*value1_max, 
+                                          (-0.5)*value1_max, 
+                                          0, 
+                                          (0.5)*value1_max, 
+                                          value1_max),
+                               labels = c(paste0("(3'->5') ", value1_max), 
+                                          (0.5)*value1_max, 
+                                          0, 
+                                          (0.5)*value1_max, 
+                                          paste0("(5'->3') ",value1_max)))
     }else{
       p <- ggplot(df) +
         geom_col(mapping = aes(x=coordinate,y=value,fill=motif,color=motif))+
         labs(fill = legend_lab_motif) + guides(color = "none") +
         # coord_cartesian(ylim = c(-value1_max,value1_max)) +
-        suppressMessages(scale_y_continuous(breaks = c((-1)*value1_max, 
-                                                      (-0.5)*value1_max, 
-                                                      0, 
-                                                      (0.5)*value1_max, 
-                                                      value1_max),
-                                            labels = c(paste0("(3'->5') ", value1_max), 
-                                                      (0.5)*value1_max, 
-                                                      0, 
-                                                      (0.5)*value1_max, 
-                                                      paste0("(5'->3') ",value1_max))))
+        scale_y_continuous(breaks = c((-1)*value1_max, 
+                                      (-0.5)*value1_max, 
+                                      0, 
+                                      (0.5)*value1_max, 
+                                      value1_max),
+                           labels = c(paste0("(3'->5') ", value1_max), 
+                                      (0.5)*value1_max, 
+                                      0, 
+                                      (0.5)*value1_max, 
+                                      paste0("(5'->3') ",value1_max)))
     }
     
   }

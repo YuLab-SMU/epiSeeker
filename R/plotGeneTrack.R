@@ -48,7 +48,7 @@ plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
                    ranges = IRanges::IRanges(start = start_pos, end = end_pos))
     
     # Get genes related to region
-    all_genes <- suppressMessages(GenomicFeatures::genes(txdb))
+    all_genes <- GenomicFeatures::genes(txdb)
     gene_df <- data.frame(subsetByOverlaps(x = all_genes, ranges = win, type = "any"))
     gene_df$gene_id <- factor(gene_df$gene_id, levels = unique(gene_df$gene_id))
     

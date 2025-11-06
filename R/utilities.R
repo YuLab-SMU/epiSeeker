@@ -620,7 +620,7 @@ getGene <- function(TxDb, by = "gene") {
     features <- get_cache_element(item = epiSeekerCache, elements = "Genes")
 
     if (is.null(features)) {
-      features <- suppressMessages(genes(TxDb))
+      features <- genes(TxDb)
       update_cache_item(item = epiSeekerCache, list("Genes" = features))
     }
 
