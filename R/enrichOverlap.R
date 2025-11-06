@@ -244,8 +244,8 @@ shuffle <- function(peak.gr, TxDb) {
 #' @importFrom parallel detectCores
 enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle=1000, mc.cores=detectCores()-1, verbose=TRUE) {
     if (verbose) {
-        cat(">> permutation test of peak overlap...\t\t",
-            format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(">> permutation test of peak overlap...\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n")
     }
 
     idx <- sample(seq_len(length(target.gr)), nShuffle, replace=TRUE)

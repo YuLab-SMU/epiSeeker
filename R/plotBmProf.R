@@ -403,14 +403,14 @@ plotBmProf.internal <- function(df,
       df <- do.call("rbind", new_df)
     }
     
-    cat(">> plotting region from ",paste0(df_chr,":",xlim[1]),
-        " to ",paste0(df_chr,":",xlim[2]),"...\t",
-        format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
+    message(">> plotting region from ",paste0(df_chr,":",xlim[1]),
+            " to ",paste0(df_chr,":",xlim[2]),"...\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
 
   }else{
-    cat(">> plotting region from ",paste0(df_chr,":",coordinate[1]),
-        " to ",paste0(df_chr,":",coordinate[length(coordinate)]),"...\t",
-        format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
+    message(">> plotting region from ",paste0(df_chr,":",coordinate[1]),
+            " to ",paste0(df_chr,":",coordinate[length(coordinate)]),"...\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
   }
 
 

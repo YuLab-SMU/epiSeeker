@@ -75,7 +75,7 @@ getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){
     }
     sub_list <- motif_positions[motif_idx]
     if(length(sub_list) == 0){
-        cat("There is no motif match...")
+        message("There is no motif match...")
         return(NULL)
     }
 

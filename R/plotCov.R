@@ -263,7 +263,7 @@ plotCov <- function(peak, weightCol = NULL,
 
         if(is.null(coaccess_cor_threshold)){
             coaccess_cor_threshold <- 0.5
-            cat("using coaccess_cor_threshold of", coaccess_cor_threshold, "\n")
+            message("using coaccess_cor_threshold of", coaccess_cor_threshold, "\n")
         }
 
         high_cor_idx <- which(abs(peak_cor_matrix) > coaccess_cor_threshold & upper_tri, arr.ind = TRUE)

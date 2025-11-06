@@ -310,7 +310,7 @@ getGenomicVersion <- function(ucsc_release, data_processing, organism, supplemen
 #' @importFrom parallel detectCores
 batchGetGSMsuppFile <- function(gsm) {
     suppfiles <- mclapply(seq_along(gsm), function(i) {
-        cat("processing ", gsm[i], "\t",  i , " of ", length(gsm), "\n")
+        message("processing ", gsm[i], "\t",  i , " of ", length(gsm), "\n")
         tryCatch(getGSMsuppFile(gsm[i]), error=function(e) NULL)
     }, mc.cores=detectCores())
 

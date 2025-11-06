@@ -18,17 +18,17 @@
   # if there is no TXDB cached, write in cache
   if (is.null(cache_item$TXDB)) {
     update_cache_item(item = item, list(TXDB = TxDb))
-    cat(">> Using Genome:", get_env_genome(), "...\n")
+    message(">> Using Genome:", get_env_genome(), "...\n")
     return(invisible(NULL))
   }
 
   # force to update item
   if (force) {
-    cat(">> Force to update txdb in cache...\n")
+    message(">> Force to update txdb in cache...\n")
     rm_cache_item(item)
     initial_cache_item(item)
     update_cache_item(item, list(TXDB = TxDb))
-    cat(">> Using Genome:", get_env_genome(), "...\n")
+    message(">> Using Genome:", get_env_genome(), "...\n")
     return(invisible(NULL))
   }
 
@@ -51,13 +51,13 @@
       any(m1 != m2) ||
       txdb_flag
   ) {
-    cat(">> Update txdb in cache...\n")
+    message(">> Update txdb in cache...\n")
     rm_cache_item(item)
     initial_cache_item(item)
     update_cache_item(item, list(TXDB = TxDb))
   }
 
-  cat(">> Using Genome:", get_env_genome(), "...\n")
+  message(">> Using Genome:", get_env_genome(), "...\n")
 
   invisible(NULL)
 
@@ -305,7 +305,7 @@ getTagCiMatrix <- function(
       ncpus = ncpus
     )
   }
-  cat(
+  message(
     ">> Running bootstrapping for tag matrix...\t\t",
     format(Sys.time(), "%Y-%m-%d %X"),
     "\n"
@@ -574,7 +574,7 @@ loadPeak <- function(peak, verbose = FALSE) {
     peak.gr <- peak
   } else if (file.exists(peak)) {
     if (verbose) {
-      cat(
+      message(
         ">> loading peak file...\t\t\t\t",
         format(Sys.time(), "%Y-%m-%d %X"),
         "\n"
@@ -862,7 +862,7 @@ check_bin <- function(nbin, windows, verbose) {
 
   if (!is.null(nbin)) {
     if (verbose) {
-      cat(
+      message(
         ">> binning method is used...",
         format(Sys.time(), "%Y-%m-%d %X"),
         "\n",

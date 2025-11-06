@@ -250,7 +250,7 @@ getTagMatrix <- function(peak,
 
   if(is(peak, "list")){
       if(is.null(names(peak))){
-        cat("Automatically assign peaks name...\n")
+        message("Automatically assign peaks name...\n")
         peak_names <- paste0("peak ", seq_len(length(peak)))
       }else{
         peak_names <- names(peak)
@@ -421,8 +421,8 @@ getTagMatrix.internal <- function(peak,
 
 
   if (verbose) {
-    cat(">> preparing tag matrix for",type,"regions","by",by,"... ", 
-        format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = " ")
+    message(">> preparing tag matrix for",type,"regions","by",by,"... ", 
+            format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = " ")
   }
   
 
@@ -471,7 +471,7 @@ getTagMatrix.internal <- function(peak,
       }
   }
 
-  cat(">> done... ", format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
+  message(">> done... ", format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = "")
 
   return(result)
 }

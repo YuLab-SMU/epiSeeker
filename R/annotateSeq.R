@@ -114,8 +114,8 @@ annotateSeq <- function(peak,
     peakNum <- length(peak.gr)
 
     if (verbose)
-        cat(">> preparing features information...\t\t",
-            format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(">> preparing features information...\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
     if (is_GRanges_of_TxDb) {
         features <- TxDb
@@ -129,8 +129,8 @@ annotateSeq <- function(peak,
         }
     }
     if (verbose)
-        cat(">> identifying nearest features...\t\t",
-            format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(">> identifying nearest features...\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
     ## nearest features
     idx.dist <- getNearestFeatureIndicesAndDistances(peak.gr, features,
@@ -139,8 +139,8 @@ annotateSeq <- function(peak,
                                                      overlap=overlap)
 
     if (verbose)
-        cat(">> calculating distance from peak to TSS...\t",
-            format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(">> calculating distance from peak to TSS...\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n")
     ## distance
     distance <- idx.dist$distance
 
@@ -150,8 +150,8 @@ annotateSeq <- function(peak,
     ## annotation
     if (assignGenomicAnnotation == TRUE) {
         if (verbose)
-            cat(">> assigning genomic annotation...\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+            message(">> assigning genomic annotation...\t\t",
+                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
         anno <- getGenomicAnnotation(peak.gr, distance, tssRegion, TxDb, level, genomicAnnotationPriority, sameStrand=sameStrand)
         annotation <- anno[["annotation"]]
@@ -216,8 +216,8 @@ annotateSeq <- function(peak,
 
     if (!is.null(annoDb)) {
         if (verbose)
-            cat(">> adding gene annotation...\t\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+            message(">> adding gene annotation...\t\t\t",
+                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
         .idtype <- IDType(TxDb)
         if (length(.idtype) == 0 || is.na(.idtype) || is.null(.idtype)) {
             n <- length(peak.gr)
@@ -242,8 +242,8 @@ annotateSeq <- function(peak,
 
     if (addFlankGeneInfo == TRUE) {
         if (verbose)
-            cat(">> adding flank feature information from peaks...\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+            message(">> adding flank feature information from peaks...\t",
+                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
         flankInfo <- getAllFlankingGene(peak.gr, features, level, flankDistance)
 
@@ -262,15 +262,15 @@ annotateSeq <- function(peak,
 
     if (!is_GRanges_of_TxDb) {
         if(verbose)
-            cat(">> assigning chromosome lengths\t\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+            message(">> assigning chromosome lengths\t\t\t",
+                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
         peak.gr@seqinfo <- seqinfo(TxDb)[names(seqlengths(peak.gr))]
     }
 
     if(verbose)
-        cat(">> done...\t\t\t\t\t",
-            format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(">> done...\t\t\t\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
     if (assignGenomicAnnotation) {
         res <- new("csAnno",

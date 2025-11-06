@@ -99,7 +99,7 @@ plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
         }else if(flag_symbol == length(select_gene)){
             gene_df <- gene_df[gene_df$gene_symbol %in% select_gene,]
         }else{
-            cat("There is no gene selected. Show all genes by default...")
+            message("There is no gene selected. Show all genes by default...")
         }
 
     }
