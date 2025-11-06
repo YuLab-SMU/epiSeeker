@@ -1,5 +1,6 @@
-# epiSeeker 0.99.6
+# epiSeeker 0.99.7
 
++ update test for the changes of TxDb.Hsapiens.UCSC.hg19.knownGene (2025-11-06, Thu)
 + new cache mechanism from 'yulab.utils' (2025-10-15, Wed)
 + fixed R check (2025-10-05, Sun)
 + remove dependent of `Vennerable` package (2025-09-27, Sat)
