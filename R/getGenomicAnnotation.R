@@ -177,8 +177,8 @@ getGenomicAnnotation <- function(peaks,
     
     peF <- features[idx]
     dd <- ifelse(strand(peF) == "+",
-		 start(peaks) - end(peF),
-		 end(peaks) - start(peF))
+                 start(peaks) - end(peF),
+                 end(peaks) - start(peF))
     
     if (length(na.idx)) {
         dd2 <- numeric(length(idx) + length(na.idx))
@@ -189,7 +189,7 @@ getGenomicAnnotation <- function(peaks,
 
     dsd <- getOption("epiSeeker.downstreamDistance")
     if (is.null(dsd))
-	    dsd <- 3000 ## downstream 3k by default
+        dsd <- 3000 ## downstream 3k by default
 
     ## downstream within dsd
     if(dsd/1000<=1){
@@ -209,7 +209,7 @@ getGenomicAnnotation <- function(peaks,
                 }else{
                     lbs <- paste("Downstream (", i-1, "-", i, "kb)", sep="")
                 }
-		annotation[j] <- lbs
+                annotation[j] <- lbs
             }
         }
         

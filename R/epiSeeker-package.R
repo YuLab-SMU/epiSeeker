@@ -67,7 +67,7 @@ NULL
 #'   \item{meanMethy1}{Average methylation levels in two conditions}
 #'   \item{meanMethy2}{Average methylation levels in two conditions}
 #'   \item{diff.Methy}{The difference in the methylation levels between two conditions}
-#'   \item{areaStat}{	The sum of the test statistics of all CpG sites within the DMR}
+#'   \item{areaStat}{The sum of the test statistics of all CpG sites within the DMR}
 #' }
 #' @name Human_dmR
 #' @import DSS
