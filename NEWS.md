@@ -1,5 +1,7 @@
-# epiSeeker 0.99.7
+# epiSeeker 0.99.8
 
++ consistently use 'hg38' for demo with new demo file, a small subset derived from GSM6418464 (2025-11-07, Fri)
++ fixed Notes reported by `BiocCheck` and add 'GeneRegulation' to 'biocViews' (2025-11-07, Fri)
 + update test for the changes of TxDb.Hsapiens.UCSC.hg19.knownGene (2025-11-06, Thu)
 + new cache mechanism from 'yulab.utils' (2025-10-15, Wed)
 + fixed R check (2025-10-05, Sun)
