@@ -50,11 +50,10 @@
 #' @import GenomeInfoDb
 #' @importFrom methods new
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peak <- readPeakFile(peakfile)[1:10]
-#' peakAnno <- annotateSeq(peak, tssRegion=c(-3000, 3000), TxDb=txdb)
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' data(demo_peak)
+#' peakAnno <- annotateSeq(demo_peak, tssRegion=c(-3000, 3000), TxDb=txdb)
 #' peakAnno
 #' @seealso \code{\link{plotAnnoBar}} \code{\link{plotAnnoPie}} \code{\link{plotDistToTSS}}
 #' @export

@@ -114,8 +114,8 @@ extend_gr <- function(regions, upstream, downstream, by, type){
 #' @import IRanges GenomicRanges
 #' @importFrom yulab.utils get_cache_item
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 #' getBioRegion(txdb)
 #' @author Guangchuang Yu
 #' @export
@@ -201,7 +201,7 @@ getBioRegion <- function(TxDb = NULL,
 #' (2) use getTagMatrix() to call getPromoters()/getBioRegion(). 
 #' In this way users do not need to input 'windows' parameter but need to input 'TxDb' parameter. 
 #' 'TxDb' can accept a set of packages contained annotation of regions of 
-#' different genomes(e.g. TxDb.Hsapiens.UCSC.hg19.knownGene). 
+#' different genomes(e.g. TxDb.Hsapiens.UCSC.hg38.knownGene). 
 #' Users can get the regions of interest through specific functions. 
 #' These specific functions are built in getPromoters()/getBioRegion(). 
 #' 
@@ -227,12 +227,12 @@ getBioRegion <- function(TxDb = NULL,
 #' @param verbose print message or not
 #' @param ignore_strand ignore the strand information or not
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peak <- readPeakFile(getSampleFiles()[[4]])[1:50]
-#' tagMatrix <- getTagMatrix(peak, type = "start_site", by = "gene", 
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' data(demo_peak)
+#' tagMatrix <- getTagMatrix(demo_peak, type = "start_site", by = "gene", 
 #'                           upstream = 500, downstream = 500,
-#'                           TxDb = txdb, weightCol = "V5")
+#'                           TxDb = txdb, weightCol = "V7")
 #' @return tagMatrix
 #' @author G Yu
 #' @export

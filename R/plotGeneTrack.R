@@ -32,8 +32,8 @@
 #' @importFrom rlang sym
 #' @importFrom rlang check_installed
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 #' plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126713193)
 #' @export 
 plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",

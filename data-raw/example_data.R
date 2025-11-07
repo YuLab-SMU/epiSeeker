@@ -1,10 +1,23 @@
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+# library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+# txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+# peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+# peakAnno <- annotateSeq(peakfile, TxDb=txdb)
+
+# usethis::use_data(peakAnno, overwrite = TRUE, compress = "xz")
+
+
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+set.seed(929)
+# data from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6418464
+data <- readPeakFile("./GSM6418464_H441_FOXA2_Rep1.narrowPeak.bed.gz")
+demo_peak <- data[sample(length(data), 50)]
+peakAnno <- annotateSeq(demo_peak, TxDb=txdb)
+
+write.table(demo_peak, file = "./inst/extdata/demo_peak.txt", quote = FALSE, sep = "\t")
 
 usethis::use_data(peakAnno, overwrite = TRUE, compress = "xz")
-
+usethis::use_data(demo_peak, overwrite = TRUE, compress = "xz")
 
 library(RSQLite)
 library(TFBSTools)

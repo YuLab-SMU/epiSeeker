@@ -13,9 +13,9 @@
 #' @importFrom stats phyper
 #' @export
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
 #' enrichAnnoOverlap(peakfile, peakfile, txdb)
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver

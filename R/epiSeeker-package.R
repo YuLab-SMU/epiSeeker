@@ -31,6 +31,14 @@ NULL
 #' @return csAnno object
 NULL
 
+#' demo peak file
+#'
+#' Peak in Grange object. See data-raw/example_data.R
+#' @name demo_peak
+#' @return Grange object
+NULL
+
+
 #' Example data of a list of peak annotation
 #'
 #' A list of peak annotation result. See data-raw/example_data.R

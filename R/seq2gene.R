@@ -10,11 +10,10 @@
 #' @return gene vector
 #' @export
 #' @examples
-#' library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' TxDb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' gr <- readPeakFile(peakfile)[1:20]
-#' genes <- seq2gene(gr, tssRegion=c(-1000, 1000), flankDistance = 3000, TxDb) 
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' data(demo_peak)
+#' genes <- seq2gene(demo_peak, tssRegion=c(-1000, 1000), flankDistance = 3000, txdb) 
 #' @importFrom yulab.utils get_cache_element
 #' @importFrom yulab.utils update_cache_item
 #' @author Guangchuang Yu

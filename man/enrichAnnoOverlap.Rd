@@ -33,9 +33,9 @@ data.frame
 calcuate overlap significant of ChIP experiments based on their nearest gene annotation
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
 enrichAnnoOverlap(peakfile, peakfile, txdb)
 }
 \author{
