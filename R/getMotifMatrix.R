@@ -6,19 +6,15 @@
 #' @param by show the motif by name or ID.
 #' @importFrom BiocGenerics start
 #' @importFrom BiocGenerics end
-#' @importFrom BSgenome getSeq
 #' @importFrom GenomeInfoDb seqnames
 #' @importFrom rlang check_installed
 #' @return score matrix
 #' @examples 
-#' require(BSgenome.Dmelanogaster.UCSC.dm6)
+#' require(BSgenome.Hsapiens.UCSC.hg38)
 #' data(pwm_obj)
-#' ref_obj <- BSgenome.Dmelanogaster.UCSC.dm6
-#' region_gr <- GenomicRanges::GRanges(seqnames = "chr2R",
-#'                                     ranges = IRanges::IRanges(start = 18398309, 
-#'                                                               end = 18398450))
-#' motifMatrix <- getMotifMatrix(region = region_gr, 
-#'                               pwm = pwm_obj, ref_obj = ref_obj)
+#' motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
+#'                                                ranges = IRanges(start = 10525891, end = 10525991)), 
+#'                               pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
 #' 
 #' @export 
 getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){
@@ -49,7 +45,11 @@ getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){
     chr_name <- as.character(seqnames(region))
 
     # get seq base
-    regionSeqs <- getSeq(ref_obj, region)
+    rlang::check_installed('BSgenome', reason = 'For motif analysis.')
+
+    if (requireNamespace("BSgenome", quietly = TRUE)){
+        regionSeqs <- BSgenome::getSeq(ref_obj, region)
+    }
     names(regionSeqs) <- as.character(region)
 
     # get motif position

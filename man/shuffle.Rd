@@ -18,11 +18,11 @@ GRanges object
 shuffle the position of peak
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peak <- readPeakFile(peakfile)
-shuffle(peak, txdb)
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+p <- GRanges(seqnames=c("chr1", "chr3"),
+             ranges=IRanges(start=c(1, 100), end=c(50, 130)))
+shuffle(p, TxDb=txdb)
 }
 \author{
 G Yu

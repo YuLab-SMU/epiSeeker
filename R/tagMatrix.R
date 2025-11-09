@@ -421,7 +421,7 @@ getTagMatrix.internal <- function(peak,
 
 
   if (verbose) {
-    message(">> preparing tag matrix for",type,"regions","by",by,"... ", 
+    message(">> preparing tag matrix for ",type," regions by ",by,"... ", 
             format(Sys.time(), "%Y-%m-%d %X"), "\n",sep = " ")
   }
   

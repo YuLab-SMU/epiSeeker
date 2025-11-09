@@ -81,14 +81,13 @@ setGeneric("plotAnnoPie",
 #' @rdname getBmMatrix-methods
 #' @importFrom methods setGeneric
 #' @examples 
-#' data(Human_BSobj)
-#' require(BSgenome.Hsapiens.UCSC.hg19)
-#' BSgenome_hg19 <- BSgenome.Hsapiens.UCSC.hg19
-#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr1", start = 894849, end = 895849),
-#'                         BSgenome = BSgenome_hg19,
-#'                         input = Human_BSobj[,c(1)],
+#' require(BSgenome.Hsapiens.UCSC.hg38)
+#' data(demo_bmdata)
+#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+#'                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+#'                         input = demo_bmdata,
 #'                         base = "C",
-#'                         motif = c("CG","CHH","CHG"))
+#'                         motif = c("CG"))
 #' @export
 setGeneric("getBmMatrix",
            function(region,

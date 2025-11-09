@@ -33,7 +33,8 @@ Biocannopkg <- yulab.utils::Biocpkg
 ```{r echo=FALSE, results='hide', message=FALSE}
 library(GenomicFeatures)
 library(GenomicRanges)
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+library(BSgenome.Hsapiens.UCSC.hg38)
 library(org.Hs.eg.db)
 library(ggplot2)
 library(clusterProfiler)
@@ -97,16 +98,7 @@ such as Oxford Nanopore Sequencing and PacBio SMRT Sequencing.
 
 ```{r}
 ## loading packages
-library(epiSeeker)
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-library(clusterProfiler)
-library(BSgenome.Hsapiens.UCSC.hg19)
-BSgenome_hg19 <- BSgenome.Hsapiens.UCSC.hg19
-library(BSgenome.Dmelanogaster.UCSC.dm6)
-library(JASPAR2024)
-library(TFBSTools)
-library(RSQLite)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 data(peakAnnoList)
 # peakAnnoList <- lapply(files, annotateSeq, TxDb=txdb,
 #                        tssRegion=c(-3000, 3000), verbose=FALSE)
@@ -192,7 +184,7 @@ The most important is that if users select the body region to visualize, binning
 
 3. Extension parameters: we provides `upstream` and `downstream` parameters to extend the region of interest. 
 If we want to visualize the gene region, start_site mode will return region of (TSS – upstream, TSS + downstream), 
-end_site mode will return region of (TES –upstream, TES + downstream), 
+end_site mode will return region of (TES – upstream, TES + downstream), 
 and body mode will region region of (TSS – upstream, TES + downstream). 
 If user select body mode, upstream and downstream parameters can also be a rel object(e.g. rel(0.2)), 
 which means upstream and downstream parameter be length(region) * 0.2.
@@ -252,120 +244,8 @@ plotPeakProf(tssTagMatrix, conf = 0.95, resample = 1000)
 </div>
 
 
-If users want to speed up function, users can use `nbin` parameter. 
-Using binning mode `nbin = 1000` to plot TSS region of 6000 bp, this means a point in figure represents 6 bp in genomic.
-```{r eval=FALSE}
-tssTagMatrix_nbin <- getTagMatrix(peak = peak, upstream = 3000, downstream = 3000, 
-                                  weightCol = "V5",
-                                  nbin = 1000, # set nbin paramter to turn on binning mode
-                                  type = "start_site", by = "transcript", 
-                                  TxDb = txdb)
-
-plotPeakHeatmap(tssTagMatrix_nbin, plot_prof = TRUE,
-                statistic_method = "mean",
-                missingDataAsZero = TRUE, 
-                conf = 0.95, resample = 1000)
-```
-
-<div style="text-align: center;">
-  ![](figures/tssTagMatrix_bin.png)
-</div>
-
-Body region is an important region to be analyzed, users can select body region through `type` parameter.
-
-In this example, show the visualization of gene body region with actual number(3000 bp) extension.
-```{r eval=FALSE}
-geneBodyTagMatrix <- getTagMatrix(peak = peak, 
-                                  upstream = 3000, downstream = 3000, 
-                                  weightCol = "V5", type = "body", 
-                                  by = "gene", TxDb = txdb, nbin = 1000)
-
-plotPeakHeatmap(geneBodyTagMatrix, conf = 0.95)
-```
-
-<div style="text-align: center;">
-![](figures/geneBodyTagMatrix.png)
-</div>
-
-
-Extension can also be rel object, here rel(0.2), means the extension is 20% of each gene length.
-```{r eval=FALSE}
-geneBodyTagMatrix_rel <- getTagMatrix(peak = peak, 
-                                      upstream = rel(0.2), downstream = rel(0.2),
-                                      weightCol = "V5", type = "body", 
-                                      by = "gene", TxDb = txdb, nbin = 1000)
-
-plotPeakHeatmap(geneBodyTagMatrix_rel, conf = 0.95)
-```
-
-<div style="text-align: center;">
-![](figures/geneBodyTagMatrix_rel.png)
-</div>
-
-
-### Profile of one sample of multiple reference regions
-
-Users can visualize data profile in different types of regions by providing multiple values to `by`. 
-This example show the start site region of gene and intron. 
-
-```{r eval=FALSE}
-gene_intron_tssTagMatrix <- getTagMatrix(peak = peak, 
-                                         upstream = 3000, downstream = 3000, 
-                                         weightCol = "V5",
-                                         type = "start_site", 
-                                         by = c('gene', 'intron'), TxDb = txdb)
-
-plotPeakHeatmap(gene_intron_tssTagMatrix, conf = 0.95)
-```
-
-<div style="text-align: center;">
-![](figures/gene_intron_tssTagMatrix.png)
-</div>
-
-
-### Profile of multiple samples of one reference region
-
-Users can input a `GrangeList` object to visualize multiple samples.
-
-```{r eval=FALSE}
-tssTagMatrix_list <- getTagMatrix(peak = peaks, 
-                                  upstream = 3000, downstream = 3000,
-                                  type = "start_site", by = "transcript", 
-                                  TxDb = txdb)
-
-plotPeakHeatmap(tssTagMatrix_list, conf = 0.95)
-```
-
-<div style="text-align: center;">
-![](figures/tssTagMatrix_list.png)
-</div>
-
-
-
-### Profile of multiple samples of multiple reference regions
-
-Users can input a `GrangeList` object and different values to `by` parameter to profile multiple samples of multiple reference regions.
-`peak` parameter in getTagMatrix can not only recept `Grange/GrangeList` object but also bed file path.
-
-```{r eval=FALSE}
-gene_intron_tssTagMatrix_list <- getTagMatrix(peak = files[4:5], 
-                                              upstream = 3000, downstream = 3000, 
-                                              weightCol = "V5",
-                                              type = "start_site", by = c('gene', 'intron'), TxDb = txdb)
-plotPeakHeatmap(gene_intron_tssTagMatrix_list, conf = 0.95)
-```
-
-<div style="text-align: center;">
-![](figures/gene_intron_tssTagMatrix_list.png)
-</div>
-
-
 # Visualization of base modification
-The datasets of base modification in  this vignettes were downloaded from _GEO (GSE52140)_[@hascher2014dna]. 
-This dataset is genome-wide methylation of lung cancer cell lines A549(A) through RRBS-Seq. 
-Two conditions of A549 cells have been tested: (1) 0R: normal cell lines, (2) 3R: three rounds of in vivo selection towards a highly metastatic phenotype.
-We use the cell in the day0(d0) to find the differntially methylated regions between A0R_d0 and A3R_d0.
-
+The datasets of base modification in  this vignettes were downloaded from _GEO (GSE223153)_[@nipper2024tgfbeta]. 
 epiSeeker provide `getBmMatrix()` and `plotBmProf()` function to visualize the base modification.
 `getBmMatrix()` accept folloing necessary parameters: (1) `region`: region of interset in the format of data frame.
 (2) `BSgenome`: sequence reference object. (3) `input`: `BSseq` object or `bmData` object. 
@@ -374,16 +254,12 @@ epiSeeker provide `getBmMatrix()` and `plotBmProf()` function to visualize the b
 
 ```{r fig.height=10, fig.width=15, fig.align="center"}
 
-data(Human_BSobj)
-data(Human_dmR)
-
-# select a differntially(0R vs 3R) methylated regions to visualize
-# Human_BSobj[,c(1,2)] is a subset samples of A0R_d0_rep1 and A3R_d0_rep1
-bmMatrix <- getBmMatrix(region = data.frame(chr = "chr1", start = 894849, end = 895464),
-                        BSgenome = BSgenome_hg19,
-                        input = Human_BSobj[,c(1,3)],
+data(demo_bmdata)
+bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+                        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+                        input = demo_bmdata,
                         base = "C",
-                        motif = c("CG","CHH","CHG"))
+                        motif = c("CG"))
 
 # Interactive function is also supported by interactive parameter
 plotBmProf(bmMatrix, interactive = TRUE)
@@ -407,23 +283,20 @@ Users should input a `Granges` object to `region` to specify the region.
 Sequence reference and motif reference are also necessary.
 
 ```{r fig.height=5, fig.width=10, fig.align="center"}
-
-# sequence reference for Drosophila
-ref_obj <- BSgenome.Dmelanogaster.UCSC.dm6
-
 # motif reference of position-specific weight matrix
 # opts_base <- list()
 # opts_base[["collection"]] <- "CORE"
 # opts_base[["all_versions"]] <- FALSE
-# opts_base[["species"]] <- "Drosophila melanogaster"
-# opts_base[["tax_group"]] <- "insects"
-# sq24 <- RSQLite::dbConnect(RSQLite::SQLite(), db(JASPAR2024()))
-# pwm_obj <- getMatrixSet(sq24, opts_base)
+# opts_human <- opts_base
+# opts_human[["species"]] <- "Homo sapiens"
+# opts_human[["tax_group"]] <- "vertebrates"
+# sq24 <- RSQLite::dbConnect(RSQLite::SQLite(), JASPAR2024::db(JASPAR2024::JASPAR2024()))
+# pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_human)
 
 data(pwm_obj)
-motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr2R",
-                                               ranges = IRanges(start = 18398309, end = 18398450)), 
-                              pwm = pwm_obj, ref_obj = ref_obj)
+motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
+                                               ranges = IRanges(start = 10525991, end = 10526342)), 
+                              pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
 
 # Interactive function is also supported by interactive parameter
 plotMotifProf(motifMatrix, interactive = TRUE)                     
@@ -506,12 +379,6 @@ Since some annotation overlap, user may interested to view the full annotation w
 which can be partially resolved by `vennpie` function.
 ```{r fig.cap="Genomic Annotation by barplot", fig.align="center", fig.height=4, fig.width=10}
 plotAnnoBar(peakAnno)
-```
-
-We extend `r CRANpkg("UpSetR")` to view full annotation overlap. User can user `upsetplot` function.
-
-```{r fig.cap="Genomic Annotation by upsetplot", fig.align="center", fig.height=8, fig.width=12}
-upsetplot(peakAnno, vennpie=TRUE)
 ```
 
 ## Visualize distribution of TF-binding loci relative to TSS

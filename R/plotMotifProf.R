@@ -11,24 +11,15 @@
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 geom_col
 #' @importFrom ggplot2 labs
-#' @importFrom ggiraph geom_line_interactive
-#' @importFrom ggiraph girafe
-#' @importFrom ggiraph opts_hover
-#' @importFrom ggiraph opts_hover_inv
-#' @importFrom ggiraph opts_tooltip
-#' @importFrom ggiraph opts_zoom
 #' @importFrom dplyr ungroup
 #' @return ggplot object
 #' @examples 
-#' require(BSgenome.Dmelanogaster.UCSC.dm6)
+#' require(BSgenome.Hsapiens.UCSC.hg38)
 #' data(pwm_obj)
-#' ref_obj <- BSgenome.Dmelanogaster.UCSC.dm6
-#' region_gr <- GenomicRanges::GRanges(seqnames = "chr2R",
-#'                                     ranges = IRanges::IRanges(start = 18398309, 
-#'                                                               end = 18398450))
-#' motifMatrix <- getMotifMatrix(region = region_gr, 
-#'                               pwm = pwm_obj, ref_obj = ref_obj)
-#  plotMotifProf(motifMatrix)
+#' motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
+#'                                                ranges = IRanges(start = 10525891, end = 10525991)), 
+#'                               pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+#' plotMotifProf(motifMatrix)
 #' @export 
 plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score", 
                           x_lab = NULL, interactive = FALSE, width_svg = 10, height_svg = 6){
@@ -55,32 +46,36 @@ plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score",
                                    motif_score = unique(score)     ) %>%
                             ungroup()
 
-        p <- ggplot(df_interactive, mapping = aes(x = coordinate, y = score, color = motif, data_id = motif,
-                                      tooltip = paste0("Motif: ", motif, "\n",
-                                                       "chr: ", motif_chr, "\n",
-                                                       "strand: ", motif_strand, "\n",
-                                                       "start: ", motif_start, "\n",
-                                                       "end: ", motif_end, "\n",
-                                                       "score: ", round(score, 3))
-                    )) +
-                geom_line_interactive(size = 1) +
-                geom_hline(yintercept = 0, color = "black", linewidth = 1) +
-                labs(color = legend_lab, y = y_lab, x = x_lab) + 
-                coord_cartesian(xlim = c(x_min, x_max), ylim = c(-score_max, score_max)) +
-                scale_x_continuous(breaks = round(as.numeric(stats::quantile(seq(x_min, x_max), c(0,0.25,0.5,0.75,1)))),
-                                labels = round(as.numeric(stats::quantile(seq(x_min, x_max), c(0,0.25,0.5,0.75,1))))) +
-                scale_y_continuous(breaks = round(c(score_max * (-1), score_max * (-0.5), 0, score_max * 0.5, score_max)),
-                                labels = round(c(score_max * (-1), score_max * (-0.5), 0, score_max * 0.5, score_max)))+ 
-                theme_classic() +
-                theme(panel.grid.minor = element_blank(),
-                    axis.line.x = element_line(colour = "black"))
+        rlang::check_installed('ggiraph', reason = 'For interactive plot.')
 
-        p <- girafe(ggobj = p, width_svg = width_svg,  height_svg = height_svg,
-                    options = list(opts_hover(css = "stroke: orange; stroke-width: 2px; cursor: pointer;"),
-                                   opts_hover_inv(css = "opacity: 0.5;"),
-                                   opts_zoom(min = .5, max = 5),
-                                   opts_tooltip(css = "background-color: white; border: 1px solid #333; padding: 8px; border-radius: 4px; font-size: 12px;"
-                )))
+        if (requireNamespace("ggiraph", quietly = TRUE)){
+            p <- ggplot(df_interactive, mapping = aes(x = coordinate, y = score, color = motif, data_id = motif,
+                                        tooltip = paste0("Motif: ", motif, "\n",
+                                                        "chr: ", motif_chr, "\n",
+                                                        "strand: ", motif_strand, "\n",
+                                                        "start: ", motif_start, "\n",
+                                                        "end: ", motif_end, "\n",
+                                                        "score: ", round(score, 3))
+                        )) +
+                    ggiraph::geom_line_interactive(size = 1) +
+                    geom_hline(yintercept = 0, color = "black", linewidth = 1) +
+                    labs(color = legend_lab, y = y_lab, x = x_lab) + 
+                    coord_cartesian(xlim = c(x_min, x_max), ylim = c(-score_max, score_max)) +
+                    scale_x_continuous(breaks = round(as.numeric(stats::quantile(seq(x_min, x_max), c(0,0.25,0.5,0.75,1)))),
+                                    labels = round(as.numeric(stats::quantile(seq(x_min, x_max), c(0,0.25,0.5,0.75,1))))) +
+                    scale_y_continuous(breaks = round(c(score_max * (-1), score_max * (-0.5), 0, score_max * 0.5, score_max)),
+                                    labels = round(c(score_max * (-1), score_max * (-0.5), 0, score_max * 0.5, score_max)))+ 
+                    theme_classic() +
+                    theme(panel.grid.minor = element_blank(),
+                          axis.line.x = element_line(colour = "black"))
+
+            p <- ggiraph::girafe(ggobj = p, width_svg = width_svg,  height_svg = height_svg,
+                                 options = list(ggiraph::opts_hover(css = "stroke: orange; stroke-width: 2px; cursor: pointer;"),
+                                                ggiraph::opts_hover_inv(css = "opacity: 0.5;"),
+                                                ggiraph::opts_zoom(min = .5, max = 5),
+                                                ggiraph::opts_tooltip(css = "background-color: white; border: 1px solid #333; padding: 8px; border-radius: 4px; font-size: 12px;"
+                    )))
+        }
 
 
     }else{

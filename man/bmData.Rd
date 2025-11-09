@@ -39,12 +39,5 @@ bmData object
 This is constructor fo bmData objects.
 }
 \examples{
-data(Human_BSobj)
-tmp <- Human_BSobj[1:10,1]
-tmp_gr <- as.data.frame(SummarizedExperiment::rowRanges(tmp))
-bmData(value1 = SummarizedExperiment::assay(tmp, "M"),
-       value2 = SummarizedExperiment::assay(tmp, "Cov"),
-       pos = tmp_gr$start,
-       chr = tmp_gr$seqnames)
-
+data(demo_bmdata)
 }

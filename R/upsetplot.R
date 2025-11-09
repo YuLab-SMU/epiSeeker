@@ -1,4 +1,3 @@
-#' @importFrom UpSetR upset
 #' @importFrom grid viewport
 #' @importFrom grid pushViewport
 #' @importFrom grid popViewport
@@ -31,39 +30,4 @@ upsetplot.csAnno <- function(x, order_by = "freq", vennpie=FALSE, vp = list(x=.6
     ggplotify::as.ggplot(g) +
         ggimage::geom_subview(subview = p, x = vp$x, y = vp$y, width = vp$width, height = vp$height)
 
-
-    ## y[y] <- 1
-    ## y <- as.data.frame(y)
-    ## ## cn <- colnames(y)
-    ## ## cn[cn == "fiveUTR"] <- "5 UTR"
-    ## ## cn[cn == "threeUTR"] <- "3 UTR"
-    ## ## colnames(y) <- cn
-
-    ## if (is.null(sets)) {
-    ##     sets <- c("distal_intergenic", "downstream",
-    ##               "threeUTR", "fiveUTR", "Intron",
-    ##               "Exon", "Promoter")
-    ##     if (vennpie && is.null(sets.bar.color)) {
-    ##         sets.bar.color <- c("#d95f0e", "#fee0d2", "#98D277",
-    ##                             "#6F9E4C", "#fc9272", "#9ecae1", "#ffeda0")
-    ##     }
-    ## }
-
-    ## if (is.null(sets.bar.color)) {
-    ##     sets.bar.color <- "black"
-    ## }
-
-    ## if (vennpie) {
-    ##     plot.new()
-    ##     # grid.rect(gp = gpar(fill="white"))
-    ##     upset(y, sets=sets, sets.bar.color=sets.bar.color,
-    ##           order.by = order.by, ...)
-    ##     pushViewport(vp)
-    ##     ##par(plt=gridPLT(), new=TRUE)
-    ##     vennpie(x)
-    ##     popViewport()
-    ## } else {
-    ##     upset(y, sets=sets,sets.bar.color=sets.bar.color,
-    ##           order.by = order.by, ...)
-    ## }
 }

@@ -296,7 +296,6 @@ makeBmDataFromFiles <- function(name,
 
 #' @importFrom GenomicRanges mcols
 #' @importFrom GenomicRanges GRangesList
-#' @importFrom data.table fread
 #' @importFrom utils getFromNamespace
 makeBmDataFromFiles.folder <- function(name, variablesNames){
 
@@ -343,7 +342,13 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
   data_list <- lapply(list.files(name),function(x){
 
     cat(">> reading",x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-    tmp <- fread(file.path(name,x))
+
+    rlang::check_installed('data.table', reason = 'For reading data.')
+
+    if (requireNamespace("data.table", quietly = TRUE)){
+      tmp <- data.table::fread(file.path(name,x))
+    }
+    
 
     if(is.null(variablesNames)){
       n0 <- ncol(tmp)-2
@@ -360,17 +365,12 @@ makeBmDataFromFiles.folder <- function(name, variablesNames){
 
 
 #' @importFrom GenomicRanges mcols
-#' @importFrom data.table fread
 makeBmDataFromFiles.file <- function(name, variablesNames){
 
   if(is.null(variablesNames)){
     cat(">> no variable name is assigned,default names will be assigned",
         format(Sys.time(), "%Y-%m-%d %X"), "\n")
   }
-
-
-
-
 
   if(isBedFile(name)){
 
@@ -389,7 +389,12 @@ makeBmDataFromFiles.file <- function(name, variablesNames){
   }
 
   cat(">> reading",name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-  data <- fread(name)
+
+  rlang::check_installed('data.table', reason = 'For reading data.')
+
+  if (requireNamespace("data.table", quietly = TRUE)){
+    data <- data.table::fread(name)
+  }
 
   if(is.null(variablesNames)){
     n0 <- ncol(data)-2

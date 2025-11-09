@@ -10,10 +10,8 @@
 #' @return gene vector
 #' @export
 #' @examples
-#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#' data(demo_peak)
-#' genes <- seq2gene(demo_peak, tssRegion=c(-1000, 1000), flankDistance = 3000, txdb) 
+#' data(seq2gene_result)
+#' seq2gene_result
 #' @importFrom yulab.utils get_cache_element
 #' @importFrom yulab.utils update_cache_item
 #' @author Guangchuang Yu

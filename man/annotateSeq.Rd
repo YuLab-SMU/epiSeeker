@@ -92,10 +92,7 @@ GENENAME: full gene name
 Annotate peaks
 }
 \examples{
-require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-data(demo_peak)
-peakAnno <- annotateSeq(demo_peak, tssRegion=c(-3000, 3000), TxDb=txdb)
+data(peakAnno)
 peakAnno
 }
 \seealso{

@@ -51,13 +51,6 @@
 #' @importFrom ggplot2 scale_color_manual
 #' @importFrom ggplot2 annotate
 #' @importFrom ggplot2 geom_curve
-#' @importFrom ggiraph geom_rect_interactive
-#' @importFrom ggiraph girafe
-#' @importFrom ggiraph opts_hover
-#' @importFrom ggiraph opts_hover_inv
-#' @importFrom ggiraph opts_tooltip
-#' @importFrom ggiraph opts_sizing
-#' @importFrom ggiraph opts_zoom
 #' @importFrom stats dist
 #' @importFrom stats hclust
 #' @importFrom stats as.formula
@@ -164,13 +157,18 @@ plotCov <- function(peak, weightCol = NULL,
             }
 
             if(interactive){
-                p <- p + geom_rect_interactive(aes(xmin = start, ymin = 0, xmax = end, 
-                                                   ymax = value, fill = .id, color = .id,
-                                                   tooltip = paste0("peak start: ", start, "\n",
-                                                                "peak end: ", end, "\n",
-                                                                "peak value: ", round(value, 2)),
-                                                   data_id = paste0(chr, "_", start, "_", end)),
-                                               hover_nearest = TRUE)
+                rlang::check_installed('ggiraph', reason = 'For interactive plot.')
+
+                if (requireNamespace("ggiraph", quietly = TRUE)){
+                    p <- p + ggiraph::geom_rect_interactive(aes(xmin = start, ymin = 0, xmax = end, 
+                                                                ymax = value, fill = .id, color = .id,
+                                                                tooltip = paste0("peak start: ", start, "\n",
+                                                                                "peak end: ", end, "\n",
+                                                                                "peak value: ", round(value, 2)),
+                                                                data_id = paste0(chr, "_", start, "_", end)),
+                                                            hover_nearest = TRUE)
+                }
+                
             }else{
                 p <- p + geom_rect(aes(xmin = start, ymin = 0, xmax = end, ymax = value, fill = .id, color = .id)) 
             }
@@ -182,12 +180,12 @@ plotCov <- function(peak, weightCol = NULL,
 
         } else {
             if(interactive){
-                p <- p + geom_rect_interactive(aes(xmin = start, ymin = 0, xmax = end, ymax = value,
-                                       tooltip = paste0("peak start: ", start, "\n",
-                                                        "peak end: ", end, "\n",
-                                                        "peak value: ", round(value, 2)), 
-                                        data_id = paste0(chr, "_", start, "_", end)),
-                                        fill = fill_color, color = fill_color, hover_nearest = TRUE)
+                p <- p + ggiraph::geom_rect_interactive(aes(xmin = start, ymin = 0, xmax = end, ymax = value,
+                                                            tooltip = paste0("peak start: ", start, "\n",
+                                                                                "peak end: ", end, "\n",
+                                                                                "peak value: ", round(value, 2)), 
+                                                                data_id = paste0(chr, "_", start, "_", end)),
+                                                                fill = fill_color, color = fill_color, hover_nearest = TRUE)
             }else{
                 p <- p + geom_rect(aes(xmin = start, ymin = 0, xmax = end, ymax = value), fill = fill_color, color = fill_color)
             }
@@ -343,13 +341,17 @@ plotCov <- function(peak, weightCol = NULL,
 
     }else{
         if(interactive){
-            p <- girafe(ggobj = p, width_svg = width_svg,
-                        height_svg = height_svg,
-                        options = list(opts_hover(css = "fill: orange; stroke: black; stroke-width: 2px;"),
-                                       opts_hover_inv(css = "opacity: 0.5;"),
-                                       opts_zoom(min = .5, max = 5),
-                                       opts_tooltip(css = "background-color: white; border: 1px solid black; padding: 5px; border-radius: 3px;")))
 
+            rlang::check_installed('ggiraph', reason = 'For interactive plot.')
+
+            if (requireNamespace("ggiraph", quietly = TRUE)){
+                p <- ggiraph::girafe(ggobj = p, width_svg = width_svg,
+                                     height_svg = height_svg,
+                                     options = list(ggiraph::opts_hover(css = "fill: orange; stroke: black; stroke-width: 2px;"),
+                                                    ggiraph::opts_hover_inv(css = "opacity: 0.5;"),
+                                                    ggiraph::opts_zoom(min = .5, max = 5),
+                                                    ggiraph::opts_tooltip(css = "background-color: white; border: 1px solid black; padding: 5px; border-radius: 3px;")))
+                }
         }
         all_p <- p
     }

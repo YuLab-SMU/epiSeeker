@@ -1,17 +1,23 @@
 library(epiSeeker)
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
 context("test getTagMatrix() and related functions")
 
 test_that("getTagMatrix function for single peak file",{
   
-  peak <- readPeakFile(getSampleFiles()[[4]])[1:50]
-  txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+  data(demo_peak)
+  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
   
   # make window through txdb object
-  tagMatrix <- getTagMatrix(peak, type = "start_site", by = "gene", 
-                            upstream = 500, downstream = 500,
-                            TxDb = txdb, weightCol = "V5")
+  tagMatrix <- getTagMatrix(demo_peak, type = "start_site", by = "gene", 
+                            upstream = 3000, downstream = 3000,
+                            TxDb = txdb, weightCol = "V7")
   
-  expect_is(tagMatrix, "matrix")
+  # test tagmatrix record
+  expect_equal(attr(tagMatrix, "type"), "start_site")
+  expect_equal(attr(tagMatrix, "by"), "gene")
+
+  # test tagMatrix upstream and downstream 
+  expect_equal(dim(tagMatrix)[2], 6001)
+
 })

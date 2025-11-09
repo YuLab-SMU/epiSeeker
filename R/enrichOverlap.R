@@ -122,9 +122,9 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 #' @return data.frame
 #' @export
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
 #' peak <- readPeakFile(peakfile)[1:10]
 #' enrichPeakOverlap(peak, peakfile, txdb, mc.cores = 1, nShuffle = 20)
 #' @importFrom rtracklayer import.chain
@@ -213,11 +213,11 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 #' @return GRanges object
 #' @export
 #' @examples 
-#' require(TxDb.Hsapiens.UCSC.hg19.knownGene)
-#' txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-#' peak <- readPeakFile(peakfile)
-#' shuffle(peak, txdb)
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' p <- GRanges(seqnames=c("chr1", "chr3"),
+#'              ranges=IRanges(start=c(1, 100), end=c(50, 130)))
+#' shuffle(p, TxDb=txdb)
 #' @author G Yu
 shuffle <- function(peak.gr, TxDb) {
     chrLens <- seqlengths(TxDb)[names(seqlengths(peak.gr))]

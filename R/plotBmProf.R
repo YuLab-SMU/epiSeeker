@@ -41,15 +41,14 @@
 #' @importFrom aplot plot_list
 #' @importFrom methods is
 #' @examples 
-#' data(Human_BSobj)
-#' require(BSgenome.Hsapiens.UCSC.hg19)
-#' BSgenome_hg19 <- BSgenome.Hsapiens.UCSC.hg19
-#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr1", start = 894849, end = 895849),
-#'                         BSgenome = BSgenome_hg19,
-#'                         input = Human_BSobj[,c(1)],
+#' require(BSgenome.Hsapiens.UCSC.hg38)
+#' data(demo_bmdata)
+#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+#'                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+#'                         input = demo_bmdata,
 #'                         base = "C",
-#'                         motif = c("CG","CHH","CHG"))
-#' plotBmProf(bmMatrix)
+#'                         motif = c("CG"))
+# plotBmProf(bmMatrix, interactive = TRUE)
 #' @export
 plotBmProf <- function(df,
                        motif_color = NULL,
@@ -309,13 +308,6 @@ plotBmProf <- function(df,
 #' @importFrom aplot insert_bottom
 #' @importFrom magrittr %>%
 #' @importFrom gginnards move_layers
-#' @importFrom ggiraph geom_col_interactive
-#' @importFrom ggiraph geom_line_interactive
-#' @importFrom ggiraph girafe
-#' @importFrom ggiraph opts_hover
-#' @importFrom ggiraph opts_hover_inv
-#' @importFrom ggiraph opts_tooltip
-#' @importFrom ggiraph opts_zoom
 plotBmProf.internal <- function(df,
                                 motif_color,
                                 interactive = FALSE,
@@ -474,34 +466,16 @@ plotBmProf.internal <- function(df,
     # plot the methylation information and cover depth information
     if(interactive){
 
-      # p <- ggplot() +
-      #       geom_col_interactive(data = df[df$type == vName1, ],
-      #                            mapping = aes(x = coordinate,y = value,
-      #                                          fill = motif,color = motif,
-      #                                          tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
-      #                                          data_id = coordinate),
-      #                            size = 1) +
-      #       geom_line_interactive(data = positive_strand_temp,
-      #                             mapping = aes(x = coordinate,y = value,
-      #                                           linetype = paste0(vName2, " information"),
-      #                                           tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", ),
-      #                                           data_id = paste0("pos_", coordinate)),
-      #                             color = "#868686FF",alpha = alpha) +
-      #       geom_line_interactive(data = negative_strand_temp,
-      #                             mapping = aes(x = coordinate,y = value,
-      #                                           linetype = paste0(vName2, " information"),
-      #                                           tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
-      #                                           data_id = paste0("neg_", coordinate)),
-      #                             color = "#868686FF", alpha = alpha, ) +
-      #       labs(linetype = vName2)
+      rlang::check_installed('ggiraph', reason = 'For interactive plot.')
 
-      p <- ggplot() +
-            geom_col_interactive(data = df[df$type == vName1, ],
-                                 mapping = aes(x = coordinate,y = value,
-                                               fill = motif,color = motif,
-                                               tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
-                                               data_id = coordinate),
-                                 size = 1) +
+      if (requireNamespace("ggiraph", quietly = TRUE)){
+        p <- ggplot() +
+            ggiraph::geom_col_interactive(data = df[df$type == vName1, ],
+                                          mapping = aes(x = coordinate,y = value,
+                                                        fill = motif,color = motif,
+                                                        tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
+                                                        data_id = coordinate),
+                                          size = 1) +
             geom_line(data = positive_strand_temp,
                       mapping = aes(x=coordinate,y=value,linetype=paste0(vName2," information")),
                       color = "#868686FF",alpha=alpha) + 
@@ -509,6 +483,22 @@ plotBmProf.internal <- function(df,
                       mapping = aes(x=coordinate,y=value,linetype=paste0(vName2," information")),
                       color = "#868686FF",alpha=alpha) + 
             labs(linetype = legend_lab_value2)
+      }else{
+        p <- ggplot() +
+            geom_col(data = df[df$type == vName1, ],
+                     mapping = aes(x = coordinate,y = value,
+                                   fill = motif,color = motif), size = 1) +
+            geom_line(data = positive_strand_temp,
+                      mapping = aes(x = coordinate,y = value,
+                                    linetype = paste0(vName2, " information")),
+                      color = "#868686FF",alpha = alpha) +
+            geom_line(data = negative_strand_temp,
+                      mapping = aes(x = coordinate,y = value,
+                                    linetype = paste0(vName2, " information")),
+                      color = "#868686FF", alpha = alpha, ) +
+            labs(linetype = vName2)
+      }
+      
 
     }else{
       p <- ggplot(df)+
@@ -530,31 +520,57 @@ plotBmProf.internal <- function(df,
 
 
     # reorganize the axis
-    p <- p +
-      scale_y_continuous(sec.axis = sec_axis(trans = ~rescale(.,c(-value2_max,value2_max)),
-                                             name = second_ylab,
-                                             breaks = c(-value2_max,
-                                                        0,
-                                                        value2_max),
-                                             labels = c(value2_max,
-                                                        0,
-                                                        value2_max)),
-                         breaks = c((-1)*value1_max, (-0.5)*value1_max, 0, (0.5)*value1_max, value1_max),
-                         labels = c(paste0("(3'->5') ", value1_max), 
-                                    (0.5)*value1_max, 0, 
-                                    (0.5)*value1_max, 
-                                    paste0("(5'->3') ",value1_max)))
-    # coord_cartesian(ylim = c(-value1_max,value1_max))
+    if(nrow(positive_strand_temp) == 1){
+      p <- p + 
+          scale_y_continuous(sec.axis = sec_axis(trans = ~ . * (value2_max / value1_max),
+                                                  name = second_ylab,
+                                                  breaks = c(-value2_max, 0),
+                                                  labels = c(value2_max, 0)),
+                             breaks = c(-value1_max, -0.5 * value1_max, 0),
+                             labels = c(paste0("(3'->5') ", value1_max), 0.5 * value1_max, 0))
+
+    }else if(nrow(negative_strand_temp) == 1){
+
+      p <- p + 
+          scale_y_continuous(sec.axis = sec_axis(trans = ~ . * (value2_max / value1_max),
+                                                  name = second_ylab,
+                                                  breaks = c(0, value2_max),
+                                                  labels = c(0, value2_max)),
+                             breaks = c(-value1_max, -0.5 * value1_max, 0),
+                             labels = c(paste0("(3'->5') ", value1_max), 0.5 * value1_max, 0))
+
+    }else{
+      p <- p +
+        scale_y_continuous(sec.axis = sec_axis(trans = ~rescale(.,c(-value2_max,value2_max)),
+                                              name = second_ylab,
+                                              breaks = c(-value2_max,
+                                                          0,
+                                                          value2_max),
+                                              labels = c(value2_max,
+                                                         0,
+                                                         value2_max)),
+                          breaks = c((-1)*value1_max, (-0.5)*value1_max, 0, (0.5)*value1_max, value1_max),
+                          labels = c(paste0("(3'->5') ", value1_max), 
+                                      (0.5)*value1_max, 0, 
+                                      (0.5)*value1_max, 
+                                      paste0("(5'->3') ",value1_max)))
+
+    }
+    
 
   }else{
     # plot the methylation information
 
     if(interactive){
-      p <- ggplot(df) +
-            geom_col_interactive(mapping = aes(x = coordinate,y = value,
-                                               fill = motif,color = motif,
-                                               tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
-                                               data_id = coordinate),size = 1)+
+
+      rlang::check_installed('ggiraph', reason = 'For interactive plot.')
+
+      if (requireNamespace("ggiraph", quietly = TRUE)){
+        p <- ggplot(df) +
+            ggiraph::geom_col_interactive(mapping = aes(x = coordinate,y = value,
+                                                        fill = motif,color = motif,
+                                                        tooltip = paste0("Coordinate: ", coordinate, "\nValue: ", round(value, 2)),
+                                                        data_id = coordinate),size = 1)+
             scale_y_continuous(breaks = c((-1)*value1_max, 
                                           (-0.5)*value1_max, 
                                           0, 
@@ -565,6 +581,9 @@ plotBmProf.internal <- function(df,
                                           0, 
                                           (0.5)*value1_max, 
                                           paste0("(5'->3') ",value1_max)))
+      }
+
+      
     }else{
       p <- ggplot(df) +
         geom_col(mapping = aes(x=coordinate,y=value,fill=motif,color=motif))+
@@ -704,12 +723,18 @@ plotBmProf.internal <- function(df,
                  legend.position = legend_position)
 
   if(interactive){
-    p <- girafe(ggobj = p, width_svg = width_svg,
-                height_svg = height_svg,
-                options = list(opts_hover(css = "fill: orange; stroke: black; stroke-width: 2px;"),
-                               opts_hover_inv(css = "opacity: 0.5;"),
-                               opts_zoom(min = .5, max = 5),
-                               opts_tooltip(css = "background-color: white; border: 1px solid black; padding: 5px; border-radius: 3px;")))
+
+    rlang::check_installed('ggiraph', reason = 'For interactive plot.')
+
+    if (requireNamespace("ggiraph", quietly = TRUE)){
+      p <- ggiraph::girafe(ggobj = p, width_svg = width_svg,
+                           height_svg = height_svg,
+                           options = list(ggiraph::opts_hover(css = "fill: orange; stroke: black; stroke-width: 2px;"),
+                                          ggiraph::opts_hover_inv(css = "opacity: 0.5;"),
+                                          ggiraph::opts_zoom(min = .5, max = 5),
+                                          ggiraph::opts_tooltip(css = "background-color: white; border: 1px solid black; padding: 5px; border-radius: 3px;")))
+    }
+    
 
   }
 

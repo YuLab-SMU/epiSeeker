@@ -592,16 +592,16 @@ loadPeak <- function(peak, verbose = FALSE) {
 #' @return txdb object
 loadTxDb <- function(TxDb) {
   rlang::check_installed(
-    'TxDb.Hsapiens.UCSC.hg19.knownGene',
+    'TxDb.Hsapiens.UCSC.hg38.knownGene',
     reason = 'Default txdb...'
   )
 
-  if (requireNamespace("TxDb.Hsapiens.UCSC.hg19.knownGene", quietly = TRUE)) {
+  if (requireNamespace("TxDb.Hsapiens.UCSC.hg38.knownGene", quietly = TRUE)) {
     if (is.null(TxDb)) {
       warning(
-        ">> TxDb is not specified, use 'TxDb.Hsapiens.UCSC.hg19.knownGene' by default..."
+        ">> TxDb is not specified, use 'TxDb.Hsapiens.UCSC.hg38.knownGene' by default..."
       )
-      TxDb <- TxDb.Hsapiens.UCSC.hg19.knownGene::TxDb.Hsapiens.UCSC.hg19.knownGene
+      TxDb <- TxDb.Hsapiens.UCSC.hg38.knownGene::TxDb.Hsapiens.UCSC.hg38.knownGene
     }
     return(TxDb)
   }
@@ -1039,9 +1039,7 @@ loadBSgenome <- function(BSgenome) {
     ## get the object from BSgenome
     BSgenome_name <- attr(BSgenome, "pkgname")
 
-    if (
-      requireNamespace(BSgenome_name, quietly = TRUE, character.only = TRUE)
-    ) {
+    if (requireNamespace(BSgenome_name, quietly = TRUE, character.only = TRUE)) {
       text <- paste0("package:", BSgenome_name)
       object <- ls(text)[grep("^[^BSgenome]", ls(text))]
       command <- paste0(BSgenome_name, "::", object)
