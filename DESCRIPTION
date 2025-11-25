@@ -24,7 +24,7 @@ Description: This package implements functions to analyzing multi-omics epigenet
     regions, genomic annotation, distance to TSS, overlap of peaks or genes, and
     the single-base resolution epigenetic data by considering the strand, motif, and additional information.
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.5.0)
 Imports:
     AnnotationDbi,
     aplot,
