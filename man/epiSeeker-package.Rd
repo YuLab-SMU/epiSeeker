@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Guangchuang Yu \email{guangchuangyu@gmail.com} (\href{https://orcid.org/0000-0002-6485-8781}{ORCID})
+\strong{Maintainer}: Guangchuang Yu \email{guangchuangyu@gmail.com} (\href{https://orcid.org/0000-0002-6485-8781}{ORCID}) [funder]
 
 Other contributors:
 \itemize{
