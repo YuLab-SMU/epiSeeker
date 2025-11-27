@@ -59,6 +59,9 @@ setGeneric("plotAnnoBar",
 #' @docType methods
 #' @name plotAnnoPie
 #' @rdname plotAnnoPie-methods
+#' @examples 
+#' data(peakAnno)
+#' plotAnnoPie(peakAnno)
 #' @export
 setGeneric("plotAnnoPie", 
   function(x, 
@@ -110,6 +113,12 @@ setGeneric("getBmMatrix",
 #' @rdname makeBmDataFromData-methods
 #' @importFrom methods setGeneric
 #' @return bmData
+#' @examples 
+#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", 
+#'                                 package="epiSeeker")
+#' demo_bisseq <- read.table(demo_bisseq_file,header = TRUE)
+#' demo_bmdata <- makeBmDataFromData(data = list(acinar_methyl = demo_bisseq), 
+#'                                   sampleNames = "acinar_methyl")
 #' @export
 setGeneric("makeBmDataFromData", function(data,
                                           sampleNames=NULL){

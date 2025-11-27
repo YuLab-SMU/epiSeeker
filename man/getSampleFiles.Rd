@@ -12,6 +12,9 @@ list of file names
 \description{
 get filenames of sample files
 }
+\examples{
+files <- getSampleFiles()
+}
 \author{
 G Yu
 }

@@ -96,4 +96,3 @@ License: Artistic-2.0
 biocViews: Annotation, ChIPSeq, Software, Visualization, MultipleComparison, Coverage, MotifAnnotation, GeneRegulation
 RoxygenNote: 7.3.3
 LazyData: false
-LazyDataCompression: xz

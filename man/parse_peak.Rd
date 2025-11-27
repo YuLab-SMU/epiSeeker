@@ -15,3 +15,6 @@ data frame
 \description{
 parse peak str
 }
+\examples{
+parse_peak("chr1:150235946-150236624")
+}

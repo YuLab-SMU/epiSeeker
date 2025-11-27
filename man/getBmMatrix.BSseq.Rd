@@ -17,7 +17,7 @@ getBmMatrix.BSseq(
 \arguments{
 \item{region}{base modification region in the form of dataframe, having columns of "chr","start" and "end"}
 
-\item{input}{the input data stored in BSseq objects}
+\item{input}{the input data stored in \link[bsseq]{BSseq} objects}
 
 \item{BSgenome}{genome reference}
 
@@ -36,6 +36,6 @@ dataframe
 get the information of base modification
 }
 \details{
-This function retrieve the information of each base, requiring BSseq object as input.
+This function retrieve the information of each base, requiring \link[bsseq]{BSseq} object as input.
    Then organized it to dataframe.
 }

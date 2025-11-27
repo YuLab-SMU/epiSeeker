@@ -17,3 +17,7 @@ matrix
 \description{
 change a list grange object to matrix
 }
+\examples{
+data(demo_peak)
+grange2mt(list(a = demo_peak, b = demo_peak), "V5")
+}

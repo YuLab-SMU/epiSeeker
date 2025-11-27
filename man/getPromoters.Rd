@@ -21,6 +21,11 @@ GRanges object
 \description{
 get promoter region in grange format
 }
+\examples{
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+promoters <- getPromoters(TxDb = txdb, upstream = 1000, downstream = 1000)
+}
 \author{
 Guangchuang Yu
 }

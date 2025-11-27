@@ -65,7 +65,7 @@ dataframe
 dataframe
 }
 \description{
-getBmMatrix method for \linkS4class{BSseq}
+getBmMatrix method for \link[bsseq]{BSseq}
 
 getBmMatrix method for \linkS4class{bmData}
 }

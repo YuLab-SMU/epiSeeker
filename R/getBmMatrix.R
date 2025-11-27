@@ -1,9 +1,9 @@
 #' @title get the information of base modification
-#' @details  This function retrieve the information of each base, requiring BSseq object as input.
+#' @details  This function retrieve the information of each base, requiring \link[bsseq]{BSseq} object as input.
 #'    Then organized it to dataframe.
 #'
 #' @param region base modification region in the form of dataframe, having columns of "chr","start" and "end"
-#' @param input the input data stored in BSseq objects
+#' @param input the input data stored in \link[bsseq]{BSseq} objects
 #' @param BSgenome genome reference
 #' @param cover_depth take the depth of cover into account or not
 #' @param base one of A/T/G/C/U

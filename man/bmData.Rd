@@ -24,13 +24,13 @@ bmData(
 
 \item{chr}{A vector of chromosomes}
 
-\item{gr}{An object of type \linkS4class{GRanges}}
+\item{gr}{An object of type \link[GenomicRanges]{GRanges}}
 
 \item{sampleNames}{A vector of sample names}
 
 \item{valueNames}{the name of value1 or value2 or both. The order maps to the value.}
 
-\item{...}{other parameters from \code{\link[bsseq]{BSseq}}}
+\item{...}{other parameters from \link[bsseq]{BSseq}}
 }
 \value{
 bmData object

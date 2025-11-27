@@ -38,6 +38,7 @@ demo_bisseq$Methylation <- demo_bisseq$Methylation * 0.01
 
 demo_bmdata <- makeBmDataFromData(data = list(acinar_methyl = demo_bisseq), sampleNames = "acinar_methyl")
 usethis::use_data(demo_bmdata, overwrite = TRUE, compress = "xz")
+write.table(demo_bisseq, file = "./inst/extdata/demo_bisseq.txt", quote = FALSE, sep = "\t", row.names = FALSE)
 
 #------------------------------------------Human ref motif------------------------------------------# 
 library(RSQLite)

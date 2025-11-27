@@ -4,6 +4,10 @@
 #' @param upstream upstream extension. One of actual number or rel() object.
 #' @param downstream downstream extension. One of actual number or rel() object.
 #' @param by one of 'gene', 'transcript'.
+#' @examples
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' promoters <- getPromoters(TxDb = txdb, upstream = 1000, downstream = 1000)
 #' @return GRanges object
 #' @author Guangchuang Yu
 #' @export

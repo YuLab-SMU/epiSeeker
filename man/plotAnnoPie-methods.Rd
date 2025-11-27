@@ -44,6 +44,10 @@ plot
 \description{
 plotAnnoPie method for \code{csAnno} instance
 }
+\examples{
+data(peakAnno)
+plotAnnoPie(peakAnno)
+}
 \author{
 Guangchuang Yu \url{https://guangchuangyu.github.io}
 }

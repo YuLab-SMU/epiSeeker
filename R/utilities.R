@@ -501,7 +501,6 @@ getFirstHitIndex <- function(x) {
 #' @param Sets a list of objects
 #' @return data.frame
 #' @importFrom gtools permutations
-#' @export
 #' @author G Yu
 overlap <- function(Sets) {
   ## this function is very generic.
@@ -660,6 +659,8 @@ getGene <- function(TxDb, by = "gene") {
 #'
 #' @title getSampleFiles
 #' @return list of file names
+#' @examples
+#' files <- getSampleFiles()
 #' @export
 #' @author G Yu
 getSampleFiles <- function() {
@@ -900,6 +901,9 @@ bin_vector <- function(vec, nbin = 800) {
 #' @param weightCol weight column of peak.
 #' @importFrom stats reshape
 #' @return matrix
+#' @examples 
+#' data(demo_peak)
+#' grange2mt(list(a = demo_peak, b = demo_peak), "V5")
 #' @export
 grange2mt <- function(gr_list, weightCol = NULL) {
   df_list <- list()
@@ -938,6 +942,8 @@ grange2mt <- function(gr_list, weightCol = NULL) {
 #' @title parse peak str
 #' @param peak_str peak str
 #' @return data frame
+#' @examples 
+#' parse_peak("chr1:150235946-150236624")
 #' @export
 parse_peak <- function(peak_str) {
   parts <- strsplit(peak_str, ":|-")[[1]]

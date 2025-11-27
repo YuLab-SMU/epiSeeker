@@ -1,10 +1,10 @@
-#' getBmMatrix method for \linkS4class{BSseq}
+#' getBmMatrix method for \link[bsseq]{BSseq}
 #'
 #' @docType methods
 #' @rdname getBmMatrix-methods
 #' @title getBmMatrix method
 #' @param region base modification region in the form of dataframe, having columns of "chr","start" and "end"
-#' @param input the input data stored in BSseq objects or BSseqExtra objects
+#' @param input the input data stored in \link[bsseq]{BSseq} objects or BSseqExtra objects
 #' @param BSgenome genome reference
 #' @param base one of A/T/G/C/U
 #' @param motif the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification
