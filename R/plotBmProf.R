@@ -522,7 +522,7 @@ plotBmProf.internal <- function(df,
     # reorganize the axis
     if(nrow(positive_strand_temp) == 1){
       p <- p + 
-          scale_y_continuous(sec.axis = sec_axis(trans = ~ . * (value2_max / value1_max),
+          scale_y_continuous(sec.axis = sec_axis(transform = ~ . * (value2_max / value1_max),
                                                   name = second_ylab,
                                                   breaks = c(-value2_max, 0),
                                                   labels = c(value2_max, 0)),
@@ -532,7 +532,7 @@ plotBmProf.internal <- function(df,
     }else if(nrow(negative_strand_temp) == 1){
 
       p <- p + 
-          scale_y_continuous(sec.axis = sec_axis(trans = ~ . * (value2_max / value1_max),
+          scale_y_continuous(sec.axis = sec_axis(transform = ~ . * (value2_max / value1_max),
                                                   name = second_ylab,
                                                   breaks = c(0, value2_max),
                                                   labels = c(0, value2_max)),
@@ -541,7 +541,7 @@ plotBmProf.internal <- function(df,
 
     }else{
       p <- p +
-        scale_y_continuous(sec.axis = sec_axis(trans = ~rescale(.,c(-value2_max,value2_max)),
+        scale_y_continuous(sec.axis = sec_axis(transform = ~rescale(.,c(-value2_max,value2_max)),
                                               name = second_ylab,
                                               breaks = c(-value2_max,
                                                           0,

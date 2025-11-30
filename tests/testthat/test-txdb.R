@@ -2,7 +2,7 @@ library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 library(epiSeeker)
 library(yulab.utils)
 
-context("TXDB")
+context("test function for TXDB")
 
 test_that("txdb", {
     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene

@@ -1,7 +1,7 @@
 library(epiSeeker)
 library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
-context("test getTagMatrix() and related functions")
+context("test function for getTagMatrix")
 
 test_that("getTagMatrix function for single peak file",{
   
@@ -20,4 +20,15 @@ test_that("getTagMatrix function for single peak file",{
   # test tagMatrix upstream and downstream 
   expect_equal(dim(tagMatrix)[2], 6001)
 
+})
+
+# test the getPromoters can run normally or not 
+test_that("getPromoters runs with default parameters", {
+
+  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+  
+  res <- getPromoters(txdb)
+  
+  expect_s4_class(res, "GRanges")
+  expect_true(length(res) > 0)
 })

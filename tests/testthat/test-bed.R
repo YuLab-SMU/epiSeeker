@@ -1,6 +1,6 @@
 library(epiSeeker)
 
-context("bed file")
+context("test function for bed file")
 
 test_that("parse bed file", {
     files <- getSampleFiles()
