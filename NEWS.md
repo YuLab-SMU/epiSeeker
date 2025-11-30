@@ -1,5 +1,6 @@
-# epiSeeker 0.99.9
+# epiSeeker 0.99.10
 
++ add more runnable examples and increase the coverage of tests (44.18%) (2025-11-30, Sun)
 + use new demo data for base modification (`demo_bmdata`) and move some dependency packages from 'Imports' to 'Suggests' (2025-11-10, Mon)
 + consistently use 'hg38' for demo with new demo file, a small subset derived from GSM6418464 (2025-11-07, Fri)
 + fixed Notes reported by `BiocCheck` and add 'GeneRegulation' to 'biocViews' (2025-11-07, Fri)
