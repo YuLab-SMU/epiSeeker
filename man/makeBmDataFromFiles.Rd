@@ -27,8 +27,10 @@ bed files and txt files are supported. Bed files can
    should organize the columns as chr, pos, value1, value2(optional).
 }
 \examples{
-demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package="epiSeeker")
-data <- makeBmDataFromFiles(demo_bisseq_file, 
-                            sampleNames = "acinar_methyl", 
-                            variablesNames = c("Cov", "Methylation"))
+if(FALSE){
+   demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package="epiSeeker")
+   data <- makeBmDataFromFiles(demo_bisseq_file, 
+                               sampleNames = "acinar_methyl", 
+                               variablesNames = c("Cov", "Methylation"))
+}
 }

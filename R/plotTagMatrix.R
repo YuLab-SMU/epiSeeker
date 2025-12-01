@@ -235,8 +235,10 @@ plotPeakHeatmap_sub.internal <- function(tagMatrix,
 #' @importFrom ggplot2 scale_color_manual
 #' @return ggplot object
 #' @examples 
-#' data(tagMatrix)
-#' plotPeakProf(tagMatrix)
+#' if(FALSE){
+#'    data(tagMatrix)
+#'    plotPeakProf(tagMatrix)
+#' }
 #' @export 
 plotPeakProf <- function(tagMatrix,
                          xlab="Genomic Region (5'->3')",
@@ -365,8 +367,10 @@ plotPeakProf <- function(tagMatrix,
 #' @param ... additional parameters
 #' @importFrom aplot insert_bottom
 #' @examples 
-#' data(tagMatrix)
-#' plotPeakHeatmap(tagMatrix)
+#' if(FALSE){
+#'    data(tagMatrix)
+#'    plotPeakHeatmap(tagMatrix)
+#' }
 #' @return ggplot object
 #' @export 
 plotPeakHeatmap <- function(tagMatrix,

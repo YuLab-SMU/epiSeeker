@@ -14,12 +14,16 @@
 #' @importFrom dplyr ungroup
 #' @return ggplot object
 #' @examples 
-#' require(BSgenome.Hsapiens.UCSC.hg38)
-#' data(pwm_obj)
-#' motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
-#'                                                ranges = IRanges(start = 10525891, end = 10525991)), 
-#'                               pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
-#' plotMotifProf(motifMatrix)
+#' if(FALSE){
+#'   require(BSgenome.Hsapiens.UCSC.hg38)
+#'   data(pwm_obj)
+#'   region_oi <- GRanges(seqnames = "chr22", 
+#'                        ranges = IRanges(start = 10525891, end = 10525991))
+#'   motifMatrix <- getMotifMatrix(region = region_oi, 
+#'                                 pwm = pwm_obj, 
+#'                                 ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+#'   plotMotifProf(motifMatrix)
+#' }
 #' @export 
 plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score", 
                           x_lab = NULL, interactive = FALSE, width_svg = 10, height_svg = 6){

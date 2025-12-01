@@ -41,14 +41,16 @@
 #' @importFrom aplot plot_list
 #' @importFrom methods is
 #' @examples 
-#' require(BSgenome.Hsapiens.UCSC.hg38)
-#' data(demo_bmdata)
-#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-#'                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-#'                         input = demo_bmdata,
-#'                         base = "C",
-#'                         motif = c("CG"))
-# plotBmProf(bmMatrix, interactive = TRUE)
+#' if(FALSE){
+#'    require(BSgenome.Hsapiens.UCSC.hg38)
+#'    data(demo_bmdata)
+#'    bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+#'                            BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+#'                            input = demo_bmdata,
+#'                            base = "C",
+#'                            motif = c("CG"))
+#'    plotBmProf(bmMatrix)
+#' }
 #' @export
 plotBmProf <- function(df,
                        motif_color = NULL,

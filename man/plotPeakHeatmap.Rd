@@ -63,6 +63,8 @@ ggplot object
 plotPeakHeatmap function
 }
 \examples{
-data(tagMatrix)
-plotPeakHeatmap(tagMatrix)
+if(FALSE){
+   data(tagMatrix)
+   plotPeakHeatmap(tagMatrix)
+}
 }

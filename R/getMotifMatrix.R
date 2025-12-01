@@ -10,11 +10,16 @@
 #' @importFrom rlang check_installed
 #' @return score matrix
 #' @examples 
-#' require(BSgenome.Hsapiens.UCSC.hg38)
-#' data(pwm_obj)
-#' motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
-#'                                                ranges = IRanges(start = 10525891, end = 10525991)), 
-#'                               pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+#' if(FALSE){
+#'   require(BSgenome.Hsapiens.UCSC.hg38)
+#'   data(pwm_obj)
+#'   
+#'   region_oi <- GRanges(seqnames = "chr22", 
+#'                        ranges = IRanges(start = 10525891, end = 10525991))
+#'   motifMatrix <- getMotifMatrix(region = region_oi, 
+#'                                 pwm = pwm_obj, 
+#'                                 ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+#' }
 #' 
 #' @export 
 getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){

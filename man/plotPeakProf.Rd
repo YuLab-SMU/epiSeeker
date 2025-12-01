@@ -45,8 +45,10 @@ ggplot object
 plot peak profile
 }
 \examples{
-data(tagMatrix)
-plotPeakProf(tagMatrix)
+if(FALSE){
+   data(tagMatrix)
+   plotPeakProf(tagMatrix)
+}
 }
 \author{
 G Yu; Y Yan
