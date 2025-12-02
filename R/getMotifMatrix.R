@@ -29,19 +29,19 @@ getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){
     by <- match.arg(by, c("name", "ID"))
 
     if(by == "name"){
-        pwm_name <- vector(mode = "character", length = length(pwm))
-        for(i in  seq_len(length(pwm))){
-            pwm_name[i] <- pwm[[i]]@name
-        }
-
-        new_name <- pwm_name
-        for(i in pwm_name[duplicated(pwm_name)]){
-            tmp <- pwm_name[pwm_name == i]
-            tmp <- paste0(tmp, "_", seq_along(tmp))
-            new_name[new_name == i] <- tmp
-        }
-
-        names(pwm) <- new_name
+        # Vectorized approach for PWM name processing
+        pwm_name <- sapply(pwm, function(x) x@name)
+        
+        # Handle duplicate PWM names with vectorized approach using ave()
+            dup_mask <- duplicated(pwm_name)
+            if(any(dup_mask)){
+                # Create sequence numbers within each group
+                seq_nums <- ave(pwm_name, pwm_name, FUN = seq_along)
+                # Only rename duplicates
+                pwm_name[dup_mask] <- paste0(pwm_name[dup_mask], "_", seq_nums[dup_mask])
+            }
+        
+        names(pwm) <- pwm_name
     }
 
     # get start and end position
@@ -69,76 +69,70 @@ getMotifMatrix <- function(region, pwm, ref_obj, by = "name"){
         }
     }
     
-    motif_idx <- vector(length = length(motif_positions))
-    for(i in seq_len(length(motif_positions))){
-        tmp_idx <- names(motif_positions)[i]
-        if(length(motif_positions[[i]][[1]]) == 0){
-            motif_idx[i] <- FALSE
-        }else{
-            motif_idx[i] <- TRUE
-        }
-    }
-    sub_list <- motif_positions[motif_idx]
+    # Vectorized approach for motif filtering
+    motif_lengths <- sapply(motif_positions, function(x) length(x[[1]]))
+    sub_list <- motif_positions[motif_lengths > 0]
+    
     if(length(sub_list) == 0){
         message("There is no motif match...")
         return(NULL)
     }
 
-    for(i in seq_len(length(sub_list))){
-        mcols(sub_list[[i]][[1]])[,"motif"] <- names(sub_list)[i]
-    }
-
-    all_list <- list()
-    for(i in seq_len(length(sub_list))){
+    # Pre-allocate list for better performance
+    all_list <- vector("list", length(sub_list))
+    motif_names <- names(sub_list)
+    
+    for(i in seq_along(sub_list)){
         tmp_IRange <- sub_list[[i]][[1]]
-        if(length(tmp_IRange) >1){
-            score_idx <- which(mcols(tmp_IRange)[,"score"] == max(mcols(tmp_IRange)[,'score']))
-            if(length(score_idx) > 1){
-                score_idx <- score_idx[1]
-            }
+        mcols(tmp_IRange)[,"motif"] <- motif_names[i]
+        
+        if(length(tmp_IRange) > 1){
+            # Find maximum score more efficiently
+            scores <- mcols(tmp_IRange)[,"score"]
+            max_score <- max(scores)
+            score_idx <- which(scores == max_score)[1]  # Take first occurrence
             all_list[[i]] <- tmp_IRange[score_idx]
-        }else{
+        } else {
             all_list[[i]] <- tmp_IRange
         }
-        
     }
-    all_IRange <- as.data.frame(do.call(c,all_list))
+    
+    # Combine all ranges efficiently
+    all_IRange <- as.data.frame(do.call(c, all_list))
     all_IRange$start <- all_IRange$start + start_pos - 1 
     all_IRange$end <- all_IRange$end + start_pos - 1 
 
-    # create a data frame
-    motif_range <- list()
-
+    # Vectorized approach for creating motif data frame
+    motif_range <- vector("list", nrow(all_IRange))
+    
     for(i in seq_len(nrow(all_IRange))){
-        # tmp_bak_df <- data.frame(chr = chr_name,
-        #                          coordinate = seq(from = start_pos,
-        #                                           to = end_pos,
-        #                                           by = 1),
-        #                          score = 0,
-        #                          strand = all_IRange[i, "strand"],
-        #                          motif = all_IRange[i,"motif"])
-            
-
-        tmp_df <- data.frame(chr = chr_name,
-                             coordinate = seq(from = all_IRange[i, "start"],
-                                              to = all_IRange[i, "end"],
-                                              by = 1))
-        tmp_df$score <- all_IRange[i, "score"]
-        tmp_df$strand <- all_IRange[i, "strand"]
-        tmp_df$motif <- all_IRange[i,"motif"]
+        start_coord <- all_IRange[i, "start"]
+        end_coord <- all_IRange[i, "end"]
+        coord_length <- end_coord - start_coord + 1
+        
+        # Create coordinate sequence efficiently
+        tmp_df <- data.frame(
+            chr = chr_name,
+            coordinate = seq.int(start_coord, end_coord),
+            score = all_IRange[i, "score"],
+            strand = all_IRange[i, "strand"],
+            motif = all_IRange[i, "motif"]
+        )
+        
+        # Adjust score for negative strand
         if(all_IRange[i, "strand"] == "-"){
-            tmp_df$score <- (-1)*tmp_df$score
+            tmp_df$score <- (-1) * tmp_df$score
         }
         
-        # tmp_match_indices <- match(tmp_df$coordinate, tmp_bak_df$coordinate)
-        # tmp_valid_indices <- which(!is.na(tmp_match_indices))
-        # tmp_bak_df[tmp_match_indices[tmp_valid_indices], ] <- tmp_df[tmp_valid_indices, ]
-        # motif_range[[i]] <- tmp_bak_df
-
         motif_range[[i]] <- tmp_df
     }
 
-    motif_df <- do.call(rbind, motif_range)
+    # Efficient rbind using data.table if available
+    if(requireNamespace("data.table", quietly = TRUE)){
+        motif_df <- data.table::rbindlist(motif_range)
+    } else {
+        motif_df <- yulab.utils::rbindlist(motif_range)
+    }
 
     attr(motif_df, "range") <- c(start_pos, end_pos)
 
