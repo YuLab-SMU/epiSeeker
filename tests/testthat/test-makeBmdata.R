@@ -1,6 +1,7 @@
 library(epiSeeker)
+library(BSgenome.Hsapiens.UCSC.hg38)
 
-context("test function for making bmData")
+context("test function for base modification Data")
 
 test_that("makeBmDataFromData works for GRanges", {
     gr <- GRanges(
@@ -35,4 +36,33 @@ test_that("makeBmDataFromData works for list of data.frame", {
     bm <- makeBmDataFromData(lst, sampleNames=c("S1", "S2"))
 
     expect_s4_class(bm, "bmData")
+})
+
+
+test_that("plotBmProf works with list input", {
+
+    data("demo_bmdata", package = "epiSeeker")
+
+    bm_df <- getBmMatrix(
+        region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+        input = demo_bmdata,
+        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+        base = "C",
+        motif = "CG",
+        cover_depth = TRUE
+    )
+
+    df_list <- list(a = bm_df, b = bm_df)
+
+
+    p <- plotBmProf(
+        df = df_list,
+        interactive = FALSE,
+        ncol = 1
+    )
+    
+
+    expect_true(
+        inherits(p, "ggplot")
+    )
 })

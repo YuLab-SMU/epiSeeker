@@ -66,9 +66,7 @@ ggplot object
 plot gene track to plot
 }
 \examples{
-if(FALSE){
-     require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-     plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126713193)
-}
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126712293)
 }

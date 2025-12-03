@@ -120,14 +120,11 @@ ggplot object
 plot base modification profile
 }
 \examples{
-if(FALSE){
-   require(BSgenome.Hsapiens.UCSC.hg38)
-   data(demo_bmdata)
-   bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-                           BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-                           input = demo_bmdata,
-                           base = "C",
-                           motif = c("CG"))
-   plotBmProf(bmMatrix)
-}
+require(BSgenome.Hsapiens.UCSC.hg38)
+data(demo_bmdata)
+bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+                        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+                        input = demo_bmdata,
+                        motif = c("CG"))
+plotBmProf(bmMatrix)
 }

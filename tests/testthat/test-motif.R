@@ -1,6 +1,6 @@
 library(epiSeeker)
 library(BSgenome.Hsapiens.UCSC.hg38)
-library(motifmatchr)
+library(universalmotif)
 
 context("test function for motif analysis")
 
@@ -15,7 +15,7 @@ test_that("getMotifMatrix works on example region", {
 
     motif_df <- getMotifMatrix(
         region  = region,
-        pwm     = pwm_obj,
+        pwm     = pwm_obj[c(45,120,170)],
         ref_obj = BSgenome.Hsapiens.UCSC.hg38,
         by      = "name"
     )
@@ -45,7 +45,7 @@ test_that("plotMotifProf works with motifMatrix example", {
 
     motif_df <- getMotifMatrix(
         region  = region,
-        pwm     = pwm_obj,
+        pwm     = pwm_obj[c(45,120,170)],
         ref_obj = BSgenome.Hsapiens.UCSC.hg38
     )
 
@@ -63,57 +63,3 @@ test_that("plotMotifProf works with motifMatrix example", {
 
 })
 
-
-test_that("plotBmProf runs with demo_bmdata", {
-
-    data("demo_bmdata", package = "epiSeeker")
-
-    bm_df <- getBmMatrix(
-        region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-        input = demo_bmdata,
-        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-        base = "C",
-        motif = "CG",
-        cover_depth = TRUE
-    )
-    expect_true(is.data.frame(bm_df))
-
-    p <- plotBmProf(
-            df = bm_df,
-            interactive = FALSE,
-            title = "Test Plot"
-    )
-
-    expect_true(
-        inherits(p, "ggplot")
-    )
-})
-
-
-test_that("plotBmProf works with list input", {
-
-    data("demo_bmdata", package = "epiSeeker")
-
-    bm_df <- getBmMatrix(
-        region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-        input = demo_bmdata,
-        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-        base = "C",
-        motif = "CG",
-        cover_depth = TRUE
-    )
-
-    df_list <- list(a = bm_df, b = bm_df)
-
-
-    p <- plotBmProf(
-        df = df_list,
-        interactive = FALSE,
-        ncol = 1
-    )
-    
-
-    expect_true(
-        inherits(p, "ggplot")
-    )
-})

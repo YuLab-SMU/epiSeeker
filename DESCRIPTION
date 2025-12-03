@@ -79,14 +79,14 @@ Suggests:
     ggVennDiagram,
     JASPAR2024,
     knitr,
-    motifmatchr,
     org.Hs.eg.db,
     prettydoc,
     ReactomePA,
     rmarkdown,
     testthat,
     TFBSTools,
-    TxDb.Hsapiens.UCSC.hg38.knownGene
+    TxDb.Hsapiens.UCSC.hg38.knownGene,
+    universalmotif
 URL: https://github.com/YuLab-SMU/epiSeeker
 BugReports: https://github.com/YuLab-SMU/epiSeeker/issues
 Encoding: UTF-8

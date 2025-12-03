@@ -270,12 +270,10 @@ make_bmData_from_value1_and_value2 <- function(data, sampleNames){
 #'    should organize the columns as chr, pos, value1, value2(optional).
 #' @return bmData
 #' @examples 
-#' if(FALSE){
-#'    demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package="epiSeeker")
-#'    data <- makeBmDataFromFiles(demo_bisseq_file, 
-#'                                sampleNames = "acinar_methyl", 
-#'                                variablesNames = c("Cov", "Methylation"))
-#' }
+#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package="epiSeeker")
+#' data <- makeBmDataFromFiles(demo_bisseq_file, 
+#'                             sampleNames = "acinar_methyl", 
+#'                             variablesNames = c("Cov", "Methylation"))
 #' @export
 makeBmDataFromFiles <- function(name,
                                 sampleNames = NULL,

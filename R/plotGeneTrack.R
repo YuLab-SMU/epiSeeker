@@ -32,11 +32,9 @@
 #' @importFrom rlang sym
 #' @importFrom rlang check_installed
 #' @examples 
-#' if(FALSE){
-#'      require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-#'      txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#'      plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126713193)
-#' }
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126712293)
 #' @export 
 plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
                           x_text_size = 10, y_text_size = 10,

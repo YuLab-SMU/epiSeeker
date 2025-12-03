@@ -22,15 +22,13 @@ score matrix
 get the information of motif in a range
 }
 \examples{
-if(FALSE){
-  require(BSgenome.Hsapiens.UCSC.hg38)
-  data(pwm_obj)
+require(BSgenome.Hsapiens.UCSC.hg38)
+data(pwm_obj)
   
-  region_oi <- GRanges(seqnames = "chr22", 
-                       ranges = IRanges(start = 10525891, end = 10525991))
-  motifMatrix <- getMotifMatrix(region = region_oi, 
-                                pwm = pwm_obj, 
-                                ref_obj = BSgenome.Hsapiens.UCSC.hg38)
-}
+region_oi <- GRanges(seqnames = "chr22", 
+                     ranges = IRanges(start = 10525891, end = 10525991))
+motifMatrix <- getMotifMatrix(region = region_oi, 
+                              pwm = pwm_obj[c(45,120,170)], 
+                              ref_obj = BSgenome.Hsapiens.UCSC.hg38)
 
 }

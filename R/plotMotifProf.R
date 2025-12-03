@@ -11,19 +11,18 @@
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 geom_col
 #' @importFrom ggplot2 labs
-#' @importFrom dplyr ungroup
+#' @importFrom dplyr left_join
+#' @importFrom dplyr summarise
 #' @return ggplot object
 #' @examples 
-#' if(FALSE){
-#'   require(BSgenome.Hsapiens.UCSC.hg38)
-#'   data(pwm_obj)
-#'   region_oi <- GRanges(seqnames = "chr22", 
-#'                        ranges = IRanges(start = 10525891, end = 10525991))
-#'   motifMatrix <- getMotifMatrix(region = region_oi, 
-#'                                 pwm = pwm_obj, 
-#'                                 ref_obj = BSgenome.Hsapiens.UCSC.hg38)
-#'   plotMotifProf(motifMatrix)
-#' }
+#' require(BSgenome.Hsapiens.UCSC.hg38)
+#' data(pwm_obj)
+#' region_oi <- GRanges(seqnames = "chr22", 
+#'                      ranges = IRanges(start = 10525891, end = 10525991))
+#' motifMatrix <- getMotifMatrix(region = region_oi, 
+#'                               pwm = pwm_obj[c(45,120,170)], 
+#'                               ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+#' plotMotifProf(motifMatrix)
 #' @export 
 plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score", 
                           x_lab = NULL, interactive = FALSE, width_svg = 10, height_svg = 6){
@@ -38,28 +37,33 @@ plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score",
 
 
     coordinate <- score <- motif <- chr <- NULL
-    motif_start <- motif_end <- motif_chr <- motif_strand <- motif_score <- NULL
+    motif_start <- motif_end <- motif_chr <- motif_strand <- motif_score <- seg_id <- NULL
 
     if(interactive){
 
-        df_interactive <- df %>%group_by(motif) %>%
-                            mutate(motif_chr = unique(chr),        
-                                   motif_start = min(coordinate),  
-                                   motif_strand = unique(strand),
-                                   motif_end = max(coordinate),    
-                                   motif_score = unique(score)     ) %>%
-                            ungroup()
+        df_interactive <- df %>%
+                            group_by(motif) %>%
+                            summarise(
+                                motif_chr = unique(chr),
+                                motif_start = min(coordinate),
+                                motif_strand = unique(strand),
+                                motif_end = max(coordinate),
+                                motif_score = unique(score),
+                                .groups = "drop"
+                            ) %>%
+                            left_join(df, by = "motif")
 
         rlang::check_installed('ggiraph', reason = 'For interactive plot.')
 
         if (requireNamespace("ggiraph", quietly = TRUE)){
             p <- ggplot(df_interactive, mapping = aes(x = coordinate, y = score, color = motif, data_id = motif,
-                                        tooltip = paste0("Motif: ", motif, "\n",
-                                                        "chr: ", motif_chr, "\n",
-                                                        "strand: ", motif_strand, "\n",
-                                                        "start: ", motif_start, "\n",
-                                                        "end: ", motif_end, "\n",
-                                                        "score: ", round(score, 3))
+                                                      group = interaction(motif, score, seg_id),
+                                                      tooltip = paste0("Motif: ", motif, "\n",
+                                                                       "chr: ", motif_chr, "\n",
+                                                                       "strand: ", motif_strand, "\n",
+                                                                       "start: ", motif_start, "\n",
+                                                                       "end: ", motif_end, "\n",
+                                                                       "score: ", round(score, 3))
                         )) +
                     ggiraph::geom_line_interactive(size = 1) +
                     geom_hline(yintercept = 0, color = "black", linewidth = 1) +
@@ -83,7 +87,7 @@ plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score",
 
 
     }else{
-        p <- ggplot(df, mapping = aes(x=coordinate, y=score, color = motif))+
+        p <- ggplot(df, mapping = aes(x=coordinate, y=score, color = motif, group = interaction(motif, score, seg_id)))+
             geom_line() +
             geom_hline(yintercept = 0, color = "black", linewidth = 1) +
             labs(color = legend_lab, y = y_lab, x = x_lab) + 

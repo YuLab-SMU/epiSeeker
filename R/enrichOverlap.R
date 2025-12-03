@@ -13,12 +13,10 @@
 #' @importFrom stats phyper
 #' @export
 #' @examples 
-#' if(FALSE){
-#'      require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-#'      txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#'      peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
-#'      enrichAnnoOverlap(peakfile, peakfile, txdb)
-#' }
+#' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#' peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
+#' enrichAnnoOverlap(peakfile, peakfile, txdb)
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver
 #' @importFrom yulab.utils get_cache_element

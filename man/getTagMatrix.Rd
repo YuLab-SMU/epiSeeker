@@ -72,14 +72,12 @@ In a word, 'TxDb' parameter getTagMatrix() is a reference information.
 Users can pass txdb object or self-made granges into it.
 }
 \examples{
-if(FALSE){
-   require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-   txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-   data(demo_peak)
-   tagMatrix <- getTagMatrix(demo_peak, type = "start_site", by = "gene", 
-                             upstream = 500, downstream = 500,
-                             TxDb = txdb, weightCol = "V7")
-}
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+data(demo_peak)
+tagMatrix <- getTagMatrix(demo_peak, type = "start_site", by = "gene", 
+                          upstream = 500, downstream = 500,
+                          TxDb = txdb, weightCol = "V7")
 }
 \author{
 G Yu
