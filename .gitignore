@@ -5,3 +5,13 @@ gh-pages
 src
 epiSeeker_files
 epiSeeker_cache
+/.quarto/
+01-Profile_cache
+02-Region_cache
+03-Anno_cache
+03-Anno_files
+04-Enrichment_cache
+05-Comparison_cache
+06-DataMining_cache
+Session-info_cache
+index_cache

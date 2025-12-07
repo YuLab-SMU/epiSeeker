@@ -20,7 +20,8 @@ For Chinese user, you can follow me on [WeChat (微信)](https://guangchuangyu.g
 
 Here is the output of `sessionInfo()` on the system on which this document was compiled:
 
-```{r echo=FALSE}
+```{r}
+#| eval: false
 sessionInfo()
 ```
 

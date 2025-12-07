@@ -1,5 +1,24 @@
+
+
 # Peak Annotation
-```{r eval = FALSE}
+
+```{r}
+#| include: false
+library(yulab.utils)
+Biocpkg <- yulab.utils::Biocpkg
+```
+
+```{r}
+#| label: annotateSeq
+#| eval: false
+
+library(epiSeeker)
+library(org.Hs.eg.db)
+library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+data(peakAnno)
+
 peakAnno <- annotateSeq(files[[4]], tssRegion=c(-3000, 3000),
                          TxDb=txdb, annoDb="org.Hs.eg.db")
 ```
@@ -10,7 +29,10 @@ peak annotations by providing it with the `TxDb` parameter. Since UCSC-style
 chromosome names are used we have to change the style of the chromosome names
 from *Ensembl* to *UCSC* in the example below.
 
-```{r, eval = FALSE}
+```{r}
+#| label: annotateSeq-UCSC
+#| eval: false
+
 library(EnsDb.Hsapiens.v75)
 edb <- EnsDb.Hsapiens.v75
 seqlevelsStyle(edb) <- "UCSC"
@@ -26,9 +48,9 @@ and `as.data.frame` to convert `csAnno` to `data.frame` which can be exported to
 
 `TxDb` object contained transcript-related features of a particular genome. 
 Bioconductor provides several package that containing `TxDb` object of model organisms with multiple commonly used genome version, 
-for instance `r Biocannopkg("TxDb.Hsapiens.UCSC.hg38.knownGene")`, `r Biocannopkg("TxDb.Hsapiens.UCSC.hg19.knownGene")` for 
-human genome hg38 and hg19, `r Biocannopkg("TxDb.Mmusculus.UCSC.mm10.knownGene")` and 
-`r Biocannopkg("TxDb.Mmusculus.UCSC.mm9.knownGene")` for 
+for instance `r Biocpkg("TxDb.Hsapiens.UCSC.hg38.knownGene")`, `r Biocpkg("TxDb.Hsapiens.UCSC.hg19.knownGene")` for 
+human genome hg38 and hg19, `r Biocpkg("TxDb.Mmusculus.UCSC.mm10.knownGene")` and 
+`r Biocpkg("TxDb.Mmusculus.UCSC.mm9.knownGene")` for 
 mouse genome mm10 and mm9, etc. User can also prepare their own `TxDb` object by retrieving information from UCSC Genome Bioinformatics 
 and BioMart data resources by R function `makeTxDbFromBiomart` and `makeTxDbFromUCSC`. 
 `TxDb` object should be passed for peak annotation.
@@ -71,34 +93,46 @@ Many researchers are very interesting in these annotations. TSS region can be de
 in details of which exon/intron of which genes as illustrated in previous section.
 
 Pie and Bar plot are supported to visualize the genomic annotation.
-```{r eval = FALSE}
+```{r}
+#| label: plotAnnoPie
+#| eval: false
 plotAnnoPie(peakAnno)
 ```
-<div style="text-align: center;">
-![](fig/peakAnno_pie.png)
-</div>
+
+![](fig/peakAnno_pie.png){.center}
 
 
-```{r eval = FALSE}
+
+```{r}
+#| label: plotAnnoBar
+#| eval: false
 plotAnnoBar(peakAnno)
 ```
-<div style="text-align: center;">
-![](fig/peakAnno_Bar.png)
-</div>
+
+![](fig/peakAnno_Bar.png){.center}
+
 
 Since some annotation overlap, user may interested to view the full annotation with their overlap, 
 which can be partially resolved by `vennpie` function.
 
-```{r eval = FALSE}
+```{r}
+#| label: peakAnno
+#| eval: false
 vennpie(peakAnno)
 ```
-<div style="text-align: center;">
-![](fig/peakAnno_vennpie.png)
-</div>
+
+![](fig/peakAnno_vennpie.png){.center}
+
 
 We extend `r CRANpkg("UpSetR")` to view full annotation overlap. User can user `upsetplot` function.
 
-```{r fig.cap="Genomic Annotation by upsetplot", fig.align="center", fig.height=8, fig.width=12}
+```{r}
+#| label: upsetplot
+#| fig-cap: "Genomic Annotation by upsetplot"
+#| fig-align: center
+#| fig-height: 8
+#| fig-width: 12
+
 upsetplot(peakAnno, vennpie=TRUE)
 ```
 
@@ -109,10 +143,11 @@ The distance from the peak (binding site) to the TSS of the nearest gene is calc
 reported in the output. We provide `plotDistToTSS` to calculate the percentage of binding sites upstream and 
 downstream from the TSS of the nearest genes, and visualize the distribution.
 
-```{r eval = FALSE}
+```{r}
+#| label: plotDistToTSS
+#| eval: false
 plotDistToTSS(peakAnno,
               title="Distribution of transcription factor-binding loci\nrelative to TSS")
 ```
-<div style="text-align: center;">
-![](fig/peakAnno_Dist.png)
-</div>
+
+![](fig/peakAnno_Dist.png){.center}

@@ -1,0 +1,59 @@
+project:
+  type: book
+  output-dir: gh-pages
+
+book:
+  title: 'epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data'
+  chapters:
+    - index.qmd
+    - 01-Profile.qmd
+    - 02-Region.qmd
+    - 03-Anno.qmd
+    - 04-Enrichment.qmd
+    - 05-Comparison.qmd
+    - 06-DataMining.qmd
+    - Session-info.qmd
+
+bibliography: references.bib
+biblio-style: apalike
+
+format:
+  html:
+    theme: cosmo
+    number-sections: true
+
+  pdf:
+    pdf-engine: xelatex
+    keep-tex: true
+    number-sections: true
+    fig-cap-location: top
+    fig-height: 3.8
+    fig-width: 6.3
+    cite-method: natbib
+    toc: true
+    toc-depth: 4
+
+    metadata:
+      documentclass: book
+      fontsize: 12pt
+      mainfont: "Times New Roman"
+      sansfont: Arial
+      linestretch: 1.5
+      papersize: A4
+      geometry: "left=35mm,right=35mm,top=25mm,bottom=25mm"
+      classoption: twoside
+      highlight_bw: true
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: true
+  setup: _setup.R
+
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+
+

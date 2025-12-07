@@ -1,31 +1,42 @@
 # ChIP peak data set comparison
 
+```{r}
+#| include: false
+library(epiSeeker)
+library(yulab.utils)
+Biocpkg <- yulab.utils::Biocpkg
+
+```
+
 ## ChIP peak annotation comparision
 The `plotAnnoBar` and `plotDistToTSS` can also accept input of a named list of annotated peaks (output of `annotateSeq`).
 
-```{r, eval = FALSE}
+```{r}
+#| label: anno-list
+#| eval: false
 peakAnnoList <- lapply(files, annotateSeq, TxDb=txdb,
                        tssRegion=c(-3000, 3000), verbose=FALSE)
 ```
 
 We can use `plotAnnoBar` to comparing their genomic annotation.
-```{r eval = FALSE}
+```{r}
+#| label: plotAnnoBar-list
+#| eval: false
 plotAnnoBar(peakAnnoList)
 ```
 
-<div style="text-align: center;">
-![](fig/peakAnnoList_Bar.png)
-</div>
+![](fig/peakAnnoList_Bar.png){.center}
 
 
 R function `plotDistToTSS` can use to comparing distance to TSS profiles among ChIPseq data.
-```{r eval = FALSE}
+```{r}
+#| label: plotDistToTSS-list
+#| eval: false
 plotDistToTSS(peakAnnoList)
 ```
 
-<div style="text-align: center;">
-![](fig/peakAnnoList_Dist.png)
-</div>
+![](fig/peakAnnoList_Dist.png){.center}
+
 
 ## Functional profiles comparison
 As shown in section 4, the annotated genes can analyzed by `r
@@ -36,7 +47,9 @@ Biocpkg("ReactomePA")` for Gene Ontology, KEGG, Disease Ontology, MeSH and React
 The `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] package provides `compareCluster` function for comparing biological themes 
 among gene clusters, and can be easily adopted to compare different ChIP peak experiments.
 
-```{r eval = FALSE}
+```{r}
+#| label: compKEGG
+#| eval: false
 genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 names(genes) <- sub("_", "\n", names(genes))
 compKEGG <- compareCluster(geneCluster   = genes,
@@ -45,7 +58,8 @@ compKEGG <- compareCluster(geneCluster   = genes,
                            pAdjustMethod = "BH")
 dotplot(compKEGG, showCategory = 15, title = "KEGG Pathway Enrichment Analysis")
 ```
-![](fig/compKEGG.png)
+
+![](fig/compKEGG.png){.center}
 
 ## Overlap of peaks and annotated genes
 
@@ -56,11 +70,14 @@ Several files can be read simultaneously using lapply, and then passed to `vennp
 `vennplot` accept a list of object, can be a list of GRanges or a list of vector. 
 Here, I will demonstrate using `vennplot` to visualize the overlap of the nearest genes stored in peakAnnoList.
 
-```{r eval = FALSE}
+```{r}
+#| label: vennplot-list
+#| eval: false
 genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 vennplot(genes)
 ```
-![](fig/vennplot.png)
+
+![](fig/vennplot.png){.center}
 
 # Statistical testing of ChIP seq overlap
 
@@ -70,7 +87,9 @@ they may cooperative in regulation. Calculating the overlap is only touch the su
 
 ## Shuffle genome coordination
 
-```{r eval = FALSE}
+```{r}
+#| label: shuffle
+#| eval: false
 p <- GRanges(seqnames=c("chr1", "chr3"),
              ranges=IRanges(start=c(1, 100), end=c(50, 130)))
 shuffle(p, TxDb=txdb)
@@ -93,7 +112,9 @@ defined in a genome which stored in `TxDb` object.
 With the ease of this `shuffle` method, we can generate thousands of random ChIP data and 
 calculate the background null distribution of the overlap among ChIP data sets.
 
-```{r eval = FALSE}
+```{r}
+#| label: enrichPeakOverlap
+#| eval: false
 enrichPeakOverlap(queryPeak     = files[[5]],
                   targetPeak    = unlist(files[1:4]),
                   TxDb          = txdb,

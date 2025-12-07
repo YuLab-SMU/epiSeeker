@@ -1,24 +1,16 @@
-gitbook:
-	Rscript -e 'library(bookdown); render_book("index.Rmd", "gitbook")'
+html:
+	quarto render --to pdf
 
-bs4book:
-	Rscript -e 'library(bookdown); render_book("index.Rmd", "bs4_book")'
-
-pdfbook:
-	Rscript -e 'library(bookdown); render_book("index.Rmd", "pdf_book")'
-
-epub:
-	Rscript -e 'library(bookdown); render_book("index.Rmd", "epub_book")'
+pdf:
+	quarto render --to pdf
 
 clean:
 	Rscript -e 'bookdown::clean_book()';\
 	rm -rf _bookdown_files epiSeeker_cache epiSeeker_files
 
 serve:
-	Rscript -e 'library(bookdown); serve_book()'
+	quarto preview
 
-publish:
-	cd gh-pages;\
-	git add .;\
-	git commit -m 'update';\
-	git push
+push_doc:
+	cd ../epiSeeker_gh_pages;\
+	cp -r gh-pages/* ../epiSeeker_gh_pages

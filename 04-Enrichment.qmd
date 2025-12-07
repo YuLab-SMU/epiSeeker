@@ -1,5 +1,13 @@
 # Functional enrichment analysis
 
+```{r}
+#| include: false
+library(epiSeeker)
+library(yulab.utils)
+Biocpkg <- yulab.utils::Biocpkg
+
+```
+
 Once we have obtained the annotated nearest genes, we can perform functional enrichment analysis to 
 identify predominant biological themes among these genes by incorporating biological knowledge provided by biological ontologies. 
 For instance, Gene Ontology (GO)[@ashburner_gene_2000] annotates genes to biological processes, molecular functions, 
@@ -19,7 +27,9 @@ associated with a particular biological term is larger than expected,
 including `r Biocpkg("DOSE")`[@yu_dose_2015] for Disease Ontology, `r Biocpkg("ReactomePA")` for reactome pathway, 
 `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for Gene Ontology and KEGG enrichment analysis.
 
-```{r eval = FALSE}
+```{r}
+#| label: enrichPathway
+#| eval: false
 library(ReactomePA)
 
 pathway1 <- enrichPathway(as.data.frame(peakAnno)$geneId)
@@ -55,7 +65,8 @@ head(pathway2, 2)
 
 dotplot(pathway2)
 ```
-![](fig/pathway2.png)
+
+![](fig/pathway2.png){.center}
 
 More information can be found in the vignettes of Bioconductor packages `r Biocpkg("DOSE")`[@yu_dose_2015], `r Biocpkg("ReactomePA")`, 
 `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012], which also provide several methods to visualize enrichment results. 
