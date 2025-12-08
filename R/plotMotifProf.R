@@ -1,4 +1,4 @@
-#' plot the profile of motif of specific peak
+#' Plot the profile of motif of specific peak
 #' 
 #' @param df motif information data.frame.
 #' @param legend_lab legend lab.

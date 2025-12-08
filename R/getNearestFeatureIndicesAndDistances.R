@@ -1,5 +1,4 @@
-#' get index of features that closest to peak and calculate distance
-#'
+#' Get index of features that closest to peak and calculate distance
 #'
 #' @title getNearestFeatureIndicesAndDistances
 #' @param peaks peak in GRanges

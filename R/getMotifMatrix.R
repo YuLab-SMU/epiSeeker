@@ -1,4 +1,4 @@
-#' get the information of motif in a range
+#' Get the information of motif in a range
 #' 
 #' @param region region object in granges.
 #' @param pwm PFMatrixList.

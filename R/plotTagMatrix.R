@@ -1,10 +1,10 @@
-#' @title plot peak heatmap sub functino
+#' @title Plot peak heatmap sub function
 #' 
 #' @param tagMatrix output from getTagMatrix().
 #' @param xlab xlab.
 #' @param ylab ylab.
 #' @param title title.
-#' @param palette palette to be filled in,details see \link[ggplot2]{scale_colour_brewer}.
+#' @param palette palette to be filled in,details see [ggplot2::scale_colour_brewer()].
 #' @param facet_label_text_size the size of facet label text
 #' @param nrow nrow to place a number of fig.
 #' @param ncol ncol to place a number of fig.
@@ -96,7 +96,7 @@ plotPeakHeatmap_sub <- function(tagMatrix,
 #' @param xlab xlab.
 #' @param ylab ylab.
 #' @param title title.
-#' @param palette palette to be filled in,details see \link[ggplot2]{scale_colour_brewer}.
+#' @param palette palette to be filled in,details see [ggplot2::scale_colour_brewer()].
 #' @param facet_label_text_size the size of facet label text
 #' @return ggplot object
 #' @importFrom yulab.utils mat2df

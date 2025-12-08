@@ -1,4 +1,4 @@
-#' makeBmDataFromData method for \code{CompressedGRangesList} objects
+#' makeBmDataFromData method for `CompressedGRangesList` objects
 #'
 #' @name makeBmDataFromData
 #' @docType methods
@@ -36,7 +36,7 @@ setMethod("makeBmDataFromData", signature(data="CompressedGRangesList"),
           })
 
 
-#' makeBmDataFromData method for \code{GRanges} objects
+#' makeBmDataFromData method for `GRanges` objects
 #'
 #' @name makeBmDataFromData
 #' @docType methods
@@ -70,7 +70,7 @@ setMethod("makeBmDataFromData", signature(data="GRanges"),
 
           })
 
-#' makeBmDataFromData method for \code{list} objects
+#' makeBmDataFromData method for `list` objects
 #'
 #' @name makeBmDataFromData
 #' @docType methods
@@ -78,7 +78,7 @@ setMethod("makeBmDataFromData", signature(data="GRanges"),
 #' @aliases makeBmDataFromData,list-method
 #' @param data lists object
 #' @param sampleNames the name of each samples
-#' @details The objects in \code{data} must have specific forms. Colunms should be
+#' @details The objects in `data` must have specific forms. Colunms should be
 #'    features, which should be organized in the order of "chr", "pos", "value1",
 #'    "value2(optional)". chr stands for chromosome. pos stands for position on
 #'    chromosome, also known as coordinates. value1/2 stands for the value on each base.

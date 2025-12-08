@@ -1,15 +1,15 @@
-#' @title get the information of base modification
-#' @details  This function retrieve the information of each base, requiring \link[bsseq]{BSseq} object as input.
-#'    Then organized it to dataframe.
+#' @title Get the information of base modification
+#' @details  This function retrieve the information of each base, requiring [bsseq::BSseq] object as input.
+#'    Then organized it to data.frame.
 #'
-#' @param region base modification region in the form of dataframe, having columns of "chr","start" and "end"
-#' @param input the input data stored in \link[bsseq]{BSseq} objects
+#' @param region base modification region in the form of data.frame, having columns of "chr","start" and "end"
+#' @param input the input data stored in [bsseq::BSseq] objects
 #' @param BSgenome genome reference
 #' @param cover_depth take the depth of cover into account or not
 #' @param base one of A/T/G/C/U
 #' @param motif the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification
 #' @param position_bias 1-base bias. e.g position_bias = 1("C" in "CHH"), position_bias = 2("A" in "GAGG")
-#' @return dataframe
+#' @return data.frame
 getBmMatrix.BSseq <- function(region,
                               input,
                               BSgenome,

@@ -1,4 +1,4 @@
-#' plot feature distribution based on their chromosome region
+#' Plot feature distribution based on their chromosome region
 #'
 #' plot chromosome region features
 #' @title plotAnnoBar.data.frame
@@ -20,8 +20,8 @@
 #' @importFrom ggplot2 ylab
 #' @importFrom ggplot2 ggtitle
 #' @importFrom ggplot2 guide_legend
-#' @seealso \code{\link{annotateSeq}} \code{\link{plotAnnoPie}}
-#' @author Guangchuang Yu \url{https://yulab-smu.top}
+#' @seealso [annotateSeq()] [plotAnnoPie()]
+#' @author Guangchuang Yu <https://yulab-smu.top>
 plotAnnoBar.data.frame <- function(anno.df,
                                    xlab="",
                                    ylab="Percentage(%)",
@@ -50,7 +50,6 @@ plotAnnoBar.data.frame <- function(anno.df,
 
 #' pieplot from peak genomic annotation
 #'
-#'
 #' @title plotAnnoPie
 #' @rdname plotAnnoPie
 #' @param x csAnno object
@@ -65,9 +64,9 @@ plotAnnoBar.data.frame <- function(anno.df,
 #' @examples
 #' data(peakAnno)
 #' plotAnnoPie(peakAnno)
-#' @seealso \code{\link{annotateSeq}} \code{\link{plotAnnoBar}}
+#' @seealso [annotateSeq()] [plotAnnoBar()]
 #' @export
-#' @author Guangchuang Yu \url{https://yulab-smu.top}
+#' @author Guangchuang Yu <https://yulab-smu.top>
 plotAnnoPie.csAnno <- function(x,
                         ndigit=2,
                         cex=0.8,

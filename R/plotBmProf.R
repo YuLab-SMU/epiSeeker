@@ -1,8 +1,7 @@
-#' plot base modification profile
-#'
+#' Plot base modification profile
 #'
 #' @title plotBmProf
-#' @param df the base modification dataframe
+#' @param df the base modification data.frame
 #' @param motif_color the color for different motifs(CHH,CHG,CG)
 #' @param title the title of the plot, can also be a list of title.
 #' @param interactive produce interactive fig or not.
@@ -46,7 +45,7 @@
 #' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
 #'                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
 #'                         input = demo_bmdata,
-#                          base = "C",
+#'#                          base = "C",
 #'                         motif = c("CG"))
 #' plotBmProf(bmMatrix)
 #' @export

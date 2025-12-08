@@ -1,6 +1,5 @@
-#' read peak file and store in data.frame or GRanges object
+#' Read peak file and store in data.frame or GRanges object
 #'
-#' 
 #' @title readPeakFile
 #' @param peakfile peak file
 #' @param as output format, one of GRanges or data.frame

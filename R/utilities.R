@@ -1,5 +1,5 @@
-#' @title env function for epiSeeker
-#' @param TxDb txdb object
+#' @title Env function for epiSeeker
+#' @param TxDb TxDb object
 #' @param item item name
 #' @param force force to update txdb item in cache or not.
 #' @importFrom yulab.utils get_cache_item
@@ -7,7 +7,7 @@
 #' @importFrom yulab.utils rm_cache_item
 #' @importFrom yulab.utils initial_cache_item
 #' @importFrom S4Vectors metadata
-#' @return Returns \code{invisible(NULL)} invisibly. The primary purpose of this function is to manage
+#' @return Returns `invisible(NULL)` invisibly. The primary purpose of this function is to manage
 #'   the TXDB cache through side effects (creating, updating, or removing cached objects),
 #'   rather than returning a value.
 .epiSeekerEnv <- function(TxDb, item = "epiSeekerEnv", force = FALSE) {

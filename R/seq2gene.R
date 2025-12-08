@@ -1,12 +1,12 @@
-#' annotate genomic regions to genes in many-to-many mapping
+#' Annotate genomic regions to genes in many-to-many mapping
 #'
-#' This funciton associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user specify distance).
+#' This function associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user-specified distance).
 #' @title seq2gene
 #' @param seq genomic regions in GRanges object
 #' @param tssRegion TSS region
 #' @param flankDistance flanking search radius
-#' @param TxDb TranscriptDb object
-#' @param sameStrand logical whether find nearest/overlap gene in the same strand
+#' @param TxDb TxDb object
+#' @param sameStrand logical, whether find nearest/overlap gene in the same strand
 #' @return gene vector
 #' @export
 #' @examples

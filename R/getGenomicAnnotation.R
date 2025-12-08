@@ -9,8 +9,7 @@ updateGenomicAnnotation <- function(peaks, genomicRegion, type, anno, sameStrand
 }
 
 
-#' get Genomic Annotation of peaks
-#'
+#' Get Genomic Annotation of peaks
 #'
 #' @title getGenomicAnnotation
 #' @param peaks peaks in GRanges object

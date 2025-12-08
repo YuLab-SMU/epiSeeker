@@ -1,4 +1,4 @@
-#' plot the overlap of a list of object
+#' Plot the overlap of a list of object
 #'
 #' venn plot produced through this way has colors which can be defined by users using
 #' ggplot2 grammar e.g.(scale_fill_distiller()). And users can specify any details, like digital number,
@@ -6,7 +6,7 @@
 #' 
 #' @title vennplot
 #' @param Sets a list of object, can be vector or GRanges object.
-#' @param ... extra parameters using ggVennDiagram. Details see \link[ggVennDiagram]{ggVennDiagram}
+#' @param ... extra parameters using ggVennDiagram. Details see [ggVennDiagram::ggVennDiagram]
 #' @return venn plot that summarize the overlap of peaks
 #' from different experiments or gene annotation from
 #' different peak files.
@@ -33,8 +33,7 @@ vennplot <- function(Sets,...) {
 
 }
 
-#' vennplot for peak files
-#'
+#' Vennplot for peak files
 #'
 #' @title vennplot.peakfile
 #' @param files peak files

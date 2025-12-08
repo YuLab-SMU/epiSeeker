@@ -3,40 +3,40 @@
 
 #' @title Information Datasets
 #' 
-#' @description ucsc genome version, precalcuated data and gsm information
+#' @description ucsc genome version, precalculated data and gsm information
 #' @section Provenance:
-#' The \code{gsminfo} dataset was constructed programmatically from public
+#' The `gsminfo` dataset was constructed programmatically from public
 #' resources in the NCBI GEO and UCSC Genome Browser databases.
 #' The data generation pipeline is implemented in
-#' \code{data-raw/} (see \code{prepareGSMInfo()} in the package source).
+#' `data-raw/` (see `prepareGSMInfo()` in the package source).
 #'
-#' Briefly, GEO metadata were retrieved using the \pkg{GEOmetadb} SQLite
-#' database and \pkg{GEOquery}. The latest GEOmetadb SQLite file was downloaded
-#' via \code{getSQLiteFile()} or, if unavailable, directly from
-#' \url{http://starbuck1.s3.amazonaws.com/sradb/GEOmetadb.sqlite.gz}.
+#' Briefly, GEO metadata were retrieved using the `GEOmetadb` SQLite
+#' database and `GEOquery`. The latest GEOmetadb SQLite file was downloaded
+#' via `getSQLiteFile()` or, if unavailable, directly from
+#' <http://starbuck1.s3.amazonaws.com/sradb/GEOmetadb.sqlite.gz>.
 #' Platform (GPL) records were queried to identify platforms associated with
 #' high-throughput sequencing experiments. For each sequencing platform, the
-#' corresponding GSM records were obtained using \code{Meta(getGEO())}.
+#' corresponding GSM records were obtained using `Meta(getGEO())`.
 #' Supplementary BED-like files for each GSM were collected using
-#' \code{getGSMsuppFile()} and \code{batchGetGSMsuppFile()}.
+#' `getGSMsuppFile()` and `batchGetGSMsuppFile()`.
 #'
 #' Additional metadata fields (title, organism, extract protocol, characteristics,
 #' data processing description, submission date, and supplementary file URLs)
-#' were extracted from GSM SOFT files downloaded using \pkg{GEOquery}.
+#' were extracted from GSM SOFT files downloaded using `GEOquery`.
 #' Genome assembly versions for each GSM were inferred using the function
-#' \code{getGenomicVersion()}, which matches UCSC genome labels to either
+#' `getGenomicVersion()`, which matches UCSC genome labels to either
 #' the data processing description or the supplementary file names, using the
-#' reference table provided in the internal dataset \code{ucsc_release}.
+#' reference table provided in the internal dataset `ucsc_release`.
 #'
 #' PubMed IDs associated with each GEO series (GSE) were obtained from the
-#' \code{gse} table in GEOmetadb. All GSM-level metadata were merged, cleaned,
-#' and converted to ASCII using \code{iconv()} to remove non-ASCII characters.
+#' `gse` table in GEOmetadb. All GSM-level metadata were merged, cleaned,
+#' and converted to ASCII using `iconv()` to remove non-ASCII characters.
 #'
 #' Finally, newly processed GSM entries were appended to any preexisting
-#' \code{gsminfo} object stored in the package, deduplicated, and saved as
-#' \code{gsminfo.rda} with \code{compress="xz"}.
+#' `gsminfo` object stored in the package, deduplicated, and saved as
+#' `gsminfo.rda` with `compress="xz"`.
 #'
-#' Thus, \code{gsminfo} represents a curated, reproducibly constructed metadata
+#' Thus, `gsminfo` represents a curated, reproducibly constructed metadata
 #' table summarizing GEO high-throughput sequencing samples, including organism,
 #' platform, experimental descriptions, processing information, genome versions,
 #' supplementary BED file locations, and associated PubMed IDs.
@@ -46,23 +46,23 @@
 #' @section Data structure:
 #' A data frame with one row per GSM sample and the following columns:
 #' \describe{
-#'   \item{\code{series_id}}{GEO series accession (GSE).}
-#'   \item{\code{gsm}}{GEO sample accession (GSM).}
-#'   \item{\code{gpl}}{GEO platform accession (GPL).}
-#'   \item{\code{organism}}{Organism name (e.g., \emph{Mus musculus}).}
-#'   \item{\code{title}}{Sample title as provided in GEO.}
-#'   \item{\code{characteristics}}{Experiment-specific metadata such as cell type, treatment, or antibody.}
-#'   \item{\code{source_name}}{Source material for sequencing, typically cell or tissue type.}
-#'   \item{\code{extract_protocol}}{Detailed wet-lab protocol for chromatin extraction, immunoprecipitation, and library preparation as reported in GEO.}
-#'   \item{\code{description}}{Antibody information or additional sample description.}
-#'   \item{\code{data_processing}}{Bioinformatics processing description including aligner, genome build, peak calling method, and filtering steps.}
-#'   \item{\code{submission_date}}{Date when the sample was submitted to GEO.}
-#'   \item{\code{supplementary_file}}{URL to supplementary processed files (e.g., BED).}
-#'   \item{\code{genomeVersion}}{Genome assembly used in the processed data (e.g., mm8, hg19).}
-#'   \item{\code{pubmed_id}}{PMID of the reference publication associated with the dataset.}
+#'   \item{`series_id`}{GEO series accession (GSE).}
+#'   \item{`gsm`}{GEO sample accession (GSM).}
+#'   \item{`gpl`}{GEO platform accession (GPL).}
+#'   \item{`organism`}{Organism name (e.g., *Mus musculus*).}
+#'   \item{`title`}{Sample title as provided in GEO.}
+#'   \item{`characteristics`}{Experiment-specific metadata such as cell type, treatment, or antibody.}
+#'   \item{`source_name`}{Source material for sequencing, typically cell or tissue type.}
+#'   \item{`extract_protocol`}{Detailed wet-lab protocol for chromatin extraction, immunoprecipitation, and library preparation as reported in GEO.}
+#'   \item{`description`}{Antibody information or additional sample description.}
+#'   \item{`data_processing`}{Bioinformatics processing description including aligner, genome build, peak calling method, and filtering steps.}
+#'   \item{`submission_date`}{Date when the sample was submitted to GEO.}
+#'   \item{`supplementary_file`}{URL to supplementary processed files (e.g., BED).}
+#'   \item{`genomeVersion`}{Genome assembly used in the processed data (e.g., mm8, hg19).}
+#'   \item{`pubmed_id`}{PMID of the reference publication associated with the dataset.}
 #' }
 #'
-#' @format A data frame with \code{n} rows (GSM samples) and 14 columns.
+#' @format A data frame with `n` rows (GSM samples) and 14 columns.
 #' @docType data
 #' @keywords datasets
 #' @return data frame
@@ -71,32 +71,32 @@ NULL
 
 #' @title Example data of peak annotation
 #'
-#' @description A \code{csAnno} object representing the annotation result of the example peak set \code{demo_peak}.  
-#' Peaks were annotated using the function \code{annotateSeq()} in \pkg{epiSeeker}.
+#' @description A `csAnno` object representing the annotation result of the example peak set `demo_peak`.  
+#' Peaks were annotated using the function `annotateSeq()` in `epiSeeker`.
 #' @section Provenance:
-#' Input peaks were taken from the example dataset \code{demo_peak}.
-#' Annotation was generated using \code{epiSeeker::annotateSeq()}.
+#' Input peaks were taken from the example dataset `demo_peak`.
+#' Annotation was generated using `epiSeeker::annotateSeq()`.
 #' @section Data structure:
-#' A \code{csAnno} S4 object with the following slots:
+#' A `csAnno` S4 object with the following slots:
 #' \describe{
-#'   \item{\code{anno}}{A \code{GRanges} object containing the annotated peaks,
+#'   \item{`anno`}{A `GRanges` object containing the annotated peaks,
 #'          including peak coordinates, basic peak metrics, and gene-based annotation fields.}
-#'   \item{\code{tssRegion}}{Numeric vector of length two defining the upstream
+#'   \item{`tssRegion`}{Numeric vector of length two defining the upstream
 #'          and downstream window used for TSS annotation.}
-#'   \item{\code{level}}{Character string indicating whether annotation was
-#'          performed at the \code{"transcript"} or \code{"gene"} level.}
-#'   \item{\code{hasGenomicAnnotation}}{Logical value indicating whether
+#'   \item{`level`}{Character string indicating whether annotation was
+#'          performed at the `"transcript"` or `"gene"` level.}
+#'   \item{`hasGenomicAnnotation`}{Logical value indicating whether
 #'          detailed genomic annotation (promoter, exon, intron, etc.) was computed.}
-#'   \item{\code{detailGenomicAnnotation}}{A data frame providing per-peak
+#'   \item{`detailGenomicAnnotation`}{A data frame providing per-peak
 #'          binary indicators for genomic categories.}
-#'   \item{\code{annoStat}}{A data frame summarizing annotation category
+#'   \item{`annoStat`}{A data frame summarizing annotation category
 #'          frequencies across the annotated peak set.}
-#'   \item{\code{peakNum}}{Total number of annotated peaks.}
+#'   \item{`peakNum`}{Total number of annotated peaks.}
 #' }
 #' @name peakAnno
 #' @docType data
 #' @return csAnno object
-#' @format A \code{csAnno} object containing 220 annotated peaks.
+#' @format A `csAnno` object containing 220 annotated peaks.
 NULL
 
 

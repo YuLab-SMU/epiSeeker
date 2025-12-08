@@ -1,5 +1,5 @@
 #' @title plotCov
-#' @details plot peak coverage
+#' @details Plot peak coverage
 #' 
 #' @param peak peak file or GRanges object.
 #' @param weightCol weight column of peak.
@@ -24,8 +24,8 @@
 #' @param facet_scales how to scale facet data. Default: "free".
 #' @param legend_position legend_position
 #' @param add_cluster_tree add cluster tree for samples or not.
-#' @param cluster_dist_method method for calculate cluster tree. Details see stat::dist
-#' @param cluster_hclust_methond method for hclust. Details see stat::hclust
+#' @param cluster_dist_method method for calculate cluster tree. Details see [stats::dist()]
+#' @param cluster_hclust_methond method for hclust. Details see [stats::hclust()]
 #' @param add_coaccess add co-accessibility or not 
 #' @param curvature curvature.
 #' @param coaccess_top_n top n co-accessibility to show, default: 3.

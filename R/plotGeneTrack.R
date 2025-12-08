@@ -1,16 +1,16 @@
-#' plot gene track to plot 
+#' Plot gene track
 #' 
-#' @param txdb txdb object, providing gene annotation.
+#' @param txdb TxDb object, providing gene annotation.
 #' @param chr chromosome id.
-#' @param start_pos start coordiante of windows.
-#' @param end_pos end coordiante of windows.
+#' @param start_pos start coordinate of windows.
+#' @param end_pos end coordinate of windows.
 #' @param xlab x lab.
 #' @param ylab y lab.
 #' @param x_text_size the size of x text.
 #' @param y_text_size the size of y text.
 #' @param select_gene show all gene or specifc gene. (1)"all", show all genes. (2) gene symbol, e.g. c("SKAP1", "EFCAB13"). (3) gene id, e.g. c(4831, 55316)
 #' @param palette palette, default "Set3".
-#' @param fromType from which type of gene name to change gene id. Default: ENTREZID. See ?clusterProfiler::bitr
+#' @param fromType from which type of gene name to change gene id. Default: ENTREZID. See [clusterProfiler::bitr()]
 #' @param highlight a region or a list of region to highlight.
 #' @param highlight_color colors of highlight rect. Default "#c6c3c3"
 #' @param highlight_alpha alpha of highlight rect.

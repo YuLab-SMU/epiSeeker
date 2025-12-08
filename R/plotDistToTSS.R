@@ -65,16 +65,15 @@ is_valid_color <- function(color){
   })
 }
 
-#' plot feature distribution based on the distances to the TSS
-#'
+#' Plot feature distribution based on the distances to the TSS
 #'
 #' @title plotDistToTSS.data.frame
 #' @param peakDist peak annotation
 #' @param distanceColumn column name of the distance from peak to nearest gene
-#' @param distanceBreaks default is 'c(0, 1000, 3000, 5000, 10000, 100000)'
+#' @param distanceBreaks default is `c(0, 1000, 3000, 5000, 10000, 100000)`
 #' @param palette palette name for coloring different distances. Run `RColorBrewer::display.brewer.all()` to see all applicable values.
 #' @param xlab x label
-#' @param ylab y lable
+#' @param ylab y label
 #' @param title figure title
 #' @param categoryColumn category column, default is ".id"
 #' @return bar plot that summarize distance from peak to

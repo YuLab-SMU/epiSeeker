@@ -1,6 +1,6 @@
-#' @title get promoter region in grange format
+#' @title Get promoter region in GRanges format
 #'
-#' @param TxDb TxDb
+#' @param TxDb TxDb object
 #' @param upstream upstream extension. One of actual number or rel() object.
 #' @param downstream downstream extension. One of actual number or rel() object.
 #' @param by one of 'gene', 'transcript'.
@@ -23,14 +23,14 @@ getPromoters <- function(TxDb = NULL,
                type = "start_site")
 }
 
-#' @title extend regions functions
+#' @title Extend regions functions
 #' 
-#' @param regions grange object
+#' @param regions GRanges object
 #' @param upstream upstream extension. One of actual number or rel() object.
 #' @param downstream downstream extension. One of actual number or rel() object.
 #' @param by one of 'gene', 'transcript', 'exon', 'intron' , '3UTR' , '5UTR', 'UTR'.
 #' @param type one of "start_site", "end_site", "body".
-#' @return grange object
+#' @return GRanges object
 extend_gr <- function(regions, upstream, downstream, by, type){
 
   check_extension(upstream = upstream, downstream = downstream, type = type)
@@ -87,14 +87,14 @@ extend_gr <- function(regions, upstream, downstream, by, type){
 }
 
 
-#' @title prepare a bioregion of selected feature
+#' @title Prepare a bioregion of selected feature
 #' 
 #' @details this function combined previous functions getPromoters(), getBioRegion() and getGeneBody() 
 #' in order to solve the following issues.
 #' 
-#' (1) \url{https://github.com/GuangchuangYu/ChIPseeker/issues/16}
+#' (1) <https://github.com/GuangchuangYu/ChIPseeker/issues/16>
 #' 
-#' (2) \url{https://github.com/GuangchuangYu/ChIPseeker/issues/87}
+#' (2) <https://github.com/GuangchuangYu/ChIPseeker/issues/87>
 #' 
 #' 1. function can provide a region of interest from txdb object. 
 #' 2. function can make region from granges object. txdb object do not contain insulator or enhancer regions. 
