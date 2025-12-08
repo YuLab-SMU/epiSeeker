@@ -2,22 +2,22 @@
 % Please edit documentation in R/utilities.R
 \name{.epiSeekerEnv}
 \alias{.epiSeekerEnv}
-\title{env function for epiSeeker}
+\title{Env function for epiSeeker}
 \usage{
 .epiSeekerEnv(TxDb, item = "epiSeekerEnv", force = FALSE)
 }
 \arguments{
-\item{TxDb}{txdb object}
+\item{TxDb}{TxDb object}
 
 \item{item}{item name}
 
 \item{force}{force to update txdb item in cache or not.}
 }
 \value{
-Returns \code{invisible(NULL)} invisibly. The primary purpose of this function is to manage
+Returns `invisible(NULL)` invisibly. The primary purpose of this function is to manage
   the TXDB cache through side effects (creating, updating, or removing cached objects),
   rather than returning a value.
 }
 \description{
-env function for epiSeeker
+Env function for epiSeeker
 }

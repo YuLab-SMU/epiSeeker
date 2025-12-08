@@ -2,7 +2,7 @@
 % Please edit documentation in R/tagMatrix.R
 \name{getBioRegion}
 \alias{getBioRegion}
-\title{prepare a bioregion of selected feature}
+\title{Prepare a bioregion of selected feature}
 \usage{
 getBioRegion(
   TxDb = NULL,
@@ -27,15 +27,15 @@ getBioRegion(
 GRanges object
 }
 \description{
-prepare a bioregion of selected feature
+Prepare a bioregion of selected feature
 }
 \details{
 this function combined previous functions getPromoters(), getBioRegion() and getGeneBody() 
 in order to solve the following issues.
 
-(1) \url{https://github.com/GuangchuangYu/ChIPseeker/issues/16}
+(1) <https://github.com/GuangchuangYu/ChIPseeker/issues/16>
 
-(2) \url{https://github.com/GuangchuangYu/ChIPseeker/issues/87}
+(2) <https://github.com/GuangchuangYu/ChIPseeker/issues/87>
 
 1. function can provide a region of interest from txdb object. 
 2. function can make region from granges object. txdb object do not contain insulator or enhancer regions. 

@@ -30,16 +30,16 @@ bmData
 \description{
 makeBmDataFromData method generics
 
-makeBmDataFromData method for \code{CompressedGRangesList} objects
+makeBmDataFromData method for `CompressedGRangesList` objects
 
-makeBmDataFromData method for \code{GRanges} objects
+makeBmDataFromData method for `GRanges` objects
 
-makeBmDataFromData method for \code{list} objects
+makeBmDataFromData method for `list` objects
 
 makeBmDataFromData method for \code{data.frame} objects
 }
 \details{
-The objects in \code{data} must have specific forms. Colunms should be
+The objects in `data` must have specific forms. Colunms should be
    features, which should be organized in the order of "chr", "pos", "value1",
    "value2(optional)". chr stands for chromosome. pos stands for position on
    chromosome, also known as coordinates. value1/2 stands for the value on each base.

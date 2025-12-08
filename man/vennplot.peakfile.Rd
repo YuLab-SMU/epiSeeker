@@ -15,7 +15,7 @@ vennplot.peakfile(files, labels = NULL)
 figure
 }
 \description{
-vennplot for peak files
+Vennplot for peak files
 }
 \examples{
 files <- list(system.file("extdata", "sample_peaks.txt", package="epiSeeker"),

@@ -43,8 +43,8 @@ data(peakAnno)
 plotAnnoPie(peakAnno)
 }
 \seealso{
-\code{\link{annotateSeq}} \code{\link{plotAnnoBar}}
+[annotateSeq()] [plotAnnoBar()]
 }
 \author{
-Guangchuang Yu \url{https://yulab-smu.top}
+Guangchuang Yu <https://yulab-smu.top>
 }

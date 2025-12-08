@@ -9,18 +9,18 @@
 show(object)
 }
 \arguments{
-\item{object}{A \code{csAnno} instance}
+\item{object}{A `csAnno` instance}
 }
 \value{
 message
 }
 \description{
-show method for \code{csAnno} instance
+show method for `csAnno` instance
 }
 \examples{
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
 show(peakfile)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

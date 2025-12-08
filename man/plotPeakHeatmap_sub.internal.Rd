@@ -20,7 +20,7 @@ plotPeakHeatmap_sub.internal(
 
 \item{ylab}{ylab.}
 
-\item{palette}{palette to be filled in,details see \link[ggplot2]{scale_colour_brewer}.}
+\item{palette}{palette to be filled in,details see [ggplot2::scale_colour_brewer()].}
 
 \item{title}{title.}
 

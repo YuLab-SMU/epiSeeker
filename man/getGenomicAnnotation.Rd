@@ -33,7 +33,7 @@ getGenomicAnnotation(
 character vector
 }
 \description{
-get Genomic Annotation of peaks
+Get Genomic Annotation of peaks
 }
 \author{
 G Yu

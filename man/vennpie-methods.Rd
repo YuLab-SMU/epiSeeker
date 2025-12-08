@@ -10,7 +10,7 @@ vennpie(x, r = 0.2, cex = 1.2, ...)
 vennpie(x, r = 0.2, cex=1.2, ...)
 }
 \arguments{
-\item{x}{A \code{csAnno} instance}
+\item{x}{A `csAnno` instance}
 
 \item{r}{initial radius}
 
@@ -29,5 +29,5 @@ data(peakAnno)
 vennpie(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

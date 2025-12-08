@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotGeneTrack.R
 \name{plotGeneTrack}
 \alias{plotGeneTrack}
-\title{plot gene track to plot}
+\title{Plot gene track}
 \usage{
 plotGeneTrack(
   txdb,
@@ -25,13 +25,13 @@ plotGeneTrack(
 )
 }
 \arguments{
-\item{txdb}{txdb object, providing gene annotation.}
+\item{txdb}{TxDb object, providing gene annotation.}
 
 \item{chr}{chromosome id.}
 
-\item{start_pos}{start coordiante of windows.}
+\item{start_pos}{start coordinate of windows.}
 
-\item{end_pos}{end coordiante of windows.}
+\item{end_pos}{end coordinate of windows.}
 
 \item{xlab}{x lab.}
 
@@ -45,7 +45,7 @@ plotGeneTrack(
 
 \item{palette}{palette, default "Set3".}
 
-\item{fromType}{from which type of gene name to change gene id. Default: ENTREZID. See ?clusterProfiler::bitr}
+\item{fromType}{from which type of gene name to change gene id. Default: ENTREZID. See [clusterProfiler::bitr()]}
 
 \item{highlight}{a region or a list of region to highlight.}
 
@@ -63,7 +63,7 @@ plotGeneTrack(
 ggplot object
 }
 \description{
-plot gene track to plot
+Plot gene track
 }
 \examples{
 require(TxDb.Hsapiens.UCSC.hg38.knownGene)

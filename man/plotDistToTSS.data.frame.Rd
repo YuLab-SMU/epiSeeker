@@ -20,13 +20,13 @@ plotDistToTSS.data.frame(
 
 \item{distanceColumn}{column name of the distance from peak to nearest gene}
 
-\item{distanceBreaks}{default is 'c(0, 1000, 3000, 5000, 10000, 100000)'}
+\item{distanceBreaks}{default is `c(0, 1000, 3000, 5000, 10000, 100000)`}
 
 \item{palette}{palette name for coloring different distances. Run `RColorBrewer::display.brewer.all()` to see all applicable values.}
 
 \item{xlab}{x label}
 
-\item{ylab}{y lable}
+\item{ylab}{y label}
 
 \item{title}{figure title}
 
@@ -37,7 +37,7 @@ bar plot that summarize distance from peak to
 TSS of the nearest gene.
 }
 \description{
-plot feature distribution based on the distances to the TSS
+Plot feature distribution based on the distances to the TSS
 }
 \seealso{
 \code{\link{annotateSeq}}

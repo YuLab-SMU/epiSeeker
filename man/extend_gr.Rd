@@ -2,12 +2,12 @@
 % Please edit documentation in R/tagMatrix.R
 \name{extend_gr}
 \alias{extend_gr}
-\title{extend regions functions}
+\title{Extend regions functions}
 \usage{
 extend_gr(regions, upstream, downstream, by, type)
 }
 \arguments{
-\item{regions}{grange object}
+\item{regions}{GRanges object}
 
 \item{upstream}{upstream extension. One of actual number or rel() object.}
 
@@ -18,8 +18,8 @@ extend_gr(regions, upstream, downstream, by, type)
 \item{type}{one of "start_site", "end_site", "body".}
 }
 \value{
-grange object
+GRanges object
 }
 \description{
-extend regions functions
+Extend regions functions
 }

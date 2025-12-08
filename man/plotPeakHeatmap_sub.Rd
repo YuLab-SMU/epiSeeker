@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotTagMatrix.R
 \name{plotPeakHeatmap_sub}
 \alias{plotPeakHeatmap_sub}
-\title{plot peak heatmap sub functino}
+\title{Plot peak heatmap sub function}
 \usage{
 plotPeakHeatmap_sub(
   tagMatrix,
@@ -22,7 +22,7 @@ plotPeakHeatmap_sub(
 
 \item{ylab}{ylab.}
 
-\item{palette}{palette to be filled in,details see \link[ggplot2]{scale_colour_brewer}.}
+\item{palette}{palette to be filled in,details see [ggplot2::scale_colour_brewer()].}
 
 \item{title}{title.}
 
@@ -36,5 +36,5 @@ plotPeakHeatmap_sub(
 ggplot object
 }
 \description{
-plot peak heatmap sub functino
+Plot peak heatmap sub function
 }

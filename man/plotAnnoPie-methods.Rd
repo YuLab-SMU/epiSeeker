@@ -22,7 +22,7 @@ plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA,
     radius = 0.8, ...)
 }
 \arguments{
-\item{x}{\code{csAnno} instance}
+\item{x}{`csAnno` instance}
 
 \item{ndigit}{number of digit to round}
 
@@ -42,12 +42,12 @@ plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA,
 plot
 }
 \description{
-plotAnnoPie method for \code{csAnno} instance
+plotAnnoPie method for `csAnno` instance
 }
 \examples{
 data(peakAnno)
 plotAnnoPie(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

@@ -26,7 +26,7 @@ plotAnnoBar(
 plotAnnoBar(x, xlab="", ylab='Percentage(\%)',title="Feature Distribution", ...)
 }
 \arguments{
-\item{x}{\code{csAnno} instance}
+\item{x}{`csAnno` instance}
 
 \item{xlab}{xlab}
 
@@ -40,12 +40,12 @@ plotAnnoBar(x, xlab="", ylab='Percentage(\%)',title="Feature Distribution", ...)
 plot
 }
 \description{
-plotAnnoBar method for \code{csAnno} instance
+plotAnnoBar method for `csAnno` instance
 }
 \examples{
 data(peakAnno)
 plotAnnoBar(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

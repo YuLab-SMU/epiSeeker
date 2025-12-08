@@ -85,9 +85,9 @@ plotCov(
 
 \item{add_cluster_tree}{add cluster tree for samples or not.}
 
-\item{cluster_dist_method}{method for calculate cluster tree. Details see stat::dist}
+\item{cluster_dist_method}{method for calculate cluster tree. Details see [stats::dist()]}
 
-\item{cluster_hclust_methond}{method for hclust. Details see stat::hclust}
+\item{cluster_hclust_methond}{method for hclust. Details see [stats::hclust()]}
 
 \item{legend_position}{legend_position}
 
@@ -114,7 +114,7 @@ ggplot2 object
 plotCov
 }
 \details{
-plot peak coverage
+Plot peak coverage
 }
 \examples{
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")

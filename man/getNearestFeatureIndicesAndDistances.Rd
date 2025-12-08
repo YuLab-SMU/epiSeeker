@@ -33,7 +33,7 @@ getNearestFeatureIndicesAndDistances(
 list
 }
 \description{
-get index of features that closest to peak and calculate distance
+Get index of features that closest to peak and calculate distance
 }
 \author{
 G Yu

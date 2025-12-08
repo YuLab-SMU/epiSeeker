@@ -306,7 +306,6 @@ plotBmProf <- function(df,
 #' @importFrom aplot xlim2
 #' @importFrom aplot insert_bottom
 #' @importFrom magrittr %>%
-#' @importFrom gginnards move_layers
 plotBmProf.internal <- function(df,
                                 motif_color,
                                 interactive = FALSE,

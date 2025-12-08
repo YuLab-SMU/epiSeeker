@@ -2,7 +2,7 @@
 % Please edit documentation in R/getMotifMatrix.R
 \name{getMotifMatrix}
 \alias{getMotifMatrix}
-\title{get the information of motif in a range}
+\title{Get the information of motif in a range}
 \usage{
 getMotifMatrix(region, pwm, ref_obj, by = "name")
 }
@@ -19,7 +19,7 @@ getMotifMatrix(region, pwm, ref_obj, by = "name")
 score matrix
 }
 \description{
-get the information of motif in a range
+Get the information of motif in a range
 }
 \examples{
 require(BSgenome.Hsapiens.UCSC.hg38)

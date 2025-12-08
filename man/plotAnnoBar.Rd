@@ -27,14 +27,14 @@ plotAnnoBar.data.frame(
 bar plot that summarize genomic features of peaks
 }
 \description{
-plot feature distribution based on their chromosome region
+Plot feature distribution based on their chromosome region
 }
 \details{
 plot chromosome region features
 }
 \seealso{
-\code{\link{annotateSeq}} \code{\link{plotAnnoPie}}
+[annotateSeq()] [plotAnnoPie()]
 }
 \author{
-Guangchuang Yu \url{https://yulab-smu.top}
+Guangchuang Yu <https://yulab-smu.top>
 }

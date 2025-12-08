@@ -13,18 +13,18 @@ seq2gene(seq, tssRegion, flankDistance, TxDb, sameStrand = FALSE)
 
 \item{flankDistance}{flanking search radius}
 
-\item{TxDb}{TranscriptDb object}
+\item{TxDb}{TxDb object}
 
-\item{sameStrand}{logical whether find nearest/overlap gene in the same strand}
+\item{sameStrand}{logical, whether find nearest/overlap gene in the same strand}
 }
 \value{
 gene vector
 }
 \description{
-annotate genomic regions to genes in many-to-many mapping
+Annotate genomic regions to genes in many-to-many mapping
 }
 \details{
-This funciton associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user specify distance).
+This function associates genomic regions with coding genes in a many-to-many mapping. It first maps genomic regions to host genes (either located in exon or intron), proximal genes (located in promoter regions) and flanking genes (located in upstream and downstream within user-specified distance).
 }
 \examples{
 data(seq2gene_result)

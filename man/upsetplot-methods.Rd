@@ -8,7 +8,7 @@
 upsetplot(x, ...)
 }
 \arguments{
-\item{x}{A \code{csAnno} instance}
+\item{x}{A `csAnno` instance}
 
 \item{...}{additional parameter}
 }
@@ -23,5 +23,5 @@ data(peakAnno)
 upsetplot(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

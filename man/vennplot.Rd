@@ -9,7 +9,7 @@ vennplot(Sets, ...)
 \arguments{
 \item{Sets}{a list of object, can be vector or GRanges object.}
 
-\item{...}{extra parameters using ggVennDiagram. Details see \link[ggVennDiagram]{ggVennDiagram}}
+\item{...}{extra parameters using ggVennDiagram. Details see [ggVennDiagram::ggVennDiagram]}
 }
 \value{
 venn plot that summarize the overlap of peaks
@@ -17,7 +17,7 @@ from different experiments or gene annotation from
 different peak files.
 }
 \description{
-plot the overlap of a list of object
+Plot the overlap of a list of object
 }
 \details{
 venn plot produced through this way has colors which can be defined by users using

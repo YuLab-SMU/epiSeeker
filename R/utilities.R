@@ -500,7 +500,6 @@ getFirstHitIndex <- function(x) {
 #' @title overlap
 #' @param Sets a list of objects
 #' @return data.frame
-#' @importFrom gtools permutations
 #' @author G Yu
 overlap <- function(Sets) {
   ## this function is very generic.
@@ -510,7 +509,7 @@ overlap <- function(Sets) {
 
   nn <- names(Sets)
   w <- t(apply(
-    permutations(2, length(Sets), 0:1, repeats.allowed = TRUE),
+    gtools::permutations(2, length(Sets), 0:1, repeats.allowed = TRUE),
     1,
     rev
   ))
@@ -530,7 +529,7 @@ overlap <- function(Sets) {
         len <- getIntersectLength(Sets, as.logical(w[ii, ]))
         ww <- w[ii, ]
         jj <- which(ww == 0)
-        pp <- permutations(2, length(jj), 0:1, repeats.allowed = TRUE)
+        pp <- gtools::permutations(2, length(jj), 0:1, repeats.allowed = TRUE)
 
         for (aa in 2:nrow(pp)) {
           ## 1st row is all 0, abondoned

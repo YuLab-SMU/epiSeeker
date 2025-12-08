@@ -32,7 +32,7 @@ ylab="Binding sites (\%) (5'->3')",
 title="Distribution of transcription factor-binding loci relative to TSS",...)
 }
 \arguments{
-\item{x}{\code{csAnno} instance}
+\item{x}{`csAnno` instance}
 
 \item{distanceColumn}{distance column name}
 
@@ -44,7 +44,7 @@ title="Distribution of transcription factor-binding loci relative to TSS",...)
 
 \item{...}{additional parameter}
 
-\item{distanceBreaks}{breaks of distance, default is 'c(0, 1000, 3000, 5000, 10000, 100000)'}
+\item{distanceBreaks}{breaks of distance, default is `c(0, 1000, 3000, 5000, 10000, 100000)`}
 
 \item{palette}{palette name for coloring different distances. Run `RColorBrewer::display.brewer.all()` to see all applicable values.}
 }
@@ -52,12 +52,12 @@ title="Distribution of transcription factor-binding loci relative to TSS",...)
 plot
 }
 \description{
-plotDistToTSS method for \code{csAnno} instance
+plotDistToTSS method for `csAnno` instance
 }
 \examples{
 data(peakAnno)
 plotDistToTSS(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

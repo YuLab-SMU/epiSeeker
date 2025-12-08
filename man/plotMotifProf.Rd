@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotMotifProf.R
 \name{plotMotifProf}
 \alias{plotMotifProf}
-\title{plot the profile of motif of specific peak}
+\title{Plot the profile of motif of specific peak}
 \usage{
 plotMotifProf(
   df,
@@ -33,7 +33,7 @@ plotMotifProf(
 ggplot object
 }
 \description{
-plot the profile of motif of specific peak
+Plot the profile of motif of specific peak
 }
 \examples{
 require(BSgenome.Hsapiens.UCSC.hg38)

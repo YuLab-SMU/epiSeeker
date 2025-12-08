@@ -43,7 +43,7 @@ plotBmProf(
 )
 }
 \arguments{
-\item{df}{the base modification dataframe}
+\item{df}{the base modification data.frame}
 
 \item{motif_color}{the color for different motifs(CHH,CHG,CG)}
 
@@ -117,7 +117,7 @@ plotBmProf(
 ggplot object
 }
 \description{
-plot base modification profile
+Plot base modification profile
 }
 \examples{
 require(BSgenome.Hsapiens.UCSC.hg38)
@@ -125,6 +125,7 @@ data(demo_bmdata)
 bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
                         input = demo_bmdata,
+#                          base = "C",
                         motif = c("CG"))
 plotBmProf(bmMatrix)
 }

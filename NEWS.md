@@ -1,4 +1,4 @@
-# epiSeeker 0.99.11
+# epiSeeker 0.99.12
 
 + add more runnable examples and increase the coverage of tests (44.18%) (2025-11-30, Sun)
 + use new demo data for base modification (`demo_bmdata`) and move some dependency packages from 'Imports' to 'Suggests' (2025-11-10, Mon)

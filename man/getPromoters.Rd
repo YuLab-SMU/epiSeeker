@@ -2,12 +2,12 @@
 % Please edit documentation in R/tagMatrix.R
 \name{getPromoters}
 \alias{getPromoters}
-\title{get promoter region in grange format}
+\title{Get promoter region in GRanges format}
 \usage{
 getPromoters(TxDb = NULL, upstream = 1000, downstream = 1000, by = "gene")
 }
 \arguments{
-\item{TxDb}{TxDb}
+\item{TxDb}{TxDb object}
 
 \item{upstream}{upstream extension. One of actual number or rel() object.}
 
@@ -19,7 +19,7 @@ getPromoters(TxDb = NULL, upstream = 1000, downstream = 1000, by = "gene")
 GRanges object
 }
 \description{
-get promoter region in grange format
+Get promoter region in GRanges format
 }
 \examples{
 require(TxDb.Hsapiens.UCSC.hg38.knownGene)

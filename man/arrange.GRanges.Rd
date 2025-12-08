@@ -2,7 +2,7 @@
 % Please edit documentation in R/dplyr-verb.R
 \name{arrange.GRanges}
 \alias{arrange.GRanges}
-\title{arrange granges object}
+\title{Arrange GRanges object}
 \usage{
 \method{arrange}{GRanges}(.data, ..., .by_group = FALSE)
 }
@@ -17,7 +17,7 @@
 grange object
 }
 \description{
-arrange granges object
+Arrange GRanges object
 }
 \examples{
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")

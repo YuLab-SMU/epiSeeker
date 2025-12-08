@@ -2,7 +2,7 @@
 % Please edit documentation in R/getBmMatrix.R
 \name{getBmMatrix.BSseq}
 \alias{getBmMatrix.BSseq}
-\title{get the information of base modification}
+\title{Get the information of base modification}
 \usage{
 getBmMatrix.BSseq(
   region,
@@ -15,9 +15,9 @@ getBmMatrix.BSseq(
 )
 }
 \arguments{
-\item{region}{base modification region in the form of dataframe, having columns of "chr","start" and "end"}
+\item{region}{base modification region in the form of data.frame, having columns of "chr","start" and "end"}
 
-\item{input}{the input data stored in \link[bsseq]{BSseq} objects}
+\item{input}{the input data stored in [bsseq::BSseq] objects}
 
 \item{BSgenome}{genome reference}
 
@@ -30,12 +30,12 @@ getBmMatrix.BSseq(
 \item{position_bias}{1-base bias. e.g position_bias = 1("C" in "CHH"), position_bias = 2("A" in "GAGG")}
 }
 \value{
-dataframe
+data.frame
 }
 \description{
-get the information of base modification
+Get the information of base modification
 }
 \details{
-This function retrieve the information of each base, requiring \link[bsseq]{BSseq} object as input.
-   Then organized it to dataframe.
+This function retrieve the information of each base, requiring [bsseq::BSseq] object as input.
+   Then organized it to data.frame.
 }
