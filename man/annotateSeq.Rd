@@ -96,7 +96,7 @@ data(peakAnno)
 peakAnno
 }
 \seealso{
-\code{\link{plotAnnoBar}} \code{\link{plotAnnoPie}} \code{\link{plotDistToTSS}}
+[plotAnnoBar()] [plotAnnoPie()] [plotDistToTSS()]
 }
 \author{
 G Yu

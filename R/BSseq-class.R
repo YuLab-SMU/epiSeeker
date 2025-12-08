@@ -1,10 +1,10 @@
-#' getBmMatrix method for \link[bsseq]{BSseq}
+#' getBmMatrix method for [bsseq::BSseq]
 #'
 #' @docType methods
 #' @rdname getBmMatrix-methods
 #' @title getBmMatrix method
-#' @param region base modification region in the form of dataframe, having columns of "chr","start" and "end"
-#' @param input the input data stored in \link[bsseq]{BSseq} objects or BSseqExtra objects
+#' @param region base modification region in the form of data.frame, having columns of "chr","start" and "end"
+#' @param input the input data stored in [bsseq::BSseq] objects or BSseqExtra objects
 #' @param BSgenome genome reference
 #' @param base one of A/T/G/C/U
 #' @param motif the motif(e.g C:CG/CH, A:GAGG/AGG) of the base modification
@@ -12,7 +12,7 @@
 #' @param cover_depth take the depth of cover into account or not
 #' @param ... other parameters
 #' @aliases getBmMatrix, BSseq-methods
-#' @return dataframe
+#' @return data.frame
 #' @importFrom methods setMethod
 #' @exportMethod getBmMatrix
 setMethod("getBmMatrix",signature(input = "BSseq"),

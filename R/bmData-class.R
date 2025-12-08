@@ -1,6 +1,6 @@
 #' bmData Class
 #'
-#' This class added extra data to \link[bsseq]{BSseq-class}. Change the assays by storing
+#' This class added extra data to [bsseq::BSseq-class]. Change the assays by storing
 #'     M/Cov to any value1/2
 #'
 #' @name bmData-class
@@ -9,8 +9,8 @@
 #' @importFrom methods setClass
 #' @keywords classes
 #' @return bmData object
-#' @seealso bmData class inherits \link[SummarizedExperiment]{RangedSummarizedExperiment-class},
-#'     other slots see \link[SummarizedExperiment]{RangedSummarizedExperiment}
+#' @seealso bmData class inherits [SummarizedExperiment::RangedSummarizedExperiment-class],
+#'     other slots see [SummarizedExperiment::RangedSummarizedExperiment]
 #' @exportClass bmData
 setClass("bmData", contains = "RangedSummarizedExperiment")
 
@@ -23,10 +23,10 @@ setClass("bmData", contains = "RangedSummarizedExperiment")
 #' @param value2 the second value to be stored, a matrix-like object
 #' @param pos A vector of locations
 #' @param chr A vector of chromosomes
-#' @param gr An object of type \link[GenomicRanges]{GRanges}
+#' @param gr An object of type [GenomicRanges::GRanges]
 #' @param sampleNames A vector of sample names
 #' @param valueNames the name of value1 or value2 or both. The order maps to the value.
-#' @param ... other parameters from \link[bsseq]{BSseq}
+#' @param ... other parameters from [bsseq::BSseq]
 #' @importFrom bsseq BSseq
 #' @importFrom bsseq pData
 #' @importFrom SummarizedExperiment assays<-

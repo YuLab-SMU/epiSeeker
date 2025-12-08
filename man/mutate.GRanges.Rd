@@ -2,7 +2,7 @@
 % Please edit documentation in R/dplyr-verb.R
 \name{mutate.GRanges}
 \alias{mutate.GRanges}
-\title{extend mutate to Peak (GRanges class object)}
+\title{Extend mutate to Peak (GRanges class object)}
 \usage{
 \method{mutate}{GRanges}(
   .data,
@@ -33,7 +33,7 @@ specifying which columns to group by for operations}
 A processed GRanges object containing the added or modified columns
 }
 \description{
-extend mutate to Peak (GRanges class object)
+Extend mutate to Peak (GRanges class object)
 }
 \examples{
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")

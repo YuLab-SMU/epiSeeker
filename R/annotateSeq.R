@@ -1,6 +1,5 @@
 #' Annotate peaks
 #'
-#'
 #' @title annotateSeq
 #' @param peak peak file or GRanges object
 #' @param tssRegion Region Range of TSS
@@ -52,7 +51,7 @@
 #' @examples
 #' data(peakAnno)
 #' peakAnno
-#' @seealso \code{\link{plotAnnoBar}} \code{\link{plotAnnoPie}} \code{\link{plotDistToTSS}}
+#' @seealso [plotAnnoBar()] [plotAnnoPie()] [plotDistToTSS()]
 #' @export
 #' @author G Yu
 annotateSeq <- function(peak,

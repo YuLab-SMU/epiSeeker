@@ -60,12 +60,12 @@ getBmMatrix(
 \item{cover_depth}{take the depth of cover into account or not}
 }
 \value{
-dataframe
+data.frame
 
 dataframe
 }
 \description{
-getBmMatrix method for \link[bsseq]{BSseq}
+getBmMatrix method for [bsseq::BSseq]
 
 getBmMatrix method for \linkS4class{bmData}
 }

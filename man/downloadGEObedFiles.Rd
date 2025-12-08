@@ -15,7 +15,7 @@ downloadGEObedFiles(genome, destDir = getwd())
 GEO files
 }
 \description{
-download all BED files of a particular genome version
+Download all BED files of a particular genome version
 }
 \examples{
 gse <- "GSE11431"

@@ -8,11 +8,11 @@
 bmData object
 }
 \description{
-This class added extra data to \link[bsseq]{BSseq-class}. Change the assays by storing
+This class added extra data to [bsseq::BSseq-class]. Change the assays by storing
     M/Cov to any value1/2
 }
 \seealso{
-bmData class inherits \link[SummarizedExperiment]{RangedSummarizedExperiment-class},
-    other slots see \link[SummarizedExperiment]{RangedSummarizedExperiment}
+bmData class inherits [SummarizedExperiment::RangedSummarizedExperiment-class],
+    other slots see [SummarizedExperiment::RangedSummarizedExperiment]
 }
 \keyword{classes}

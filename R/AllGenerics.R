@@ -1,6 +1,5 @@
 #' vennpie method generics
 #'
-#'
 #' @docType methods
 #' @name vennpie
 #' @rdname vennpie-methods
@@ -15,7 +14,6 @@ setGeneric("vennpie",
 
 
 #' plotDistToTSS method generics
-#'
 #'
 #' @docType methods
 #' @name plotDistToTSS
@@ -35,7 +33,6 @@ setGeneric("plotDistToTSS",
 
 #' plotAnnoBar method generics
 #'
-#'
 #' @docType methods
 #' @name plotAnnoBar
 #' @rdname plotAnnoBar-methods
@@ -54,7 +51,6 @@ setGeneric("plotAnnoBar",
 
 
 #' plotAnnoPie method generics
-#'
 #'
 #' @docType methods
 #' @name plotAnnoPie
@@ -77,7 +73,6 @@ setGeneric("plotAnnoPie",
 
 
 #' getBmMatrix methods generics
-#'
 #'
 #' @docType methods
 #' @name getBmMatrix

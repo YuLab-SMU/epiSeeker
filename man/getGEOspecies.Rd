@@ -10,7 +10,7 @@ getGEOspecies()
 data.frame
 }
 \description{
-accessing species statistics collecting from GEO database
+Accessing species statistics collecting from GEO database
 }
 \examples{
 getGEOspecies()

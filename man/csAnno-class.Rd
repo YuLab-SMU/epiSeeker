@@ -38,9 +38,9 @@ This class represents the output of epiSeeker Annotation
 }}
 
 \seealso{
-\code{\link{annotateSeq}}
+[annotateSeq()]
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }
 \keyword{classes}

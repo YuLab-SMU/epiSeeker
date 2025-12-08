@@ -1,7 +1,6 @@
 #' Class "csAnno"
 #' This class represents the output of epiSeeker Annotation
 #'
-#'
 #' @name csAnno-class
 #' @aliases csAnno-class
 #' show,csAnno-method vennpie,csAnno-method
@@ -18,8 +17,8 @@
 #' @slot annoStat annotation statistics
 #' @slot peakNum number of peaks
 #' @exportClass csAnno
-#' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
-#' @seealso \code{\link{annotateSeq}}
+#' @author Guangchuang Yu <https://guangchuangyu.github.io>
+#' @seealso [annotateSeq()]
 #' @return annotation object
 #' @keywords classes
 setClass("csAnno",
@@ -39,7 +38,7 @@ setClass("csAnno",
 #' @title as.GRanges
 #' @param x csAnno object
 #' @return GRanges object
-#' @author Guangchuang Yu \url{https://guangchuangyu.github.io}
+#' @author Guangchuang Yu <https://guangchuangyu.github.io>
 #' @examples
 #' data(peakAnno)
 #' as.GRanges(peakAnno)
@@ -51,7 +50,6 @@ as.GRanges <- function(x) {
 }
 
 #' getting status of annotation
-#' 
 #' 
 #' @title getAnnoStat
 #' @param x csAnno object
@@ -69,7 +67,6 @@ getAnnoStat <- function(x) {
 
 
 #' Combine csAnno Object
-#'
 #'
 #' https://github.com/YuLab-SMU/ChIPseeker/issues/157
 #' @title combine_csAnno

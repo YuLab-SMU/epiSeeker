@@ -1,5 +1,4 @@
-#' get gene annotation, symbol, gene name etc.
-#'
+#' Get gene annotation, symbol, gene name etc.
 #'
 #' @title getGeneAnno
 #' @param annoDb annotation package

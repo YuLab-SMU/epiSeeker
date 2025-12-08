@@ -19,7 +19,7 @@ getGeneAnno(annoDb, geneID, type, columns)
 data.frame
 }
 \description{
-get gene annotation, symbol, gene name etc.
+Get gene annotation, symbol, gene name etc.
 }
 \author{
 G Yu

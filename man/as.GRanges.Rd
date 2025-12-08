@@ -20,5 +20,5 @@ data(peakAnno)
 as.GRanges(peakAnno)
 }
 \author{
-Guangchuang Yu \url{https://guangchuangyu.github.io}
+Guangchuang Yu <https://guangchuangyu.github.io>
 }

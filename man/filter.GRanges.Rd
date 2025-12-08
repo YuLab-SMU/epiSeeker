@@ -2,7 +2,7 @@
 % Please edit documentation in R/dplyr-verb.R
 \name{filter.GRanges}
 \alias{filter.GRanges}
-\title{extend filter to Peak (GRanges class object)}
+\title{Extend filter to Peak (GRanges class object)}
 \usage{
 \method{filter}{GRanges}(.data, ..., .by = NULL, .preserve = FALSE)
 }
@@ -23,7 +23,7 @@ A filtered GRanges object containing only rows that meet the specified criteria
 grange object
 }
 \description{
-extend filter to Peak (GRanges class object)
+Extend filter to Peak (GRanges class object)
 }
 \examples{
 peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")

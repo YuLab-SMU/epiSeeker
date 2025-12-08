@@ -6,8 +6,7 @@
 
 
 
-#' accessing species statistics collecting from GEO database
-#'
+#' Accessing species statistics collecting from GEO database
 #'
 #' @title getGEOspecies
 #' @return data.frame
@@ -22,8 +21,7 @@ getGEOspecies <- function() {
     return(res)
 }
 
-#' get genome version statistics collecting from GEO ChIPseq data
-#'
+#' Get genome version statistics collecting from GEO ChIPseq data
 #'
 #' @title getGEOgenomeVersion
 #' @return data.frame
@@ -44,8 +42,7 @@ getGEOgenomeVersion <- function() {
     return(res)
 }
 
-#' get subset of GEO information by genome version keyword
-#'
+#' Get subset of GEO information by genome version keyword
 #'
 #' @title getGEOInfo
 #' @param genome genome version
@@ -65,15 +62,13 @@ getGEOInfo <- function(genome, simplify =TRUE) {
     return(res)
 }
 
-#' download all BED files of a particular genome version
-#'
+#' Download all BED files of a particular genome version
 #'
 #' @title downloadGEObedFiles
 #' @param genome genome version
 #' @param destDir destination folder
-#' @return NULL
-#' @author G Yu
 #' @return GEO files
+#' @author G Yu
 #' @examples 
 #' gse <- "GSE11431"
 #' @export
@@ -82,15 +77,13 @@ downloadGEObedFiles <- function(genome, destDir=getwd()) {
     downloadGEO.internal(info, destDir)
 }
 
-#' download BED supplementary files of a list of GSM accession numbers
-#'
+#' Download BED supplementary files of a list of GSM accession numbers
 #'
 #' @title downloadGSMbedFiles
 #' @param GSM GSM accession numbers
 #' @param destDir destination folder
-#' @return NULL
-#' @author G Yu
 #' @return GEO data
+#' @author G Yu
 #' @examples 
 #' gsm <- "GSM288348"
 #' @export

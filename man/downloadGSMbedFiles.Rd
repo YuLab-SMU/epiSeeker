@@ -15,7 +15,7 @@ downloadGSMbedFiles(GSM, destDir = getwd())
 GEO data
 }
 \description{
-download BED supplementary files of a list of GSM accession numbers
+Download BED supplementary files of a list of GSM accession numbers
 }
 \examples{
 gsm <- "GSM288348"

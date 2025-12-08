@@ -1,4 +1,4 @@
-#' @title extend filter to Peak (GRanges class object)
+#' @title Extend filter to Peak (GRanges class object)
 #' @method filter GRanges
 #' @param .data granges object
 #' @param ... additional parameters
@@ -22,7 +22,7 @@ filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
 
-#' @title extend mutate to Peak (GRanges class object)
+#' @title Extend mutate to Peak (GRanges class object)
 #' @method mutate GRanges
 #' @param .data granges object
 #' @param ... additional parameters
@@ -87,7 +87,7 @@ rename.GRanges <- function(.data, ...){
   return(new)
 }
 
-#' @title arrange granges object
+#' @title Arrange GRanges object
 #' @method arrange GRanges
 #' @importFrom dplyr arrange
 #' @param .data granges object
@@ -99,7 +99,7 @@ rename.GRanges <- function(.data, ...){
 #' dplyr::arrange(peak, seqnames)
 #' @return grange object
 #' @export
-arrange.GRanges <- function(.data, ..., .by_group = FALSE){
+arrange.GRanges <- function(.data, ..., .by_group = FALSE) {
   dots <- rlang::quos(...)
   as.data.frame(.data) |> 
     dplyr::arrange(!!!dots, .by_group = .by_group) |> 

@@ -1,5 +1,4 @@
-#' calcuate overlap significant of ChIP experiments based on their nearest gene annotation
-#'
+#' Calculate overlap significance of ChIP experiments based on their nearest gene annotation
 #'
 #' @title enrichAnnoOverlap
 #' @param queryPeak query bed file
