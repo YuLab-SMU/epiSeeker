@@ -5,7 +5,7 @@ gh-pages
 src
 epiSeeker_files
 epiSeeker_cache
-/.quarto/
+.quarto/
 01-Profile_cache
 02-Region_cache
 03-Anno_cache
@@ -15,3 +15,4 @@ epiSeeker_cache
 06-DataMining_cache
 Session-info_cache
 index_cache
+/.quarto/

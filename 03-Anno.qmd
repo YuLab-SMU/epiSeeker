@@ -5,7 +5,11 @@
 ```{r}
 #| include: false
 library(yulab.utils)
+library(epiSeeker)
 Biocpkg <- yulab.utils::Biocpkg
+CRANpkg <- yulab.utils::CRANpkg
+
+data(peakAnno)
 ```
 
 ```{r}
