@@ -2,7 +2,7 @@
 "_PACKAGE"
 
 #' @title Information Datasets
-#' 
+#'
 #' @description ucsc genome version, precalculated data and gsm information
 #' @section Provenance:
 #' The `gsminfo` dataset was constructed programmatically from public
@@ -71,7 +71,7 @@ NULL
 
 #' @title Example data of peak annotation
 #'
-#' @description A `csAnno` object representing the annotation result of the example peak set `demo_peak`.  
+#' @description A `csAnno` object representing the annotation result of the example peak set `demo_peak`.
 #' Peaks were annotated using the function `annotateSeq()` in `epiSeeker`.
 #' @section Provenance:
 #' Input peaks were taken from the example dataset `demo_peak`.
@@ -105,7 +105,7 @@ NULL
 #' @description  Peak in Grange object. See data-raw/example_data.R
 #' @section Provenance:
 #' The demo peaks were extracted from GSM6418464 in the GEO database
-#' (\url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6418464}). 
+#' (\url{https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6418464}).
 #' @section Data structure:
 #' A \code{GRanges} object with 220 genomic ranges and the following metadata columns:
 #' \describe{
@@ -124,14 +124,14 @@ NULL
 #' @title Example data of a list of peak annotation
 #'
 #' @description A list of \code{csAnno} objects obtained by annotating multiple peak
-#' files using \code{epiSeeker::annotateSeq()}.  
+#' files using \code{epiSeeker::annotateSeq()}.
 #' See data-raw/example_data.R
 #' @section Provenance:
 #' The example peak annotation list was generated using several example peak
 #' files returned by \code{getSampleFiles()}. Each peak file was annotated
 #' using \code{epiSeeker::annotateSeq()}.
 #' @section Data structure:
-#' A named list where each element is a \code{csAnno} S4 object produced by \code{annotateSeq()}.  
+#' A named list where each element is a \code{csAnno} S4 object produced by \code{annotateSeq()}.
 #' @name peakAnnoList
 #' @docType data
 #' @format A a list of \code{csAnno} objects.
@@ -145,7 +145,7 @@ NULL
 #' tag distribution plotting functions in \pkg{epiSeeker}. See data-raw/example_data.R
 #' @section Provenance:
 #' The tag matrix was generated using a sample peak file obtained from
-#' \code{getSampleFiles()[[4]]}.  
+#' \code{getSampleFiles()[[4]]}.
 #' Peaks were imported via \code{readPeakFile()} and processed using
 #' \code{epiSeeker::getTagMatrix()} with the following settings:
 #' \itemize{
@@ -174,13 +174,13 @@ NULL
 #' @title motif reference for Homo sapiens
 #'
 #' @description A collection of transcription factor position weight matrices (PWMs)
-#' retrieved from the JASPAR 2024 database.  
+#' retrieved from the JASPAR 2024 database.
 #' This dataset is used to demonstrate motif enrichment, motif scanning,
 #' and peak–motif association analyses in \pkg{epiSeeker}.
 #' See data-raw/example_data.R
 #' @section Provenance:
 #' The PWM set was obtained using the JASPAR 2024 SQLite database bundled in
-#' the \pkg{JASPAR2024} package.  
+#' the \pkg{JASPAR2024} package.
 #' Matrices were retrieved using \pkg{TFBSTools} with the following parameters:
 #' \itemize{
 #'   \item \code{collection = "CORE"}
@@ -190,7 +190,7 @@ NULL
 #' }
 #' @section Data structure:
 #' A \code{TFBSTools::PWMatrixList} (or \code{PFMatrixList}) object containing
-#' one PWM per transcription factor.  
+#' one PWM per transcription factor.
 #' Each matrix stores nucleotide position weights across the TF binding motif,
 #' with rows representing \code{A, C, G, T} and columns representing motif positions.
 #' @format A \code{PFMatrixList} object containing PWMs for multiple human
@@ -203,15 +203,15 @@ NULL
 #' @title demo base modification data
 #'
 #' @description A small example \code{bmData} object representing cytosine methylation
-#' measurements from Bisulfite-Seq data.  
+#' measurements from Bisulfite-Seq data.
 #' This dataset is intended for demonstrating base-modification visualization,
 #' regional methylation profiling, and \code{epiSeeker} workflows operating on
-#' \code{bmData} objects. 
+#' \code{bmData} objects.
 #' See data-raw/example_data.R
-#' 
+#'
 #' @section Provenance:
 #' The example dataset was constructed from publicly available Bisulfite-Seq
-#' data (GEO accession: \code{GSM6940395}, genome build: hg38).  
+#' data (GEO accession: \code{GSM6940395}, genome build: hg38).
 #' The raw methylation coverage file (\code{*.bismark.cov.gz}) was imported
 #' using \pkg{data.table::fread()}.
 #'
@@ -228,7 +228,7 @@ NULL
 #'   \item Convert methylation percentage to a fraction.
 #' }
 #' @section Data structure:
-#' A \code{bmData} S4 object containing one sample (\code{"acinar_methyl"}).  
+#' A \code{bmData} S4 object containing one sample (\code{"acinar_methyl"}).
 #' Each entry stores:
 #' \describe{
 #'   \item{\code{chr}}{Chromosome in UCSC format (e.g. \code{"chr22"}).}
@@ -245,7 +245,7 @@ NULL
 #' @title Result of seq2gene
 #'
 #' @description A character vector of gene IDs returned by \code{seq2gene()}, representing
-#' genes associated with a subset of peaks.  
+#' genes associated with a subset of peaks.
 #' This dataset is used to illustrate peak-to-gene mapping and regulatory
 #' region annotation workflows in \pkg{epiSeeker}.
 #' See data-raw/example_data.R
@@ -257,7 +257,7 @@ NULL
 #' @section Provenance:
 #' The example peak set \code{demo_peak} was constructed by sampling up to
 #' 10 peaks per autosome (chr1–chr22) from the ChIP-seq dataset
-#' \code{GSM6418464}.  
+#' \code{GSM6418464}.
 #' Peaks were imported using \code{readPeakFile()}, subset by chromosome,
 #' and combined into a single \code{GRanges} object.
 #'
@@ -280,5 +280,5 @@ NULL
 NULL
 
 #' Name of the epiSeeker cache environment (internal static variable)
-#' @format character vector 
+#' @format character vector
 epiSeekerCache <- "epiSeekerEnv"

@@ -4,7 +4,7 @@ context("test build-in data")
 
 test_that("demo_peak", {
     data("demo_peak", package = "epiSeeker")
-    
+
     expect_s4_class(demo_peak, "GRanges")
     expect_true(length(demo_peak) > 0)
     expect_true(ncol(mcols(demo_peak)) >= 1)
@@ -45,8 +45,8 @@ test_that("pwm_obj", {
     data("pwm_obj", package = "epiSeeker")
 
     expect_true(
-        inherits(pwm_obj, "PFMatrixList") || 
-        inherits(pwm_obj, "PWMatrixList")
+        inherits(pwm_obj, "PFMatrixList") ||
+            inherits(pwm_obj, "PWMatrixList")
     )
     expect_true(length(pwm_obj) > 0)
 })

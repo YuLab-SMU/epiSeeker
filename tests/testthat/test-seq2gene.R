@@ -5,7 +5,6 @@ library(epiSeeker)
 context("test function for seq2gene ")
 
 test_that("seq2gene runs correctly on demo_peak", {
-
     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 
     data("demo_peak", package = "epiSeeker")
@@ -18,6 +17,6 @@ test_that("seq2gene runs correctly on demo_peak", {
     )
 
 
-    expect_type(genes, "character")       
-    expect_true(length(genes) > 0)          
+    expect_type(genes, "character")
+    expect_true(length(genes) > 0)
 })

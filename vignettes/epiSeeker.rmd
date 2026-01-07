@@ -22,9 +22,11 @@ vignette: >
 
 
 ```{r style, echo=FALSE, results='asis', message=FALSE}
-knitr::opts_chunk$set(tidy         = FALSE,
-                      warning      = FALSE,
-                      message      = FALSE)
+knitr::opts_chunk$set(
+    tidy = FALSE,
+    warning = FALSE,
+    message = FALSE
+)
 
 library(yulab.utils)
 Biocannopkg <- yulab.utils::Biocpkg
@@ -96,8 +98,7 @@ such as `Me‑DIP` and `oxBS‑seq` for `5mC`; `TAB-seq` and `hme‑DIP` for `5h
 Aside from these, third-generation sequencing methods, which refer to direct single-molecule sequencing, 
 such as Oxford Nanopore Sequencing and PacBio SMRT Sequencing.
 
-```{r}
-## loading packages
+```{r load-data}
 txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 data(peakAnnoList)
 # peakAnnoList <- lapply(files, annotateSeq, TxDb=txdb,
@@ -111,7 +112,7 @@ from _GEO (GSE40740)_[@pemberton_genome-wide_2014] while _ARmo\_0M_, _ARmo\_1nM_
 downloaded from _GEO (GSE48308)_[@urbanucci_overexpression_2012] . 
 `r Biocpkg("ChIPseeker")` provides `readPeakFile` to load the peak and store in `GRanges` object.
 
-```{r}
+```{r read-peak-file}
 files <- getSampleFiles()
 print(files)
 peak <- readPeakFile(files[[4]])
@@ -127,8 +128,8 @@ supported and can be used to compare coverage of multiple bed files.
 Interactive function is also supported by epiSeeker. When the user hovers the mouse over the corresponding element, 
 it can display the position and value of the peak.
 
-```{r fig.height=4, fig.width=10}
-plotCov(peak, weightCol="V5", chrs=c("chr17", "chr18"), xlim=c(4.5e7, 5e7), interactive = TRUE)
+```{r cov-plot, fig.height=4, fig.width=10}
+plotCov(peak, weightCol = "V5", chrs = c("chr17", "chr18"), xlim = c(4.5e7, 5e7), interactive = TRUE)
 ```
 
 Hierarchical clustering and co-accessibility relationships and will emerge in the process of analyzing the 
@@ -141,27 +142,30 @@ scores and the highest negative correlation scores.
 # We only show usage here for demonstration
 pancancer_atac <- readRDS("./data/pancancer_atac.rds")
 
-fill_color <- c("#a10589", "#fce364", "#854d23", "#c0b742",
-                "#1c670d", "#3ec486", "#f7bbff", "#ee0700",
-                "#172ec5", "#f56103", "#3f3a95", "#7a7875",
-                "#e06cdc", "#7effff", "#f9b250", "#af1e18",
-                "#997f69", "#9d82ed", "#40bcf5", "#f28582",
-                "#97be8c", "#7b2ed0", "#81f75b")
+fill_color <- c(
+    "#a10589", "#fce364", "#854d23", "#c0b742",
+    "#1c670d", "#3ec486", "#f7bbff", "#ee0700",
+    "#172ec5", "#f56103", "#3f3a95", "#7a7875",
+    "#e06cdc", "#7effff", "#f9b250", "#af1e18",
+    "#997f69", "#9d82ed", "#40bcf5", "#f28582",
+    "#97be8c", "#7b2ed0", "#81f75b"
+)
 
 design <- "AAAB
            AAAB
            AAAB
            CCC#"
 
-atac_p <- plotCov(pancancer_atac, weightCol = "V5", 
-                  chrs = "chr8", title = "",
-                  xlim = c(126712193, 128412193),
-                  xlab = "", fill_col = fill_color,
-                  legend_position = 'none', facet_var = ".id~.",
-                  add_cluster_tree = TRUE,
-                  add_coaccess = TRUE,
-                  design = design)
-
+atac_p <- plotCov(pancancer_atac,
+    weightCol = "V5",
+    chrs = "chr8", title = "",
+    xlim = c(126712193, 128412193),
+    xlab = "", fill_col = fill_color,
+    legend_position = "none", facet_var = ".id~.",
+    add_cluster_tree = TRUE,
+    add_coaccess = TRUE,
+    design = design
+)
 ```
 ![](figures/pancancer.png)
 
@@ -219,14 +223,18 @@ Here we show the usage of one sample. `by = "transcript"` means we visualize dat
 `conf = 0.95, resample = 1000` means in the line plot using 95% confidence interval and resample 1000 times.
 
 ```{r eval=FALSE}
-tssTagMatrix <- getTagMatrix(peak = peak, upstream = 3000, downstream = 3000, weightCol = "V5",
-                             type = "start_site", by = "transcript", TxDb = txdb)
+tssTagMatrix <- getTagMatrix(
+    peak = peak, upstream = 3000, downstream = 3000, weightCol = "V5",
+    type = "start_site", by = "transcript", TxDb = txdb
+)
 
 # plot_prof = FALSE will plot only heatmap
-plotPeakHeatmap(tssTagMatrix, plot_prof = TRUE,
-                statistic_method = "mean",
-                missingDataAsZero = TRUE, 
-                conf = 0.95, resample = 1000)
+plotPeakHeatmap(tssTagMatrix,
+    plot_prof = TRUE,
+    statistic_method = "mean",
+    missingDataAsZero = TRUE,
+    conf = 0.95, resample = 1000
+)
 ```
 
 
@@ -252,14 +260,15 @@ epiSeeker provide `getBmMatrix()` and `plotBmProf()` function to visualize the b
 `bmData` object can be constructed by `makeBmDataFromData()` provided by epiSeeker.
 (4) `base` : type of base that has modification. (5) `motif`: motif to be analyzed.
 
-```{r fig.height=10, fig.width=15, fig.align="center"}
-
+```{r plot-bm-prof, fig.height=10, fig.width=15, fig.align="center"}
 data(demo_bmdata)
-bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-                        BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-                        input = demo_bmdata,
-                        base = "C",
-                        motif = c("CG"))
+bmMatrix <- getBmMatrix(
+    region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+    BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+    input = demo_bmdata,
+    base = "C",
+    motif = c("CG")
+)
 
 # Interactive function is also supported by interactive parameter
 plotBmProf(bmMatrix, interactive = TRUE)
@@ -271,10 +280,12 @@ Gene information can be added to visualization result produced by epiSeeker in t
 `plotGeneTrack()` accepts several parameters to plot gene track: (1) `txdb`: Gene annotation object, txdb object.
 (2) `chr,start_pos,end_pos` : region inforamtion to specify which region to plot.
 (3) `OrgDb`: annotation object to change gene id.
-```{r fig.height=3, fig.width=8, fig.align="center"}
+```{r plot-gene-track, fig.height=3, fig.width=8, fig.align="center"}
 # this region is the same as the region of pancancer figure
-plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, 
-              end_pos = 128412193, OrgDb = "org.Hs.eg.db")
+plotGeneTrack(
+    txdb = txdb, chr = "chr8", start_pos = 126712193,
+    end_pos = 128412193, OrgDb = "org.Hs.eg.db"
+)
 ```
 
 # Visualization of motif
@@ -282,7 +293,7 @@ epiSeeker provide functions to visualize the motif in a specific region.
 Users should input a `Granges` object to `region` to specify the region.
 Sequence reference and motif reference are also necessary.
 
-```{r fig.height=5, fig.width=10, fig.align="center"}
+```{r plot-motif-prof, fig.height=5, fig.width=10, fig.align="center"}
 # motif reference of position-specific weight matrix
 # opts_base <- list()
 # opts_base[["collection"]] <- "CORE"
@@ -294,19 +305,25 @@ Sequence reference and motif reference are also necessary.
 # pwm_obj <- TFBSTools::getMatrixSet(sq24, opts_human)
 
 data(pwm_obj)
-motifMatrix <- getMotifMatrix(region = GRanges(seqnames = "chr22",
-                                               ranges = IRanges(start = 10525991, end = 10526342)), 
-                              pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+motifMatrix <- getMotifMatrix(
+    region = GRanges(
+        seqnames = "chr22",
+        ranges = IRanges(start = 10525991, end = 10526342)
+    ),
+    pwm = pwm_obj, ref_obj = BSgenome.Hsapiens.UCSC.hg38
+)
 
 # Interactive function is also supported by interactive parameter
-plotMotifProf(motifMatrix, interactive = TRUE)                     
+plotMotifProf(motifMatrix, interactive = TRUE)
 ```
 
 
 # Peak Annotation
-```{r eval = FALSE}
-peakAnno <- annotateSeq(files[[4]], tssRegion=c(-3000, 3000),
-                         TxDb=txdb, annoDb="org.Hs.eg.db")
+```{r annotate-seq, eval = FALSE}
+peakAnno <- annotateSeq(files[[4]],
+    tssRegion = c(-3000, 3000),
+    TxDb = txdb, annoDb = "org.Hs.eg.db"
+)
 ```
 
 Note that it would also be possible to use Ensembl-based `EnsDb` annotation 
@@ -315,13 +332,15 @@ peak annotations by providing it with the `TxDb` parameter. Since UCSC-style
 chromosome names are used we have to change the style of the chromosome names
 from *Ensembl* to *UCSC* in the example below.
 
-```{r, eval = FALSE}
+```{r annotate-seq-edb, eval = FALSE}
 library(EnsDb.Hsapiens.v75)
 edb <- EnsDb.Hsapiens.v75
 seqlevelsStyle(edb) <- "UCSC"
 
-peakAnno.edb <- annotateSeq(files[[4]], tssRegion=c(-3000, 3000),
-                             TxDb=edb, annoDb="org.Hs.eg.db")
+peakAnno.edb <- annotateSeq(files[[4]],
+    tssRegion = c(-3000, 3000),
+    TxDb = edb, annoDb = "org.Hs.eg.db"
+)
 ```
 
 Peak Annotation is performed by `annotateSeq`. User can define TSS (transcription start site) region, 
@@ -377,7 +396,7 @@ in details of which exon/intron of which genes as illustrated in previous sectio
 Pie and Bar plot are supported to visualize the genomic annotation.
 Since some annotation overlap, user may interested to view the full annotation with their overlap, 
 which can be partially resolved by `vennpie` function.
-```{r fig.cap="Genomic Annotation by barplot", fig.align="center", fig.height=4, fig.width=10}
+```{r plot-anno-bar, fig.cap="Genomic Annotation by barplot", fig.align="center", fig.height=4, fig.width=10}
 plotAnnoBar(peakAnno)
 ```
 
@@ -387,9 +406,10 @@ The distance from the peak (binding site) to the TSS of the nearest gene is calc
 reported in the output. We provide `plotDistToTSS` to calculate the percentage of binding sites upstream and 
 downstream from the TSS of the nearest genes, and visualize the distribution.
 
-```{r fig.cap="Distribution of Binding Sites", fig.align="center", fig.height=2, fig.width=6}
+```{r plot-dist-to-tss, fig.cap="Distribution of Binding Sites", fig.align="center", fig.height=2, fig.width=6}
 plotDistToTSS(peakAnno,
-              title="Distribution of transcription factor-binding loci\nrelative to TSS")
+    title = "Distribution of transcription factor-binding loci\nrelative to TSS"
+)
 ```
 
 # Functional enrichment analysis
@@ -413,7 +433,7 @@ associated with a particular biological term is larger than expected,
 including `r Biocpkg("DOSE")`[@yu_dose_2015] for Disease Ontology, `r Biocpkg("ReactomePA")` for reactome pathway, 
 `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] for Gene Ontology and KEGG enrichment analysis.
 
-```{r eval = FALSE}
+```{r enrichment-analysis, eval = FALSE}
 library(ReactomePA)
 
 pathway1 <- enrichPathway(as.data.frame(peakAnno)$geneId)
@@ -431,7 +451,7 @@ head(pathway1, 2)
 ## R-HSA-9830369    19
 ## R-HSA-9758941    27
 
-gene <- seq2gene(peak, tssRegion = c(-1000, 1000), flankDistance = 3000, TxDb=txdb)
+gene <- seq2gene(peak, tssRegion = c(-1000, 1000), flankDistance = 3000, TxDb = txdb)
 pathway2 <- enrichPathway(gene)
 head(pathway2, 2)
 ##                          ID        Description GeneRatio   BgRatio RichFactor
@@ -462,7 +482,7 @@ among gene clusters, and can directly applied to compare biological themes at GO
 ## ChIP peak annotation comparision
 The `plotAnnoBar` and `plotDistToTSS` can also accept input of a named list of annotated peaks (output of `annotateSeq`).
 We can use `plotAnnoBar` to comparing their genomic annotation.
-```{r fig.cap="Genomic Annotation among different ChIPseq data", fig.align="center", fig.height=4, fig.width=6}
+```{r plot-anno-bar-list, fig.cap="Genomic Annotation among different ChIPseq data", fig.align="center", fig.height=4, fig.width=6}
 plotAnnoBar(peakAnnoList)
 ```
 
@@ -475,13 +495,15 @@ Biocpkg("ReactomePA")` for Gene Ontology, KEGG, Disease Ontology, MeSH and React
 The `r Biocpkg("clusterProfiler")`[@yu_clusterprofiler_2012] package provides `compareCluster` function for comparing biological themes 
 among gene clusters, and can be easily adopted to compare different ChIP peak experiments.
 
-```{r eval = FALSE}
+```{r compare-cluster, eval = FALSE}
 genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 names(genes) <- sub("_", "\n", names(genes))
-compKEGG <- compareCluster(geneCluster   = genes,
-                           fun           = "enrichKEGG",
-                           pvalueCutoff  = 0.05,
-                           pAdjustMethod = "BH")
+compKEGG <- compareCluster(
+    geneCluster = genes,
+    fun = "enrichKEGG",
+    pvalueCutoff = 0.05,
+    pAdjustMethod = "BH"
+)
 dotplot(compKEGG, showCategory = 15, title = "KEGG Pathway Enrichment Analysis")
 ```
 ![](figures/compKEGG.png)
@@ -495,7 +517,7 @@ Several files can be read simultaneously using lapply, and then passed to `vennp
 `vennplot` accept a list of object, can be a list of GRanges or a list of vector. 
 Here, I will demonstrate using `vennplot` to visualize the overlap of the nearest genes stored in peakAnnoList.
 
-```{r fig.cap="Overlap of annotated genes", fig.align="center", fig.height=7, fig.width=7}
+```{r venn-plot, fig.cap="Overlap of annotated genes", fig.align="center", fig.height=7, fig.width=7}
 genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 vennplot(genes)
 ```
@@ -508,10 +530,12 @@ they may cooperative in regulation. Calculating the overlap is only touch the su
 
 ## Shuffle genome coordination
 
-```{r}
-p <- GRanges(seqnames=c("chr1", "chr3"),
-             ranges=IRanges(start=c(1, 100), end=c(50, 130)))
-shuffle(p, TxDb=txdb)
+```{r shuffle-peak}
+p <- GRanges(
+    seqnames = c("chr1", "chr3"),
+    ranges = IRanges(start = c(1, 100), end = c(50, 130))
+)
+shuffle(p, TxDb = txdb)
 ```
 
 We implement the `shuffle` function to randomly permute the genomic locations of ChIP peaks 
@@ -523,14 +547,16 @@ defined in a genome which stored in `TxDb` object.
 With the ease of this `shuffle` method, we can generate thousands of random ChIP data and 
 calculate the background null distribution of the overlap among ChIP data sets.
 
-```{r eval = FALSE}
-enrichPeakOverlap(queryPeak     = files[[5]],
-                  targetPeak    = unlist(files[1:4]),
-                  TxDb          = txdb,
-                  pAdjustMethod = "BH",
-                  nShuffle      = 50,
-                  chainFile     = NULL,
-                  verbose       = FALSE)
+```{r enrich-peak-overlap, eval = FALSE}
+enrichPeakOverlap(
+    queryPeak = files[[5]],
+    targetPeak = unlist(files[1:4]),
+    TxDb = txdb,
+    pAdjustMethod = "BH",
+    nShuffle = 50,
+    chainFile = NULL,
+    verbose = FALSE
+)
 ##                                                       qSample
 ## ARmo_0M    GSM1295077_CBX7_BF_ChipSeq_mergedReps_peaks.bed.gz
 ## ARmo_1nM   GSM1295077_CBX7_BF_ChipSeq_mergedReps_peaks.bed.gz
@@ -570,23 +596,22 @@ We collect about **17,000** bed files deposited in GEO, user can use `getGEOspec
 
 ## GEO data collection
 
-```{r}
+```{r get-geo-species}
 getGEOspecies() |> head()
 ```
 
 
 The summary can also based on genome version as illustrated below:
 
-```{r}
+```{r get-geo-genome}
 getGEOgenomeVersion() |> head()
 ```
 
 User can access the detail information by `getGEOInfo`, for each genome version.
 
-```{r}
-hg19 <- getGEOInfo(genome="hg19", simplify=TRUE)
+```{r get-geo-info}
+hg19 <- getGEOInfo(genome = "hg19", simplify = TRUE)
 head(hg19)
-
 ```
 
 If _simplify_ is set to _FALSE_, extra information including _source\_name_, _extract\_protocol_, _description_, _data\_processing_ 
@@ -596,14 +621,14 @@ and _submission\_date_ will be incorporated.
 
 `r Biocpkg("ChIPseeker")` provide function `downloadGEObedFiles` to download all the bed files of a particular genome.
 
-```{r eval=FALSE}
-downloadGEObedFiles(genome="hg19", destDir="hg19")
+```{r download-geo-bed, eval=FALSE}
+downloadGEObedFiles(genome = "hg19", destDir = "hg19")
 ```
 
 Or a vector of GSM accession number by `downloadGSMbedFiles`.
-```{r eval=FALSE}
+```{r download-gsm-bed, eval=FALSE}
 gsm <- hg19$gsm[sample(nrow(hg19), 10)]
-downloadGSMbedFiles(gsm, destDir="hg19")
+downloadGSMbedFiles(gsm, destDir = "hg19")
 ```
 
 
@@ -640,7 +665,7 @@ For Chinese user, you can follow me on [WeChat (微信)](https://guangchuangyu.g
 
 Here is the output of `sessionInfo()` on the system on which this document was compiled:
 
-```{r echo=FALSE}
+```{r session-info, echo=FALSE}
 sessionInfo()
 ```
 

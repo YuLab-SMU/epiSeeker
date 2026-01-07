@@ -11,24 +11,25 @@
 #' @importFrom stats p.adjust
 #' @importFrom stats phyper
 #' @export
-#' @examples 
+#' @examples
 #' if (interactive()) {
-#'   require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-#'   txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#'   peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
-#'   enrichAnnoOverlap(peakfile, peakfile, txdb)
+#'     require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+#'     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+#'     peakfile <- system.file("extdata", "demo_peak.txt", package = "epiSeeker")
+#'     enrichAnnoOverlap(peakfile, peakfile, txdb)
 #' }
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver
 #' @importFrom yulab.utils get_cache_element
 #' @importFrom yulab.utils update_cache_item
 #' @author G Yu
-enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="BH", chainFile=NULL, distanceToTSS_cutoff=NULL) {
-
+enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod = "BH", chainFile = NULL, distanceToTSS_cutoff = NULL) {
     TxDb <- loadTxDb(TxDb)
 
-    query.anno <- annotateSeq(queryPeak, TxDb=TxDb,
-                               assignGenomicAnnotation=FALSE, annoDb=NULL, verbose=FALSE)
+    query.anno <- annotateSeq(queryPeak,
+        TxDb = TxDb,
+        assignGenomicAnnotation = FALSE, annoDb = NULL, verbose = FALSE
+    )
 
 
     if (is(targetPeak[1], "GRanges") || is(targetPeak[[1]], "GRanges")) {
@@ -41,11 +42,13 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 
     if (!is.null(chainFile)) {
         chain <- import.chain(chainFile)
-        target.gr <- lapply(target.gr, liftOver, chain=chain)
+        target.gr <- lapply(target.gr, liftOver, chain = chain)
     }
 
-    target.anno <- lapply(target.gr, annotateSeq, TxDb=TxDb,
-                          assignGenomicAnnotation=FALSE, annoDb=NULL, verbose=FALSE)
+    target.anno <- lapply(target.gr, annotateSeq,
+        TxDb = TxDb,
+        assignGenomicAnnotation = FALSE, annoDb = NULL, verbose = FALSE
+    )
 
 
     if (!is.null(distanceToTSS_cutoff)) {
@@ -63,7 +66,7 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
     # }
 
     features <- get_cache_element(item = epiSeekerCache, elements = "Transcripts")
-    if(is.null(features)){
+    if (is.null(features)) {
         features <- transcriptsBy(TxDb)
         features <- unlist(features)
         update_cache_item(item = epiSeekerCache, list("Transcripts" = features))
@@ -78,7 +81,7 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
     n <- N - m
     ## drawn
     k <- unlist(lapply(target.anno, function(i) length(unique(as.GRanges(i)$geneId))))
-    p <- phyper(oln, m, n, k, lower.tail=FALSE)
+    p <- phyper(oln, m, n, k, lower.tail = FALSE)
 
 
     if (is(queryPeak, "GRanges")) {
@@ -89,21 +92,23 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 
     if (is.null(targetFiles)) {
         tSample <- names(target.gr)
-        if(is.null(tSample)) {
+        if (is.null(tSample)) {
             tSample <- paste0("targetPeak", seq_along(target.gr))
         }
     } else {
         tSample <- basename(targetFiles)
     }
 
-    padj <- p.adjust(p, method=pAdjustMethod)
-    res <- data.frame(qSample=qSample,
-                      tSample=tSample,
-                      qLen=length(unique(as.GRanges(query.anno)$geneId)),
-                      tLen=unlist(lapply(target.anno, function(i) length(unique(as.GRanges(i)$geneId)))),
-                      N_OL=oln,
-                      pvalue=p,
-                      p.adjust=padj)
+    padj <- p.adjust(p, method = pAdjustMethod)
+    res <- data.frame(
+        qSample = qSample,
+        tSample = tSample,
+        qLen = length(unique(as.GRanges(query.anno)$geneId)),
+        tLen = unlist(lapply(target.anno, function(i) length(unique(as.GRanges(i)$geneId)))),
+        N_OL = oln,
+        pvalue = p,
+        p.adjust = padj
+    )
     return(res)
 }
 
@@ -122,17 +127,17 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 #' @param verbose logical
 #' @return data.frame
 #' @export
-#' @examples 
+#' @examples
 #' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#' peakfile <- system.file("extdata", "demo_peak.txt", package="epiSeeker")
+#' peakfile <- system.file("extdata", "demo_peak.txt", package = "epiSeeker")
 #' peak <- readPeakFile(peakfile)[1:10]
 #' enrichPeakOverlap(peak, peakfile, txdb, mc.cores = 1, nShuffle = 20)
 #' @importFrom rtracklayer import.chain
 #' @importFrom rtracklayer liftOver
 #' @author G Yu
-enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="BH", nShuffle=1000,
-                              chainFile=NULL, pool=TRUE, mc.cores=detectCores()-1, verbose=TRUE) {
+enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod = "BH", nShuffle = 1000,
+                              chainFile = NULL, pool = TRUE, mc.cores = detectCores() - 1, verbose = TRUE) {
     TxDb <- loadTxDb(TxDb)
     query.gr <- loadPeak(queryPeak)
     if (is(targetPeak[1], "GRanges") || is(targetPeak[[1]], "GRanges")) {
@@ -145,22 +150,25 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 
     if (!is.null(chainFile)) {
         chain <- import.chain(chainFile)
-        target.gr <- lapply(target.gr, liftOver, chain=chain)
+        target.gr <- lapply(target.gr, liftOver, chain = chain)
     }
 
     if (pool) {
         p.ol <- enrichOverlap.peak.internal(query.gr, target.gr, TxDb, nShuffle,
-                                            mc.cores=mc.cores,verbose=verbose)
+            mc.cores = mc.cores, verbose = verbose
+        )
     } else {
         res_list <- lapply(seq_len(length(target.gr)), function(i) {
-            enrichPeakOverlap(queryPeak = queryPeak,
-                              targetPeak = target.gr[i],
-                              TxDb = TxDb,
-                              pAdjustMethod = pAdjustMethod,
-                              nShuffle = nShuffle,
-                              chainFile = chainFile,
-                              mc.cores = mc.cores,
-                              verbose = verbose)
+            enrichPeakOverlap(
+                queryPeak = queryPeak,
+                targetPeak = target.gr[i],
+                TxDb = TxDb,
+                pAdjustMethod = pAdjustMethod,
+                nShuffle = nShuffle,
+                chainFile = chainFile,
+                mc.cores = mc.cores,
+                verbose = verbose
+            )
         })
         res <- do.call("rbind", res_list)
         return(res)
@@ -170,7 +178,7 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
         p <- padj <- NA
     } else {
         p <- p.ol$pvalue
-        padj <- p.adjust(p, method=pAdjustMethod)
+        padj <- p.adjust(p, method = pAdjustMethod)
     }
 
     ol <- p.ol$overlap
@@ -185,24 +193,25 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 
     if (is.null(targetFiles)) {
         tSample <- names(target.gr)
-        if(is.null(tSample)) {
+        if (is.null(tSample)) {
             tSample <- paste0("targetPeak", seq_along(target.gr))
         }
     } else {
         tSample <- basename(targetFiles)
     }
 
-    res <- data.frame(qSample=qSample,
-                      tSample=tSample,
-                      qLen=length(query.gr),
-                      tLen=unlist(lapply(target.gr, length)),
-                      N_OL=ol,
-                      pvalue=p,
-                      p.adjust=padj)
+    res <- data.frame(
+        qSample = qSample,
+        tSample = tSample,
+        qLen = length(query.gr),
+        tLen = unlist(lapply(target.gr, length)),
+        N_OL = ol,
+        pvalue = p,
+        p.adjust = padj
+    )
 
     return(res)
 }
-
 
 
 #' shuffle the position of peak
@@ -213,12 +222,14 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb=NULL, pAdjustMethod="B
 #' @param TxDb TxDb
 #' @return GRanges object
 #' @export
-#' @examples 
+#' @examples
 #' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-#' p <- GRanges(seqnames=c("chr1", "chr3"),
-#'              ranges=IRanges(start=c(1, 100), end=c(50, 130)))
-#' shuffle(p, TxDb=txdb)
+#' p <- GRanges(
+#'     seqnames = c("chr1", "chr3"),
+#'     ranges = IRanges(start = c(1, 100), end = c(50, 130))
+#' )
+#' shuffle(p, TxDb = txdb)
 #' @author G Yu
 shuffle <- function(peak.gr, TxDb) {
     chrLens <- seqlengths(TxDb)[names(seqlengths(peak.gr))]
@@ -229,13 +240,11 @@ shuffle <- function(peak.gr, TxDb) {
     jj <- order(names(nnt))
     nnt <- nnt[jj]
     chrLens <- chrLens[jj]
-    ss <- unlist(lapply(seq_len(length(nnt)), function(i) sample(chrLens[i],nnt[i])))
+    ss <- unlist(lapply(seq_len(length(nnt)), function(i) sample(chrLens[i], nnt[i])))
 
-    res <- GRanges(seqnames=nn[ii], ranges=IRanges(ss, width=w[ii]), strand="*")
+    res <- GRanges(seqnames = nn[ii], ranges = IRanges(ss, width = w[ii]), strand = "*")
     return(res)
 }
-
-
 
 
 #' @import GenomeInfoDb
@@ -243,45 +252,46 @@ shuffle <- function(peak.gr, TxDb) {
 #' @importFrom utils setTxtProgressBar
 #' @importFrom parallel mclapply
 #' @importFrom parallel detectCores
-enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle=1000, mc.cores=detectCores()-1, verbose=TRUE) {
+enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle = 1000, mc.cores = detectCores() - 1, verbose = TRUE) {
     if (verbose) {
-        message(">> permutation test of peak overlap...\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        message(
+            ">> permutation test of peak overlap...\t\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
     }
 
-    idx <- sample(seq_len(length(target.gr)), nShuffle, replace=TRUE)
+    idx <- sample(seq_len(length(target.gr)), nShuffle, replace = TRUE)
     len <- unlist(lapply(target.gr, length))
 
-    if(Sys.info()[1] == "Windows") {
+    if (Sys.info()[1] == "Windows") {
         qLen <- lapply(target.gr, function(tt) {
             length(intersect(query.gr, tt))
         })
     } else {
         qLen <- mclapply(target.gr, function(tt) {
             length(intersect(query.gr, tt))
-        }, mc.cores=mc.cores
-                         )
+        }, mc.cores = mc.cores)
     }
     qLen <- unlist(qLen)
     ## query ratio
-    qr <- qLen/len
+    qr <- qLen / len
 
     if (nShuffle < 1) {
-        res <- list(pvalue=NULL, overlap=qLen)
+        res <- list(pvalue = NULL, overlap = qLen)
         return(res)
     }
 
     if (verbose) {
-        pb <- txtProgressBar(min=0, max=nShuffle, style=3)
+        pb <- txtProgressBar(min = 0, max = nShuffle, style = 3)
     }
-    if(Sys.info()[1] == "Windows") {
+    if (Sys.info()[1] == "Windows") {
         rr <- lapply(seq_along(idx), function(j) {
             if (verbose) {
                 setTxtProgressBar(pb, j)
             }
             i <- idx[j]
             tarShuffle <- shuffle(target.gr[[i]], TxDb)
-            length(intersect(query.gr, tarShuffle))/len[i]
+            length(intersect(query.gr, tarShuffle)) / len[i]
         })
     } else {
         rr <- mclapply(seq_along(idx), function(j) {
@@ -290,9 +300,8 @@ enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle=1000
             }
             i <- idx[j]
             tarShuffle <- shuffle(target.gr[[i]], TxDb)
-            length(intersect(query.gr, tarShuffle))/len[i]
-        }, mc.cores=mc.cores
-                       )
+            length(intersect(query.gr, tarShuffle)) / len[i]
+        }, mc.cores = mc.cores)
     }
 
     if (verbose) {
@@ -302,8 +311,7 @@ enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle=1000
     rr <- unlist(rr) ## random ratio
 
     ## p <- lapply(qr, function(q) mean(rr>q))
-    p <- lapply(qr, function(q) (sum(rr>q)+1)/(length(rr)+1))
-    res <- list(pvalue=unlist(p), overlap=qLen)
+    p <- lapply(qr, function(q) (sum(rr > q) + 1) / (length(rr) + 1))
+    res <- list(pvalue = unlist(p), overlap = qLen)
     return(res)
 }
-

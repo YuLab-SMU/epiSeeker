@@ -3,13 +3,15 @@
 #' @docType methods
 #' @name vennpie
 #' @rdname vennpie-methods
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' vennpie(peakAnno)
 #' @export
-setGeneric("vennpie", 
-  function(x, r = 0.2, cex = 1.2, ...) 
-  standardGeneric("vennpie")
+setGeneric(
+    "vennpie",
+    function(x, r = 0.2, cex = 1.2, ...) {
+        standardGeneric("vennpie")
+    }
 )
 
 
@@ -22,13 +24,17 @@ setGeneric("vennpie",
 #' data(peakAnno)
 #' plotDistToTSS(peakAnno)
 #' @export
-setGeneric("plotDistToTSS", 
-  function(x, 
-    distanceColumn="distanceToTSS",
-    xlab="", ylab="Binding sites (%) (5'->3')",
-    title="Distribution of transcription factor-binding loci relative to TSS", 
-    ...)
-  standardGeneric("plotDistToTSS")
+setGeneric(
+    "plotDistToTSS",
+    function(
+      x,
+      distanceColumn = "distanceToTSS",
+      xlab = "", ylab = "Binding sites (%) (5'->3')",
+      title = "Distribution of transcription factor-binding loci relative to TSS",
+      ...
+    ) {
+        standardGeneric("plotDistToTSS")
+    }
 )
 
 #' plotAnnoBar method generics
@@ -40,13 +46,17 @@ setGeneric("plotDistToTSS",
 #' data(peakAnno)
 #' plotAnnoBar(peakAnno)
 #' @export
-setGeneric("plotAnnoBar", 
-  function(x,
-    xlab="",
-    ylab="Percentage(%)",
-    title="Feature Distribution",
-    ...)
-  standardGeneric("plotAnnoBar")
+setGeneric(
+    "plotAnnoBar",
+    function(
+      x,
+      xlab = "",
+      ylab = "Percentage(%)",
+      title = "Feature Distribution",
+      ...
+    ) {
+        standardGeneric("plotAnnoBar")
+    }
 )
 
 
@@ -55,20 +65,24 @@ setGeneric("plotAnnoBar",
 #' @docType methods
 #' @name plotAnnoPie
 #' @rdname plotAnnoPie-methods
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' plotAnnoPie(peakAnno)
 #' @export
-setGeneric("plotAnnoPie", 
-  function(x, 
-    ndigit=2,
-    cex=0.9,
-    col=NA,
-    legend.position="rightside",
-    pie3D=FALSE,
-    radius=0.8,
-    ...)
-  standardGeneric("plotAnnoPie")
+setGeneric(
+    "plotAnnoPie",
+    function(
+      x,
+      ndigit = 2,
+      cex = 0.9,
+      col = NA,
+      legend.position = "rightside",
+      pie3D = FALSE,
+      radius = 0.8,
+      ...
+    ) {
+        standardGeneric("plotAnnoPie")
+    }
 )
 
 
@@ -78,27 +92,29 @@ setGeneric("plotAnnoPie",
 #' @name getBmMatrix
 #' @rdname getBmMatrix-methods
 #' @importFrom methods setGeneric
-#' @examples 
+#' @examples
 #' require(BSgenome.Hsapiens.UCSC.hg38)
 #' data(demo_bmdata)
-#' bmMatrix <- getBmMatrix(region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
-#'                         BSgenome = BSgenome.Hsapiens.UCSC.hg38,
-#'                         input = demo_bmdata,
-#'                         base = "C",
-#'                         motif = c("CG"))
+#' bmMatrix <- getBmMatrix(
+#'     region = data.frame(chr = "chr22", start = 10525991, end = 10526342),
+#'     BSgenome = BSgenome.Hsapiens.UCSC.hg38,
+#'     input = demo_bmdata,
+#'     base = "C",
+#'     motif = c("CG")
+#' )
 #' @export
-setGeneric("getBmMatrix",
-           function(region,
-                    input,
-                    BSgenome,
-                    base = NULL,
-                    motif = NULL,
-                    position_bias = NULL,
-                    ...){
-
-             standardGeneric("getBmMatrix")
-
-           })
+setGeneric(
+    "getBmMatrix",
+    function(region,
+             input,
+             BSgenome,
+             base = NULL,
+             motif = NULL,
+             position_bias = NULL,
+             ...) {
+        standardGeneric("getBmMatrix")
+    }
+)
 
 #' makeBmDataFromData method generics
 #'
@@ -108,14 +124,17 @@ setGeneric("getBmMatrix",
 #' @rdname makeBmDataFromData-methods
 #' @importFrom methods setGeneric
 #' @return bmData
-#' @examples 
-#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", 
-#'                                 package="epiSeeker")
-#' demo_bisseq <- read.table(demo_bisseq_file,header = TRUE)
-#' demo_bmdata <- makeBmDataFromData(data = list(acinar_methyl = demo_bisseq), 
-#'                                   sampleNames = "acinar_methyl")
+#' @examples
+#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt",
+#'     package = "epiSeeker"
+#' )
+#' demo_bisseq <- read.table(demo_bisseq_file, header = TRUE)
+#' demo_bmdata <- makeBmDataFromData(
+#'     data = list(acinar_methyl = demo_bisseq),
+#'     sampleNames = "acinar_methyl"
+#' )
 #' @export
 setGeneric("makeBmDataFromData", function(data,
-                                          sampleNames=NULL){
-  standardGeneric("makeBmDataFromData")
+                                          sampleNames = NULL) {
+    standardGeneric("makeBmDataFromData")
 })

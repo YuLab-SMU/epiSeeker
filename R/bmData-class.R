@@ -36,122 +36,122 @@ setClass("bmData", contains = "RangedSummarizedExperiment")
 #' @importFrom methods new
 #' @importFrom S4Vectors SimpleList
 #' @return bmData object
-#' @examples 
+#' @examples
 #' data(demo_bmdata)
 #' @export
 bmData <- function(value1 = NULL, value2 = NULL,
                    pos = NULL, chr = NULL, gr = NULL,
                    sampleNames = NULL, valueNames = NULL,
-                   ...){
+                   ...) {
+    ## get the non null number
+    n0 <- sum(vapply(list(value1, value2),
+        function(x) !is.null(x),
+        FUN.VALUE = logical(1)
+    ))
 
-  ## get the non null number
-  n0 <- sum(vapply(list(value1,value2),
-                   function(x) !is.null(x),
-                   FUN.VALUE = logical(1)))
+    ## value1 and value2 can not be NULL simultaneously
+    if (n0 == 0) stop("Need an input value...")
 
-  ## value1 and value2 can not be NULL simultaneously
-  if(n0 == 0) stop("Need an input value...")
+    ## check valueNames
+    valueNames <- .check_valueNames(valueNames, n0)
 
-  ## check valueNames
-  valueNames <- .check_valueNames(valueNames, n0)
+    ## for the sake of convenience, we assign values for null
+    if (n0 == 1) {
+        if (is.null(value1)) value1 <- value2
 
-  ## for the sake of convenience, we assign values for null
-  if(n0 == 1){
+        if (is.null(value2)) value2 <- value1
 
-    if(is.null(value1)) value1 <- value2
-
-    if(is.null(value2)) value2 <- value1
-
-    valueNames <- rep(valueNames,2)
-  }
-
-
-  ## This parameter check comes from BSseq()
-  ## https://github.com/hansenlab/bsseq/blob/master/R/BSseq-class.R
-  if (is.null(gr)) {
-    if (is.null(pos) || is.null(chr)) {
-      stop("Need 'pos' and 'chr' if 'gr' not supplied.")
+        valueNames <- rep(valueNames, 2)
     }
-    gr <- GRanges(seqnames = chr, ranges = IRanges(start = pos, width = 1L))
-  }
-  if (!is(gr, "GRanges")) {
-    stop("'gr' needs to be a GRanges.")
-  }
 
-  ## deal with the duplicated location
-  if(any(duplicated(gr))){
 
-    ## We removed duplicated locations and keep only one value
-    warning("There are duplicated locis, which will be removed and keep only one value...")
-    gr <- gr[!duplicated(gr)]
-    value1 <- value1[!duplicated(gr)]
-    value2 <- value2[!duplicated(gr)]
-
-    ## Users can use other methods to deal with duplicated value.
-    ## rowsums() maybe a good method.
-    ## An example is placed in BSseq-class.R, following codes are from
+    ## This parameter check comes from BSseq()
     ## https://github.com/hansenlab/bsseq/blob/master/R/BSseq-class.R
-    ##
-    ##
-    # # Collapse duplicate loci --------------------------------------------------
-    #
-    # is_duplicated <- duplicated(gr)
-    # if (any(is_duplicated)) {
-    #   warning("Detected duplicate loci. Collapsing counts in 'M' and 'Cov' ",
-    #           "at these positions.")
-    #   if (!is.null(coef) || !is.null(se.coef)) {
-    #     stop("Cannot collapse when 'coef' or 'se.coef' are non-NULL.")
-    #   }
-    #   loci <- gr[!is_duplicated]
-    #   ol <- findOverlaps(gr, loci, type = "equal")
-    #   M <- rowsum(x = M, group = subjectHits(ol), reorder = FALSE)
-    #   rownames(M) <- NULL
-    #   Cov <- rowsum(x = Cov, group = subjectHits(ol), reorder = FALSE)
-    #   rownames(Cov) <- NULL
-    # } else {
-    #   loci <- gr
-    # }
+    if (is.null(gr)) {
+        if (is.null(pos) || is.null(chr)) {
+            stop("Need 'pos' and 'chr' if 'gr' not supplied.")
+        }
+        gr <- GRanges(seqnames = chr, ranges = IRanges(start = pos, width = 1L))
+    }
+    if (!is(gr, "GRanges")) {
+        stop("'gr' needs to be a GRanges.")
+    }
 
-  }
+    ## deal with the duplicated location
+    if (any(duplicated(gr))) {
+        ## We removed duplicated locations and keep only one value
+        warning("There are duplicated locis, which will be removed and keep only one value...")
+        gr <- gr[!duplicated(gr)]
+        value1 <- value1[!duplicated(gr)]
+        value2 <- value2[!duplicated(gr)]
+
+        ## Users can use other methods to deal with duplicated value.
+        ## rowsums() maybe a good method.
+        ## An example is placed in BSseq-class.R, following codes are from
+        ## https://github.com/hansenlab/bsseq/blob/master/R/BSseq-class.R
+        ##
+        ##
+        # # Collapse duplicate loci --------------------------------------------------
+        #
+        # is_duplicated <- duplicated(gr)
+        # if (any(is_duplicated)) {
+        #   warning("Detected duplicate loci. Collapsing counts in 'M' and 'Cov' ",
+        #           "at these positions.")
+        #   if (!is.null(coef) || !is.null(se.coef)) {
+        #     stop("Cannot collapse when 'coef' or 'se.coef' are non-NULL.")
+        #   }
+        #   loci <- gr[!is_duplicated]
+        #   ol <- findOverlaps(gr, loci, type = "equal")
+        #   M <- rowsum(x = M, group = subjectHits(ol), reorder = FALSE)
+        #   rownames(M) <- NULL
+        #   Cov <- rowsum(x = Cov, group = subjectHits(ol), reorder = FALSE)
+        #   rownames(Cov) <- NULL
+        # } else {
+        #   loci <- gr
+        # }
+    }
 
 
-  ## In order to use BSseq() as an constructor, we make vitual M and Cov
-  ## to pass the BSseq() check
-  M <- matrix(c(rep(1,nrow(value1)*ncol(value1))),nrow = nrow(value1))
-  Cov <- matrix(c(rep(3,nrow(value1)*ncol(value1))),nrow = nrow(value1))
+    ## In order to use BSseq() as an constructor, we make vitual M and Cov
+    ## to pass the BSseq() check
+    M <- matrix(c(rep(1, nrow(value1) * ncol(value1))), nrow = nrow(value1))
+    Cov <- matrix(c(rep(3, nrow(value1) * ncol(value1))), nrow = nrow(value1))
 
-  tmp_bsseq <- BSseq(M = M, Cov = Cov,
-                     gr = gr, sampleNames = sampleNames,
-                     ...)
+    tmp_bsseq <- BSseq(
+        M = M, Cov = Cov,
+        gr = gr, sampleNames = sampleNames,
+        ...
+    )
 
-  ## Now we extract the assays from BSseq object and
-  ## substitute it with the value we input.
-  if(n0 == 1){
+    ## Now we extract the assays from BSseq object and
+    ## substitute it with the value we input.
+    if (n0 == 1) {
+        command <- paste0(
+            "assays(tmp_bsseq,withDimnames=FALSE) <- SimpleList(",
+            valueNames[1],
+            "=value1)"
+        )
 
-    command <- paste0("assays(tmp_bsseq,withDimnames=FALSE) <- SimpleList(",
-                      valueNames[1],
-                      "=value1)")
+        eval(parse(text = command))
+    } else {
+        command <- paste0(
+            "assays(tmp_bsseq,withDimnames=FALSE) <- SimpleList(",
+            valueNames[1],
+            "= value1, ",
+            valueNames[2],
+            "= value2)"
+        )
 
-    eval(parse(text = command))
+        eval(parse(text = command))
+    }
 
-  }else{
+    new_se <- SummarizedExperiment(
+        assays = assays(tmp_bsseq),
+        rowRanges = granges(tmp_bsseq),
+        colData = pData(tmp_bsseq)
+    )
 
-    command <- paste0("assays(tmp_bsseq,withDimnames=FALSE) <- SimpleList(",
-                      valueNames[1],
-                      "= value1, ",
-                      valueNames[2],
-                      "= value2)")
-
-    eval(parse(text = command))
-
-  }
-
-  new_se <- SummarizedExperiment(assays = assays(tmp_bsseq),
-                                 rowRanges = granges(tmp_bsseq),
-                                 colData = pData(tmp_bsseq))
-
-  return(new("bmData", new_se))
-
+    return(new("bmData", new_se))
 }
 
 
@@ -171,20 +171,22 @@ bmData <- function(value1 = NULL, value2 = NULL,
 #' @return dataframe
 #' @importFrom methods setMethod
 #' @exportMethod getBmMatrix
-setMethod("getBmMatrix",signature(input = "bmData"),
-          function(region,
-                   input,
-                   BSgenome,
-                   base = NULL,
-                   motif = NULL,
-                   position_bias = NULL,
-                   ...){
-
-            getBmMatrix.bmData(region = region,
-                                         input = input,
-                                         BSgenome = BSgenome,
-                                         base = base,
-                                         motif = motif,
-                                         position_bias = position_bias)
-
-          })
+setMethod(
+    "getBmMatrix", signature(input = "bmData"),
+    function(region,
+             input,
+             BSgenome,
+             base = NULL,
+             motif = NULL,
+             position_bias = NULL,
+             ...) {
+        getBmMatrix.bmData(
+            region = region,
+            input = input,
+            BSgenome = BSgenome,
+            base = base,
+            motif = motif,
+            position_bias = position_bias
+        )
+    }
+)

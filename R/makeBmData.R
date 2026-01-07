@@ -10,30 +10,28 @@
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @exportMethod makeBmDataFromData
-setMethod("makeBmDataFromData", signature(data="CompressedGRangesList"),
-          function(data,
-                   sampleNames=NULL){
+setMethod(
+    "makeBmDataFromData", signature(data = "CompressedGRangesList"),
+    function(data,
+             sampleNames = NULL) {
+        data_list <- lapply(data, function(x) {
+            chr <- as.character(seqnames(x))
+            pos <- start(x)
+            valueNames <- names(mcols(x))
 
-            data_list <- lapply(data, function(x){
+            df <- data.frame(chr = chr, pos = pos)
 
-              chr <- as.character(seqnames(x))
-              pos <- start(x)
-              valueNames <- names(mcols(x))
+            mcol <- as.data.frame(mcols(x))
+            df <- data.frame(df, mcol)
 
-              df <- data.frame(chr=chr,pos=pos)
+            colnames(df) <- c("chr", "pos", valueNames)
 
-              mcol <- as.data.frame(mcols(x))
-              df <- data.frame(df,mcol)
+            return(df)
+        })
 
-              colnames(df) <- c("chr","pos",valueNames)
-
-              return(df)
-
-            })
-
-            makeBmDataFromData.internal(data = data_list, sampleNames=sampleNames)
-
-          })
+        makeBmDataFromData.internal(data = data_list, sampleNames = sampleNames)
+    }
+)
 
 
 #' makeBmDataFromData method for `GRanges` objects
@@ -48,27 +46,26 @@ setMethod("makeBmDataFromData", signature(data="CompressedGRangesList"),
 #' @importFrom GenomicRanges seqnames
 #' @importFrom GenomicRanges start
 #' @exportMethod makeBmDataFromData
-setMethod("makeBmDataFromData", signature(data="GRanges"),
-          function(data,
-                   sampleNames=NULL){
+setMethod(
+    "makeBmDataFromData", signature(data = "GRanges"),
+    function(data,
+             sampleNames = NULL) {
+        chr <- as.character(seqnames(data))
+        pos <- start(data)
+        valueNames <- names(mcols(data))
 
-            chr <- as.character(seqnames(data))
-            pos <- start(data)
-            valueNames <- names(mcols(data))
+        df <- data.frame(chr = chr, pos = pos)
 
-            df <- data.frame(chr=chr,pos=pos)
+        mcol <- as.data.frame(mcols(data))
+        df <- data.frame(df, mcol)
 
-            mcol <- as.data.frame(mcols(data))
-            df <- data.frame(df,mcol)
+        colnames(df) <- c("chr", "pos", valueNames)
 
-            colnames(df) <- c("chr","pos",valueNames)
+        data_list <- list(df)
 
-            data_list <- list(df)
-
-            makeBmDataFromData.internal(data = data_list, sampleNames=sampleNames)
-
-
-          })
+        makeBmDataFromData.internal(data = data_list, sampleNames = sampleNames)
+    }
+)
 
 #' makeBmDataFromData method for `list` objects
 #'
@@ -86,19 +83,17 @@ setMethod("makeBmDataFromData", signature(data="GRanges"),
 #'    observation.
 #' @importFrom methods setMethod
 #' @exportMethod makeBmDataFromData
-setMethod("makeBmDataFromData", signature(data="list"),
-          function(data,
-                   sampleNames=NULL){
+setMethod(
+    "makeBmDataFromData", signature(data = "list"),
+    function(data,
+             sampleNames = NULL) {
+        if (any(unlist(lapply(data, function(x) is.null(colnames(x)))))) {
+            stop("pls input colnames to each objects...")
+        }
 
-            if(any(unlist(lapply(data, function(x) is.null(colnames(x)))))){
-
-              stop("pls input colnames to each objects...")
-
-            }
-
-            makeBmDataFromData.internal(data = data, sampleNames=sampleNames)
-
-          })
+        makeBmDataFromData.internal(data = data, sampleNames = sampleNames)
+    }
+)
 
 
 #' makeBmDataFromData method for \code{data.frame} objects
@@ -117,21 +112,23 @@ setMethod("makeBmDataFromData", signature(data="list"),
 #'    observation.
 #' @importFrom methods setMethod
 #' @exportMethod makeBmDataFromData
-setMethod("makeBmDataFromData", signature(data="data.frame"),
-          function(data,
-                   sampleNames=NULL){
+setMethod(
+    "makeBmDataFromData", signature(data = "data.frame"),
+    function(data,
+             sampleNames = NULL) {
+        if (is.null(colnames(data))) {
+            n0 <- ncol(data) - 2
+            colnames(data) <- paste0("value", seq_len(n0))
+        }
 
-            if(is.null(colnames(data))){
-              n0 <- ncol(data)-2
-              colnames(data) <- paste0("value",seq_len(n0))
-            }
+        data_list <- list(data)
 
-            data_list <- list(data)
-
-            makeBmDataFromData.internal(data = data_list,
-                                        sampleNames = sampleNames)
-
-          })
+        makeBmDataFromData.internal(
+            data = data_list,
+            sampleNames = sampleNames
+        )
+    }
+)
 
 
 #' make dmData object from data
@@ -150,107 +147,104 @@ setMethod("makeBmDataFromData", signature(data="data.frame"),
 #'    observation.
 #' @return dmData object
 makeBmDataFromData.internal <- function(data,
-                                        sampleNames=NULL){
+                                        sampleNames = NULL) {
+    n0 <- length(colnames(data[[1]])) - 2
 
-  n0 <- length(colnames(data[[1]]))-2
+    ## check the sampleNames
+    sampleNames <- .check_and_make_sampleNames(data = data, sampleNames = sampleNames)
 
-  ## check the sampleNames
-  sampleNames <- .check_and_make_sampleNames(data = data, sampleNames = sampleNames)
-
-  ## check variables names in data
-  if(!.check_variables_names(data)){
-    stop("pls input the same column names in each object in data...")
-  }
+    ## check variables names in data
+    if (!.check_variables_names(data)) {
+        stop("pls input the same column names in each object in data...")
+    }
 
 
-  if(n0 == 1){
-    bmData <- make_bmData_from_value1(data = data, sampleNames = sampleNames)
-  }else{
-    bmData <- make_bmData_from_value1_and_value2(data = data, sampleNames = sampleNames)
-  }
+    if (n0 == 1) {
+        bmData <- make_bmData_from_value1(data = data, sampleNames = sampleNames)
+    } else {
+        bmData <- make_bmData_from_value1_and_value2(data = data, sampleNames = sampleNames)
+    }
 
-  return(bmData)
-
+    return(bmData)
 }
 
 
 #' @importFrom dplyr arrange
-make_bmData_from_value1 <- function(data, sampleNames){
+make_bmData_from_value1 <- function(data, sampleNames) {
+    n0 <- length(data)
+    allDat <- data.frame(data[[1]][, seq_len(2)])
+    valueNames <- colnames(data[[1]])[3]
 
-  n0 <- length(data)
-  allDat <- data.frame(data[[1]][,seq_len(2)])
-  valueNames <- colnames(data[[1]])[3]
+    ## merge data
+    for (i in seq_len(n0)) {
+        allDat <- data.frame(allDat, data[[i]][, 3])
+    }
 
-  ## merge data
-  for(i in seq_len(n0)){
-    allDat <- data.frame(allDat, data[[i]][,3])
-  }
+    colnames(allDat) <- c("chr", "pos", sampleNames)
 
-  colnames(allDat) <- c("chr","pos",sampleNames)
+    ## order the allDat
+    chr <- pos <- NULL
 
-  ## order the allDat
-  chr <- pos <- NULL
+    allDat.ordered <- arrange(allDat, chr, pos)
 
-  allDat.ordered <- arrange(allDat,chr,pos)
-
-  value1 <- as.matrix(allDat.ordered[,sampleNames])
+    value1 <- as.matrix(allDat.ordered[, sampleNames])
 
 
-  bmData <- bmData(chr = allDat.ordered$chr,
-                   pos = allDat.ordered$pos,
-                   value1 = value1,
-                   sampleNames = sampleNames,
-                   valueNames = valueNames)
+    bmData <- bmData(
+        chr = allDat.ordered$chr,
+        pos = allDat.ordered$pos,
+        value1 = value1,
+        sampleNames = sampleNames,
+        valueNames = valueNames
+    )
 
-  return(bmData)
-
+    return(bmData)
 }
 
 #' @importFrom dplyr arrange
-make_bmData_from_value1_and_value2 <- function(data, sampleNames){
+make_bmData_from_value1_and_value2 <- function(data, sampleNames) {
+    n0 <- length(data)
+    allDat_value1 <- data.frame(data[[1]][, seq_len(2)])
+    allDat_value2 <- data.frame(data[[1]][, seq_len(2)])
+    value1_name <- colnames(data[[1]])[3]
+    value2_name <- colnames(data[[1]])[4]
+    colnames(data[[1]])[3] <- paste0(value1_name, ".1")
+    colnames(data[[1]])[4] <- paste0(value2_name, ".1")
 
-  n0 <- length(data)
-  allDat_value1 <- data.frame(data[[1]][,seq_len(2)])
-  allDat_value2 <- data.frame(data[[1]][,seq_len(2)])
-  value1_name <- colnames(data[[1]])[3]
-  value2_name <- colnames(data[[1]])[4]
-  colnames(data[[1]])[3] <- paste0(value1_name, ".1")
-  colnames(data[[1]])[4] <- paste0(value2_name, ".1")
+    ## merge data
+    for (i in seq_len(n0)) {
+        colnames(data[[i]])[3] <- paste0(value1_name, ".", i)
+        colnames(data[[i]])[4] <- paste0(value2_name, ".", i)
 
-  ## merge data
-  for(i in seq_len(n0)){
+        allDat_value1 <- merge(allDat_value1, data[[i]][, c(1, 2, 3)], all = TRUE)
+        allDat_value2 <- merge(allDat_value2, data[[i]][, c(1, 2, 4)], all = TRUE)
+    }
 
-    colnames(data[[i]])[3] <- paste0(value1_name, ".",i)
-    colnames(data[[i]])[4] <- paste0(value2_name, ".",i)
+    colnames(allDat_value1) <- c("chr", "pos", sampleNames)
+    colnames(allDat_value2) <- c("chr", "pos", sampleNames)
 
-    allDat_value1 <- merge(allDat_value1,data[[i]][,c(1,2,3)], all = TRUE)
-    allDat_value2 <- merge(allDat_value2,data[[i]][,c(1,2,4)], all = TRUE)
-  }
+    allDat_value1[is.na(allDat_value1)] <- 0
+    allDat_value2[is.na(allDat_value2)] <- 0
 
-  colnames(allDat_value1) <- c("chr","pos",sampleNames)
-  colnames(allDat_value2) <- c("chr","pos",sampleNames)
+    ## order the allDat
+    chr <- pos <- NULL
 
-  allDat_value1[is.na(allDat_value1)] <- 0
-  allDat_value2[is.na(allDat_value2)] <- 0
+    allDat_value1.ordered <- arrange(allDat_value1, chr, pos)
+    allDat_value2.ordered <- arrange(allDat_value2, chr, pos)
 
-  ## order the allDat
-  chr <- pos <- NULL
+    value1 <- as.matrix(allDat_value1.ordered[, sampleNames])
+    value2 <- as.matrix(allDat_value2.ordered[, sampleNames])
 
-  allDat_value1.ordered <- arrange(allDat_value1,chr,pos)
-  allDat_value2.ordered <- arrange(allDat_value2,chr,pos)
+    bmData <- bmData(
+        chr = allDat_value1.ordered$chr,
+        pos = allDat_value1.ordered$pos,
+        value1 = value1,
+        value2 = value2,
+        sampleNames = sampleNames,
+        valueNames = c(value1_name, value2_name)
+    )
 
-  value1 <- as.matrix(allDat_value1.ordered[,sampleNames])
-  value2 <- as.matrix(allDat_value2.ordered[,sampleNames])
-
-  bmData <- bmData(chr = allDat_value1.ordered$chr,
-                   pos = allDat_value1.ordered$pos,
-                   value1 = value1,
-                   value2 = value2,
-                   sampleNames = sampleNames,
-                   valueNames = c(value1_name,value2_name))
-
-  return(bmData)
-
+    return(bmData)
 }
 
 
@@ -269,144 +263,137 @@ make_bmData_from_value1_and_value2 <- function(data, sampleNames){
 #'    only contain no more than two metadata, as it stands for value1/2. Txt files
 #'    should organize the columns as chr, pos, value1, value2(optional).
 #' @return bmData
-#' @examples 
-#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package="epiSeeker")
-#' data <- makeBmDataFromFiles(demo_bisseq_file, 
-#'                             sampleNames = "acinar_methyl", 
-#'                             variablesNames = c("Cov", "Methylation"))
+#' @examples
+#' demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", package = "epiSeeker")
+#' data <- makeBmDataFromFiles(demo_bisseq_file,
+#'     sampleNames = "acinar_methyl",
+#'     variablesNames = c("Cov", "Methylation")
+#' )
 #' @export
 makeBmDataFromFiles <- function(name,
                                 sampleNames = NULL,
-                                variablesNames = NULL){
+                                variablesNames = NULL) {
+    ## check the name of file
+    if (!is.character(name)) stop("pls input character as file name...")
 
-  ## check the name of file
-  if(!is.character(name)) stop("pls input character as file name...")
+    if (file_test("-d", name)) {
+        ## deal with file folder
+        data <- makeBmDataFromFiles.folder(name = name, variablesNames = variablesNames)
+    } else {
+        ## deal with file
+        data <- makeBmDataFromFiles.file(name = name, variablesNames = variablesNames)
+    }
 
-  if(file_test("-d", name)){
-
-    ## deal with file folder
-    data <- makeBmDataFromFiles.folder(name = name, variablesNames = variablesNames)
-
-  }else{
-
-    ## deal with file
-    data <- makeBmDataFromFiles.file(name = name, variablesNames = variablesNames)
-  }
-
-  result <- makeBmDataFromData(data = data,
-                               sampleNames = sampleNames)
-
+    result <- makeBmDataFromData(
+        data = data,
+        sampleNames = sampleNames
+    )
 }
 
 
 #' @importFrom GenomicRanges mcols
 #' @importFrom GenomicRanges GRangesList
 #' @importFrom utils getFromNamespace
-makeBmDataFromFiles.folder <- function(name, variablesNames){
+makeBmDataFromFiles.folder <- function(name, variablesNames) {
+    ## check the file type
+    file_type <- gsub(".*\\.", "", list.files(name))
 
-  ## check the file type
-  file_type <- gsub(".*\\.","",list.files(name))
+    file_type <- file_type[!duplicated(file_type)]
 
-  file_type <- file_type[!duplicated(file_type)]
+    if (length(file_type) != 1) {
+        stop("pls input files with the same type in the folder...")
+    }
 
-  if(length(file_type) != 1){
+    if (is.null(variablesNames)) {
+        cat(
+            ">> no variable name is assigned,default names will be assigned",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
+    }
 
-    stop("pls input files with the same type in the folder...")
+    bed_flag <- all(unlist(lapply(list.files(name), isBedFile)))
 
-  }
+    if (bed_flag) {
+        data <- lapply(list.files(name), function(x) {
+            cat(">> reading", x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
-  if(is.null(variablesNames)){
-    cat(">> no variable name is assigned,default names will be assigned",
-        format(Sys.time(), "%Y-%m-%d %X"), "\n")
-  }
+            tmp <- readPeakFile(file.path(name, x))
 
-  bed_flag <- all(unlist(lapply(list.files(name), isBedFile)))
+            if (is.null(variablesNames)) {
+                n0 <- length(names(mcols(tmp)))
+                variablesNames <- paste0("value", seq_len(n0))
+            }
 
-  if(bed_flag){
-    data <- lapply(list.files(name),function(x){
+            names(mcols(tmp)) <- variablesNames
 
-      cat(">> reading",x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
+            return(tmp)
+        })
 
-      tmp <- readPeakFile(file.path(name,x))
+        data_list <- GRangesList(data)
 
-      if(is.null(variablesNames)){
-        n0 <- length(names(mcols(tmp)))
-        variablesNames <- paste0("value",seq_len(n0))
-      }
+        return(data_list)
+    }
 
-      names(mcols(tmp)) <- variablesNames
+    data_list <- lapply(list.files(name), function(x) {
+        cat(">> reading", x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
-      return(tmp)
+        rlang::check_installed("data.table", reason = "For reading data.")
+
+        if (requireNamespace("data.table", quietly = TRUE)) {
+            tmp <- data.table::fread(file.path(name, x))
+        }
+
+
+        if (is.null(variablesNames)) {
+            n0 <- ncol(tmp) - 2
+            variablesNames <- paste0("value", seq_len(n0))
+        }
+
+        colnames(tmp) <- c("chr", "pos", variablesNames)
+        return(tmp)
     })
 
-    data_list <- GRangesList(data)
-
     return(data_list)
-  }
-
-  data_list <- lapply(list.files(name),function(x){
-
-    cat(">> reading",x, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-
-    rlang::check_installed('data.table', reason = 'For reading data.')
-
-    if (requireNamespace("data.table", quietly = TRUE)){
-      tmp <- data.table::fread(file.path(name,x))
-    }
-    
-
-    if(is.null(variablesNames)){
-      n0 <- ncol(tmp)-2
-      variablesNames <- paste0("value",seq_len(n0))
-    }
-
-    colnames(tmp) <- c('chr', 'pos' ,variablesNames)
-    return(tmp)
-  })
-
-  return(data_list)
-
 }
 
 
 #' @importFrom GenomicRanges mcols
-makeBmDataFromFiles.file <- function(name, variablesNames){
-
-  if(is.null(variablesNames)){
-    cat(">> no variable name is assigned,default names will be assigned",
-        format(Sys.time(), "%Y-%m-%d %X"), "\n")
-  }
-
-  if(isBedFile(name)){
-
-    cat(">> reading",name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-
-    data <- readPeakFile(name)
-
-    if(is.null(variablesNames)){
-      n0 <- length(names(mcols(data)))
-      variablesNames <- paste0("value",seq_len(n0))
+makeBmDataFromFiles.file <- function(name, variablesNames) {
+    if (is.null(variablesNames)) {
+        cat(
+            ">> no variable name is assigned,default names will be assigned",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
     }
 
-    names(mcols(data)) <- variablesNames
+    if (isBedFile(name)) {
+        cat(">> reading", name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
 
+        data <- readPeakFile(name)
+
+        if (is.null(variablesNames)) {
+            n0 <- length(names(mcols(data)))
+            variablesNames <- paste0("value", seq_len(n0))
+        }
+
+        names(mcols(data)) <- variablesNames
+
+        return(data)
+    }
+
+    cat(">> reading", name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
+
+    rlang::check_installed("data.table", reason = "For reading data.")
+
+    if (requireNamespace("data.table", quietly = TRUE)) {
+        data <- data.table::fread(name)
+    }
+
+    if (is.null(variablesNames)) {
+        n0 <- ncol(data) - 2
+        variablesNames <- paste0("value", seq_len(n0))
+    }
+
+    colnames(data) <- c("chr", "pos", variablesNames)
     return(data)
-  }
-
-  cat(">> reading",name, format(Sys.time(), "%Y-%m-%d %X"), "\n")
-
-  rlang::check_installed('data.table', reason = 'For reading data.')
-
-  if (requireNamespace("data.table", quietly = TRUE)){
-    data <- data.table::fread(name)
-  }
-
-  if(is.null(variablesNames)){
-    n0 <- ncol(data)-2
-    variablesNames <- paste0("value",seq_len(n0))
-  }
-
-  colnames(data) <- c('chr', 'pos' ,variablesNames)
-  return(data)
-
 }

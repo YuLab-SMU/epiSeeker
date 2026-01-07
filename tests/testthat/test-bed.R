@@ -8,4 +8,3 @@ test_that("parse bed file", {
         expect_true(is(readPeakFile(files[[i]]), "GRanges"))
     }
 })
-

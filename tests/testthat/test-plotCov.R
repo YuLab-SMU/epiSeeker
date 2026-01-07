@@ -3,7 +3,6 @@ library(epiSeeker)
 context("test function for plotCov ")
 
 test_that("plotCov works with sample peak", {
-    
     peak <- readPeakFile(getSampleFiles()[[4]])
 
     p <- plotCov(peak = peak, weightCol = "V5")
@@ -13,7 +12,6 @@ test_that("plotCov works with sample peak", {
 
 
 test_that("getChrCov", {
-    
     peak <- readPeakFile(getSampleFiles()[[4]])
 
     df <- getChrCov(

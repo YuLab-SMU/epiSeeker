@@ -11,8 +11,8 @@ test_that("upsetplot.csAnno works without vennpie", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })
 
@@ -26,8 +26,8 @@ test_that("upsetplot.csAnno works with vennpie enabled", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })
 
@@ -39,7 +39,7 @@ test_that("upsetplot.csAnno with order_by", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })

@@ -1,5 +1,5 @@
 #' Plot gene track
-#' 
+#'
 #' @param txdb TxDb object, providing gene annotation.
 #' @param chr chromosome id.
 #' @param start_pos start coordinate of windows.
@@ -31,109 +31,110 @@
 #' @importFrom ggplot2 coord_cartesian
 #' @importFrom rlang sym
 #' @importFrom rlang check_installed
-#' @examples 
+#' @examples
 #' require(TxDb.Hsapiens.UCSC.hg38.knownGene)
 #' txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 #' plotGeneTrack(txdb = txdb, chr = "chr8", start_pos = 126712193, end_pos = 126712293)
-#' @export 
+#' @export
 plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
                           x_text_size = 10, y_text_size = 10,
-                          select_gene = "all", palette = NULL,  fromType = "ENTREZID",
+                          select_gene = "all", palette = NULL, fromType = "ENTREZID",
                           highlight = NULL, highlight_color = "#c6c3c3", highlight_alpha = 0.2,
                           OrgDb = NULL, show_legend = FALSE, auto_x_axis = TRUE) {
-    
-
     # Get genes in the region
-    win <- GRanges(seqnames = chr,
-                   ranges = IRanges::IRanges(start = start_pos, end = end_pos))
-    
+    win <- GRanges(
+        seqnames = chr,
+        ranges = IRanges::IRanges(start = start_pos, end = end_pos)
+    )
+
     # Get genes related to region
     all_genes <- GenomicFeatures::genes(txdb)
     gene_df <- data.frame(subsetByOverlaps(x = all_genes, ranges = win, type = "any"))
     gene_df$gene_id <- factor(gene_df$gene_id, levels = unique(gene_df$gene_id))
-    
+
     # Process gene data
-    gene_df <- gene_df[,c("seqnames", "gene_id", "start", "end", "strand")]
+    gene_df <- gene_df[, c("seqnames", "gene_id", "start", "end", "strand")]
     colnames(gene_df)[1] <- "chromosome"
-    gene_df$forward <- ifelse(gene_df$strand=="+", TRUE, FALSE)
+    gene_df$forward <- ifelse(gene_df$strand == "+", TRUE, FALSE)
 
     gene_df$start <- pmax(gene_df$start, start_pos)
-    gene_df$end <- pmin(gene_df$end, end_pos)  
-    
-    # Convert gene IDs
-    if(!is.null(OrgDb)){
-        # check clusterProfiler install or not 
-        rlang::check_installed('clusterProfiler', reason = 'For coverting gene ids.')
+    gene_df$end <- pmin(gene_df$end, end_pos)
 
-        if (requireNamespace("clusterProfiler", quietly = TRUE)){
-            changeid <- clusterProfiler::bitr(geneID = gene_df$gene_id, 
-                                              fromType = fromType, toType = "SYMBOL",
-                                              OrgDb = OrgDb)
+    # Convert gene IDs
+    if (!is.null(OrgDb)) {
+        # check clusterProfiler install or not
+        rlang::check_installed("clusterProfiler", reason = "For coverting gene ids.")
+
+        if (requireNamespace("clusterProfiler", quietly = TRUE)) {
+            changeid <- clusterProfiler::bitr(
+                geneID = gene_df$gene_id,
+                fromType = fromType, toType = "SYMBOL",
+                OrgDb = OrgDb
+            )
         }
-        
-        colnames(changeid)[1] <- c("gene_id") 
+
+        colnames(changeid)[1] <- c("gene_id")
         gene_df <- merge(gene_df, changeid, all.x = TRUE)
         colnames(gene_df)[ncol(gene_df)] <- "gene_symbol"
         legend_label <- "gene_symbol"
-        
-    }else{
-
+    } else {
         legend_label <- "gene_id"
     }
 
     # Subset gene_df
-    if(all(select_gene != "all")){
-
+    if (all(select_gene != "all")) {
         # gene symbol
-        if(!is.null(OrgDb)){
+        if (!is.null(OrgDb)) {
             flag_symbol <- sum(select_gene %in% gene_df$gene_symbol)
-        }else{
+        } else {
             flag_symbol <- 0
         }
 
-        # gene id 
+        # gene id
         flag_id <- sum(select_gene %in% gene_df$gene_id)
 
-        if(flag_id == length(select_gene)){
-            gene_df <- gene_df[gene_df$gene_id %in% select_gene,]
-        }else if(flag_symbol == length(select_gene)){
-            gene_df <- gene_df[gene_df$gene_symbol %in% select_gene,]
-        }else{
+        if (flag_id == length(select_gene)) {
+            gene_df <- gene_df[gene_df$gene_id %in% select_gene, ]
+        } else if (flag_symbol == length(select_gene)) {
+            gene_df <- gene_df[gene_df$gene_symbol %in% select_gene, ]
+        } else {
             message("There is no gene selected. Show all genes by default...")
         }
-
     }
 
     forward <- NULL
 
-    rlang::check_installed('gggenes', reason = 'For ploting genes structure.')
+    rlang::check_installed("gggenes", reason = "For ploting genes structure.")
 
-    if(requireNamespace("gggenes", quietly = TRUE)){
-
-        p <- ggplot(gene_df, aes(xmin = start, xmax = end, y = !!rlang::sym(legend_label), 
-                             forward=forward, fill = !!rlang::sym(legend_label))) + 
-                gggenes::geom_gene_arrow() +
-                coord_cartesian(xlim = c(start_pos, end_pos)) +
-                xlim(c(start_pos, end_pos)) +
-                gggenes::theme_genes() +
-                labs(fill = gsub("_", " ",legend_label), x = xlab, y = ylab) +
-                theme(panel.grid.minor = element_blank(),
-                    axis.line = element_line(colour = "black"),
-                    panel.border = element_blank(),
-                    plot.title = element_text(hjust = 0.5),
-                    axis.text.x = element_text(size = x_text_size),
-                    axis.text.y = element_text(size = y_text_size))
-
+    if (requireNamespace("gggenes", quietly = TRUE)) {
+        p <- ggplot(gene_df, aes(
+            xmin = start, xmax = end, y = !!rlang::sym(legend_label),
+            forward = forward, fill = !!rlang::sym(legend_label)
+        )) +
+            gggenes::geom_gene_arrow() +
+            coord_cartesian(xlim = c(start_pos, end_pos)) +
+            xlim(c(start_pos, end_pos)) +
+            gggenes::theme_genes() +
+            labs(fill = gsub("_", " ", legend_label), x = xlab, y = ylab) +
+            theme(
+                panel.grid.minor = element_blank(),
+                axis.line = element_line(colour = "black"),
+                panel.border = element_blank(),
+                plot.title = element_text(hjust = 0.5),
+                axis.text.x = element_text(size = x_text_size),
+                axis.text.y = element_text(size = y_text_size)
+            )
     }
 
-    
-    
-    if(!auto_x_axis){
-        p <- p  + scale_x_continuous(breaks = round(as.numeric(quantile(seq(start_pos, end_pos), c(0,0.25,0.5,0.75,1)))),
-                                     labels = round(as.numeric(quantile(seq(start_pos, end_pos), c(0,0.25,0.5,0.75,1)))))
+
+    if (!auto_x_axis) {
+        p <- p + scale_x_continuous(
+            breaks = round(as.numeric(quantile(seq(start_pos, end_pos), c(0, 0.25, 0.5, 0.75, 1)))),
+            labels = round(as.numeric(quantile(seq(start_pos, end_pos), c(0, 0.25, 0.5, 0.75, 1))))
+        )
     }
 
-    if(!is.null(palette)){
+    if (!is.null(palette)) {
         p <- p + scale_fill_brewer(palette = palette)
     }
 
@@ -141,27 +142,25 @@ plotGeneTrack <- function(txdb, chr, start_pos, end_pos, xlab = "", ylab = "",
         p <- p + theme(legend.position = "none")
     }
 
-    if(!is.null(highlight)){
-
-        if(is(highlight, "list")){
-
-            for(idx in seq_along(highlight)){
+    if (!is.null(highlight)) {
+        if (is(highlight, "list")) {
+            for (idx in seq_along(highlight)) {
                 tmp <- highlight[[idx]]
-                p <- p + annotate("rect", 
-                              xmin = tmp[1], xmax = tmp[2],
-                              ymin = 0, ymax = Inf, 
-                              fill = highlight_color, alpha = highlight_alpha)
+                p <- p + annotate("rect",
+                    xmin = tmp[1], xmax = tmp[2],
+                    ymin = 0, ymax = Inf,
+                    fill = highlight_color, alpha = highlight_alpha
+                )
             }
-
-        }else{
-            p <- p + annotate("rect", 
-                              xmin = highlight[1], xmax = highlight[2],
-                              ymin = 0, ymax = Inf, 
-                              fill = highlight_color, alpha = highlight_alpha)
+        } else {
+            p <- p + annotate("rect",
+                xmin = highlight[1], xmax = highlight[2],
+                ymin = 0, ymax = Inf,
+                fill = highlight_color, alpha = highlight_alpha
+            )
         }
-
     }
 
-    
+
     return(p)
 }

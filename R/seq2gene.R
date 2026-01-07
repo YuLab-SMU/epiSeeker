@@ -15,10 +15,10 @@
 #' @importFrom yulab.utils get_cache_element
 #' @importFrom yulab.utils update_cache_item
 #' @author Guangchuang Yu
-seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {
+seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand = FALSE) {
     .epiSeekerEnv(TxDb, item = epiSeekerCache)
     # epiSeekerEnv <- get("epiSeekerEnv", envir=.GlobalEnv)
-    
+
     ## Exons
     # if ( exists("exonList", envir=epiSeekerEnv, inherits=FALSE) ) {
     #     exonList <- get("exonList", envir=epiSeekerEnv)
@@ -27,12 +27,12 @@ seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {
     #     assign("exonList", exonList, envir=epiSeekerEnv)
     # }
     exonList <- get_cache_element(item = epiSeekerCache, elements = "exonList")
-    if(is.null(exonList)){
+    if (is.null(exonList)) {
         exonList <- exonsBy(TxDb)
         update_cache_item(item = epiSeekerCache, list("exonList" = exonList))
     }
-    exons <- getGenomicAnnotation.internal(seq, exonList, type = "Exon", sameStrand=sameStrand)
-    
+    exons <- getGenomicAnnotation.internal(seq, exonList, type = "Exon", sameStrand = sameStrand)
+
     ## Introns
     # if ( exists("intronList", envir=epiSeekerEnv, inherits=FALSE) ) {
     #     intronList <- get("intronList", envir=epiSeekerEnv)
@@ -42,25 +42,25 @@ seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand=FALSE) {
     # }
     intronList <- get_cache_element(item = epiSeekerCache, elements = "intronList")
 
-    if(is.null(intronList)){
+    if (is.null(intronList)) {
         intronList <- intronsByTranscript(TxDb)
         update_cache_item(item = epiSeekerCache, list("intronList" = intronList))
     }
 
-    introns <- getGenomicAnnotation.internal(seq, intronList, type="Intron", sameStrand=sameStrand)
-    
+    introns <- getGenomicAnnotation.internal(seq, intronList, type = "Intron", sameStrand = sameStrand)
+
     genes <- c(exons$gene, introns$gene)
     ## > head(genes)
-    ## [1] "uc001aed.3/126789"    "uc001aka.3/440556"    "uc001ako.3/49856"    
-    ## [4] "uc001alg.3/100133612" "uc009vly.2/390992"    "uc001awv.2/79814"   
+    ## [1] "uc001aed.3/126789"    "uc001aka.3/440556"    "uc001ako.3/49856"
+    ## [4] "uc001alg.3/100133612" "uc009vly.2/390992"    "uc001awv.2/79814"
     genes <- gsub("\\w+\\.*\\d*/(\\d+)", "\\1", genes)
     ## > head(genes)
-    ## [1] "126789"    "440556"    "49856"     "100133612" "390992"    "79814"   
+    ## [1] "126789"    "440556"    "49856"     "100133612" "390992"    "79814"
 
-    features <- getGene(TxDb, by="gene")
-    idx.dist <- getNearestFeatureIndicesAndDistances(seq, features, sameStrand=sameStrand)
-    nearestFeatures <- features[idx.dist$index] 
-    
+    features <- getGene(TxDb, by = "gene")
+    idx.dist <- getNearestFeatureIndicesAndDistances(seq, features, sameStrand = sameStrand)
+    nearestFeatures <- features[idx.dist$index]
+
     distance <- idx.dist$distance
 
     pi <- distance > tssRegion[1] & distance < tssRegion[2]

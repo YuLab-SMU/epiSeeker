@@ -12,7 +12,6 @@ test_that("plotPeakHeatmap_sub works with single tagMatrix", {
 })
 
 
-
 test_that("plotPeakHeatmap_sub works with list tagMatrix", {
     data("tagMatrix", package = "epiSeeker")
 
@@ -22,11 +21,10 @@ test_that("plotPeakHeatmap_sub works with list tagMatrix", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })
-
 
 
 test_that("plotPeakProf works with tagMatrix", {
@@ -40,7 +38,6 @@ test_that("plotPeakProf works with tagMatrix", {
 })
 
 
-
 test_that("plotPeakHeatmap works to plot heatmap and profile)", {
     data("tagMatrix", package = "epiSeeker")
 
@@ -48,11 +45,10 @@ test_that("plotPeakHeatmap works to plot heatmap and profile)", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })
-
 
 
 test_that("plotPeakHeatmap works without profile", {
@@ -62,7 +58,7 @@ test_that("plotPeakHeatmap works without profile", {
 
     expect_true(
         inherits(p, "ggplot") ||
-        inherits(p, "gtable") ||
-        inherits(p, "patchwork")
+            inherits(p, "gtable") ||
+            inherits(p, "patchwork")
     )
 })

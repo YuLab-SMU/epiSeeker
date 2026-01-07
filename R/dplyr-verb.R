@@ -2,31 +2,31 @@
 #' @method filter GRanges
 #' @param .data granges object
 #' @param ... additional parameters
-#' @param .by Optional grouping variable(s) (column name or variable expression) 
+#' @param .by Optional grouping variable(s) (column name or variable expression)
 #'   specifying which columns to group by when applying filters
-#' @param .preserve Logical value indicating whether to preserve the original grouping 
+#' @param .preserve Logical value indicating whether to preserve the original grouping
 #'   structure when .by is specified. If TRUE, group order and identities are maintained
 #' @return A filtered GRanges object containing only rows that meet the specified criteria
 #' @importFrom dplyr filter
-#' @examples 
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' @examples
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::filter(peak, fold_enrichment > 20)
 #' @return grange object
 #' @export
 filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
-  dots <- rlang::quos(...)
-  as.data.frame(.data) |> 
-    dplyr::filter(!!!dots, .by = .by, .preserve = .preserve) |> 
-    droplevels() |> 
-    GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+    dots <- rlang::quos(...)
+    as.data.frame(.data) |>
+        dplyr::filter(!!!dots, .by = .by, .preserve = .preserve) |>
+        droplevels() |>
+        GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
 
 #' @title Extend mutate to Peak (GRanges class object)
 #' @method mutate GRanges
 #' @param .data granges object
 #' @param ... additional parameters
-#' @param .by Optional grouping variable(s) (column name or variable expression) 
+#' @param .by Optional grouping variable(s) (column name or variable expression)
 #'   specifying which columns to group by for operations
 #' @param .keep Character vector specifying which columns to retain. Possible values:
 #'   "all" (retain all columns, default), "used" (retain only columns used in calculations),
@@ -35,34 +35,34 @@ filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
 #' @param .after Column name or position index specifying where to insert new columns after
 #' @return A processed GRanges object containing the added or modified columns
 #' @importFrom dplyr mutate
-#' @examples 
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' @examples
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::mutate(peak, score = tags)
 #' @export
-mutate.GRanges <- function(.data, ..., .by = NULL, 
+mutate.GRanges <- function(.data, ..., .by = NULL,
                            .keep = c("all", "used", "unused", "none"),
                            .before = NULL,
                            .after = NULL) {
-  dots <- rlang::quos(...)
-  df <- as.data.frame(.data)
-  
-  if (!is.null(.before) && !is.null(.after)) {
-    stop("You can't supply both `.before` and `.after`.")
-  }
-  
-  if (!is.null(.before)) {
-    df <- df |> 
-      dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .before = .before)
-  } else if (!is.null(.after)) {
-    df <- df |> 
-      dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .after = .after)
-  } else {
-    df <- df |> dplyr::mutate(!!!dots, .by = .by, .keep = .keep)
-  }
-  
-  df |> 
-    GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+    dots <- rlang::quos(...)
+    df <- as.data.frame(.data)
+
+    if (!is.null(.before) && !is.null(.after)) {
+        stop("You can't supply both `.before` and `.after`.")
+    }
+
+    if (!is.null(.before)) {
+        df <- df |>
+            dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .before = .before)
+    } else if (!is.null(.after)) {
+        df <- df |>
+            dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .after = .after)
+    } else {
+        df <- df |> dplyr::mutate(!!!dots, .by = .by, .keep = .keep)
+    }
+
+    df |>
+        GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
 
 #' @title Rename columns of a GRanges object
@@ -72,19 +72,19 @@ mutate.GRanges <- function(.data, ..., .by = NULL,
 #' @importFrom rlang quos
 #' @importFrom dplyr rename
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
-#' @examples 
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' @examples
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::rename(peak, tag = tags)
 #' @return A GRanges object with renamed metadata columns.
 #' @export
-rename.GRanges <- function(.data, ...){
-  dots <- rlang::quos(...)
-  new <- as.data.frame(.data) |> 
-          dplyr::rename(!!!dots) |> 
-          GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+rename.GRanges <- function(.data, ...) {
+    dots <- rlang::quos(...)
+    new <- as.data.frame(.data) |>
+        dplyr::rename(!!!dots) |>
+        GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 
-  return(new)
+    return(new)
 }
 
 #' @title Arrange GRanges object
@@ -93,17 +93,15 @@ rename.GRanges <- function(.data, ...){
 #' @param .data granges object
 #' @param ... additional parameters
 #' @param .by_group If TRUE, will sort first by grouping variable. Applies to grouped data frames only.
-#' @examples 
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' @examples
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 #' peak <- readPeakFile(peakfile)
 #' dplyr::arrange(peak, seqnames)
 #' @return grange object
 #' @export
 arrange.GRanges <- function(.data, ..., .by_group = FALSE) {
-  dots <- rlang::quos(...)
-  as.data.frame(.data) |> 
-    dplyr::arrange(!!!dots, .by_group = .by_group) |> 
-    GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+    dots <- rlang::quos(...)
+    as.data.frame(.data) |>
+        dplyr::arrange(!!!dots, .by_group = .by_group) |>
+        GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
-
-

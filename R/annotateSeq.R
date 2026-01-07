@@ -55,22 +55,21 @@
 #' @export
 #' @author G Yu
 annotateSeq <- function(peak,
-                        tssRegion=c(-3000, 3000),
-                        TxDb=NULL,
+                        tssRegion = c(-3000, 3000),
+                        TxDb = NULL,
                         level = "transcript",
-                        assignGenomicAnnotation=TRUE,
+                        assignGenomicAnnotation = TRUE,
                         genomicAnnotationPriority = c("Promoter", "5UTR", "3UTR", "Exon", "Intron", "Downstream", "Intergenic"),
-                        annoDb=NULL,
-                        addFlankGeneInfo=FALSE,
-                        flankDistance=5000,
+                        annoDb = NULL,
+                        addFlankGeneInfo = FALSE,
+                        flankDistance = 5000,
                         sameStrand = FALSE,
-                        ignoreOverlap=FALSE,
-                        ignoreUpstream=FALSE,
-                        ignoreDownstream=FALSE,
+                        ignoreOverlap = FALSE,
+                        ignoreUpstream = FALSE,
+                        ignoreDownstream = FALSE,
                         overlap = "TSS",
-                        verbose=TRUE,
-                        columns=c("ENTREZID", "ENSEMBL", "SYMBOL", "GENENAME")) {
-
+                        verbose = TRUE,
+                        columns = c("ENTREZID", "ENSEMBL", "SYMBOL", "GENENAME")) {
     is_GRanges_of_TxDb <- FALSE
     if (is(TxDb, "GRanges")) {
         is_GRanges_of_TxDb <- TRUE
@@ -96,7 +95,7 @@ annotateSeq <- function(peak,
         stop('genomicAnnotationPriority should be any order of c("Promoter", "5UTR", "3UTR", "Exon", "Intron", "Downstream", "Intergenic")')
     }
 
-    if ( is(peak, "GRanges") ){
+    if (is(peak, "GRanges")) {
         ## this test will be TRUE
         ## when peak is an instance of class/subclass of "GRanges"
         input <- "gr"
@@ -108,34 +107,44 @@ annotateSeq <- function(peak,
 
     peakNum <- length(peak.gr)
 
-    if (verbose)
-        message(">> preparing features information...\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+    if (verbose) {
+        message(
+            ">> preparing features information...\t\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
+    }
 
     if (is_GRanges_of_TxDb) {
         features <- TxDb
     } else {
         TxDb <- loadTxDb(TxDb)
 
-        if (level=="transcript") {
-            features <- getGene(TxDb, by="transcript")
+        if (level == "transcript") {
+            features <- getGene(TxDb, by = "transcript")
         } else {
-            features <- getGene(TxDb, by="gene")
+            features <- getGene(TxDb, by = "gene")
         }
     }
-    if (verbose)
-        message(">> identifying nearest features...\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+    if (verbose) {
+        message(
+            ">> identifying nearest features...\t\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
+    }
 
     ## nearest features
     idx.dist <- getNearestFeatureIndicesAndDistances(peak.gr, features,
-                                                     sameStrand, ignoreOverlap,
-                                                     ignoreUpstream,ignoreDownstream,
-                                                     overlap=overlap)
+        sameStrand, ignoreOverlap,
+        ignoreUpstream, ignoreDownstream,
+        overlap = overlap
+    )
 
-    if (verbose)
-        message(">> calculating distance from peak to TSS...\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+    if (verbose) {
+        message(
+            ">> calculating distance from peak to TSS...\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
+    }
     ## distance
     distance <- idx.dist$distance
 
@@ -144,11 +153,14 @@ annotateSeq <- function(peak,
 
     ## annotation
     if (assignGenomicAnnotation == TRUE) {
-        if (verbose)
-            message(">> assigning genomic annotation...\t\t",
-                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        if (verbose) {
+            message(
+                ">> assigning genomic annotation...\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n"
+            )
+        }
 
-        anno <- getGenomicAnnotation(peak.gr, distance, tssRegion, TxDb, level, genomicAnnotationPriority, sameStrand=sameStrand)
+        anno <- getGenomicAnnotation(peak.gr, distance, tssRegion, TxDb, level, genomicAnnotationPriority, sameStrand = sameStrand)
         annotation <- anno[["annotation"]]
         detailGenomicAnnotation <- anno[["detailGenomicAnnotation"]]
     } else {
@@ -157,8 +169,9 @@ annotateSeq <- function(peak,
     }
 
     ## append annotation to peak.gr
-    if (!is.null(annotation))
+    if (!is.null(annotation)) {
         mcols(peak.gr)[["annotation"]] <- annotation
+    }
 
 
     has_nearest_idx <- which(idx.dist$index <= length(features))
@@ -168,61 +181,83 @@ annotateSeq <- function(peak,
     names(nearestFeatures) <- NULL
     nearestFeatures.df <- as.data.frame(nearestFeatures)
     if (is_GRanges_of_TxDb) {
-        colnames(nearestFeatures.df)[seq_len(5)] <- c("geneChr", "geneStart", "geneEnd",
-                                                      "geneLength", "geneStrand")
+        colnames(nearestFeatures.df)[seq_len(5)] <- c(
+            "geneChr", "geneStart", "geneEnd",
+            "geneLength", "geneStrand"
+        )
     } else if (level == "transcript") {
         if (is(TxDb, "EnsDb")) {
-            nearestFeatures.df <- nearestFeatures.df[, c("seqnames", "start",
-                                                         "end", "width",
-                                                         "strand", "gene_id",
-                                                         "tx_id", "tx_biotype"),
-                                                     drop = FALSE]
+            nearestFeatures.df <- nearestFeatures.df[, c(
+                "seqnames", "start",
+                "end", "width",
+                "strand", "gene_id",
+                "tx_id", "tx_biotype"
+            ),
+            drop = FALSE
+            ]
             colnames(nearestFeatures.df) <- c(
                 "geneChr", "geneStart", "geneEnd", "geneLength", "geneStrand",
-                "geneId", "transcriptId", "transcriptBiotype")
+                "geneId", "transcriptId", "transcriptBiotype"
+            )
         } else {
-            colnames(nearestFeatures.df) <- c("geneChr", "geneStart", "geneEnd",
-                                              "geneLength", "geneStrand",
-                                              "geneId", "transcriptId")
+            colnames(nearestFeatures.df) <- c(
+                "geneChr", "geneStart", "geneEnd",
+                "geneLength", "geneStrand",
+                "geneId", "transcriptId"
+            )
             nearestFeatures.df$geneId <- TXID2EG(
-                as.character(nearestFeatures.df$geneId), geneIdOnly=TRUE)
+                as.character(nearestFeatures.df$geneId),
+                geneIdOnly = TRUE
+            )
         }
     } else {
         if (is(TxDb, "EnsDb")) {
-            nearestFeatures.df <- nearestFeatures.df[, c("seqnames", "start",
-                                                         "end", "width",
-                                                         "strand", "gene_id",
-                                                         "gene_biotype"),
-                                                     drop = FALSE]
-            colnames(nearestFeatures.df) <- c("geneChr", "geneStart", "geneEnd",
-                                              "geneLength", "geneStrand",
-                                              "geneId", "geneBiotype")
-        } else
-            colnames(nearestFeatures.df) <- c("geneChr", "geneStart", "geneEnd",
-                                              "geneLength", "geneStrand",
-                                              "geneId")
+            nearestFeatures.df <- nearestFeatures.df[, c(
+                "seqnames", "start",
+                "end", "width",
+                "strand", "gene_id",
+                "gene_biotype"
+            ),
+            drop = FALSE
+            ]
+            colnames(nearestFeatures.df) <- c(
+                "geneChr", "geneStart", "geneEnd",
+                "geneLength", "geneStrand",
+                "geneId", "geneBiotype"
+            )
+        } else {
+            colnames(nearestFeatures.df) <- c(
+                "geneChr", "geneStart", "geneEnd",
+                "geneLength", "geneStrand",
+                "geneId"
+            )
+        }
     }
 
-    for(cn in colnames(nearestFeatures.df)) {
+    for (cn in colnames(nearestFeatures.df)) {
         mcols(peak.gr)[[cn]][has_nearest_idx] <- unlist(nearestFeatures.df[, cn])
     }
 
     mcols(peak.gr)[["distanceToTSS"]] <- distance
 
     if (!is.null(annoDb)) {
-        if (verbose)
-            message(">> adding gene annotation...\t\t\t",
-                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        if (verbose) {
+            message(
+                ">> adding gene annotation...\t\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n"
+            )
+        }
         .idtype <- IDType(TxDb)
         if (length(.idtype) == 0 || is.na(.idtype) || is.null(.idtype)) {
             n <- length(peak.gr)
-            if (n > 100)
+            if (n > 100) {
                 n <- 100
+            }
             sampleID <- peak.gr$geneId[seq_len(n)]
 
-            if (all(grepl('^ENS', sampleID))) {
+            if (all(grepl("^ENS", sampleID))) {
                 .idtype <- "Ensembl Gene ID"
-            } else if (all(grepl('^\\d+$', sampleID))) {
+            } else if (all(grepl("^\\d+$", sampleID))) {
                 .idtype <- "Entrez Gene ID"
             } else {
                 warning("Unknown ID type, gene annotation will not be added...")
@@ -236,9 +271,12 @@ annotateSeq <- function(peak,
     }
 
     if (addFlankGeneInfo == TRUE) {
-        if (verbose)
-            message(">> adding flank feature information from peaks...\t",
-                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        if (verbose) {
+            message(
+                ">> adding flank feature information from peaks...\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n"
+            )
+        }
 
         flankInfo <- getAllFlankingGene(peak.gr, features, level, flankDistance)
 
@@ -252,39 +290,44 @@ annotateSeq <- function(peak,
 
         mcols(peak.gr)[["flank_geneIds"]][flankInfo$peakIdx] <- flankInfo$flank_geneIds
         mcols(peak.gr)[["flank_gene_distances"]][flankInfo$peakIdx] <- flankInfo$flank_gene_distances
-
     }
 
     if (!is_GRanges_of_TxDb) {
-        if(verbose)
-            message(">> assigning chromosome lengths\t\t\t",
-                    format(Sys.time(), "%Y-%m-%d %X"), "\n")
+        if (verbose) {
+            message(
+                ">> assigning chromosome lengths\t\t\t",
+                format(Sys.time(), "%Y-%m-%d %X"), "\n"
+            )
+        }
 
         peak.gr@seqinfo <- seqinfo(TxDb)[names(seqlengths(peak.gr))]
     }
 
-    if(verbose)
-        message(">> done...\t\t\t\t\t",
-                format(Sys.time(), "%Y-%m-%d %X"), "\n")
+    if (verbose) {
+        message(
+            ">> done...\t\t\t\t\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n"
+        )
+    }
 
     if (assignGenomicAnnotation) {
         res <- new("csAnno",
-                   anno = peak.gr,
-                   tssRegion = tssRegion,
-                   level=level,
-                   hasGenomicAnnotation = TRUE,
-                   detailGenomicAnnotation=detailGenomicAnnotation,
-                   annoStat=getGenomicAnnoStat(peak.gr),
-                   peakNum=peakNum
-                   )
+            anno = peak.gr,
+            tssRegion = tssRegion,
+            level = level,
+            hasGenomicAnnotation = TRUE,
+            detailGenomicAnnotation = detailGenomicAnnotation,
+            annoStat = getGenomicAnnoStat(peak.gr),
+            peakNum = peakNum
+        )
     } else {
         res <- new("csAnno",
-                   anno = peak.gr,
-                   tssRegion = tssRegion,
-                   level=level,
-                   hasGenomicAnnotation = FALSE,
-                   peakNum=peakNum
-                   )
+            anno = peak.gr,
+            tssRegion = tssRegion,
+            level = level,
+            hasGenomicAnnotation = FALSE,
+            peakNum = peakNum
+        )
     }
 
     return(res)
@@ -299,17 +342,17 @@ annotateSeq <- function(peak,
 #' @param distanceToTSS_cutoff distance to TSS cutoff
 #' @return csAnno object
 #' @export
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' dropAnno(peakAnno)
 #' @author Guangchuang Yu
-dropAnno <- function(csAnno, distanceToTSS_cutoff=10000) {
+dropAnno <- function(csAnno, distanceToTSS_cutoff = 10000) {
     idx <- which(abs(mcols(csAnno@anno)[["distanceToTSS"]]) < distanceToTSS_cutoff)
     csAnno@anno <- csAnno@anno[idx]
     csAnno@peakNum <- length(idx)
     if (csAnno@hasGenomicAnnotation) {
         csAnno@annoStat <- getGenomicAnnoStat(csAnno@anno)
-        csAnno@detailGenomicAnnotation <- csAnno@detailGenomicAnnotation[idx,]
+        csAnno@detailGenomicAnnotation <- csAnno@detailGenomicAnnotation[idx, ]
     }
     csAnno
 }

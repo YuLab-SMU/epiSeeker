@@ -8,16 +8,16 @@
 #' @return data.frame
 #' @importFrom AnnotationDbi select
 #' @author G Yu
-getGeneAnno <- function(annoDb, geneID, type, columns){
+getGeneAnno <- function(annoDb, geneID, type, columns) {
     kk <- unlist(geneID)
 
-    if (requireNamespace(annoDb, quietly = TRUE, character.only = TRUE)){
-        annoDb <- eval(parse(text=annoDb))
+    if (requireNamespace(annoDb, quietly = TRUE, character.only = TRUE)) {
+        annoDb <- eval(parse(text = annoDb))
     }
 
     if (type == "Entrez Gene ID") {
         kt <- "ENTREZID"
-    } else if (type =="Ensembl gene ID" || type == "Ensembl Gene ID") {
+    } else if (type == "Ensembl gene ID" || type == "Ensembl Gene ID") {
         kt <- "ENSEMBL"
     } else {
         message("geneID type is not supported...\tPlease report it to developer...\n")
@@ -28,17 +28,19 @@ getGeneAnno <- function(annoDb, geneID, type, columns){
     kk <- gsub("\\.\\d+$", "", kk)
     ann <- tryCatch(
         select(annoDb,
-               keys=unique(kk[i]),
-               keytype=kt,
-               columns=columns),
-        error = function(e) NULL)
+            keys = unique(kk[i]),
+            keytype = kt,
+            columns = columns
+        ),
+        error = function(e) NULL
+    )
 
     if (is.null(ann)) {
         warning("ID type not matched, gene annotation will not be added...")
         return(NA)
     }
-    idx <- getFirstHitIndex(ann[,kt])
-    ann <- ann[idx,]
+    idx <- getFirstHitIndex(ann[, kt])
+    ann <- ann[idx, ]
 
     ## idx <- unlist(sapply(kk, function(x) which(x==ann[,kt])))
     ## res <- matrix(NA, ncol=ncol(ann), nrow=length(kk)) %>% as.data.frame
@@ -46,7 +48,7 @@ getGeneAnno <- function(annoDb, geneID, type, columns){
     ## res[i,] <- ann[idx,]
 
     rownames(ann) <- ann[, kt]
-    res <- ann[as.character(kk),]
+    res <- ann[as.character(kk), ]
 
     return(res)
 }
@@ -54,11 +56,10 @@ getGeneAnno <- function(annoDb, geneID, type, columns){
 
 addGeneAnno <- function(peak.gr, annoDb, type, columns) {
     geneAnno <- getGeneAnno(annoDb, peak.gr$geneId, type, columns)
-    if (! all(is.na(geneAnno))) {
-        for(cn in colnames(geneAnno)[-1]) {
+    if (!all(is.na(geneAnno))) {
+        for (cn in colnames(geneAnno)[-1]) {
             mcols(peak.gr)[[cn]] <- geneAnno[, cn]
         }
     }
     return(peak.gr)
 }
-

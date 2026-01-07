@@ -4,27 +4,22 @@ library(ggVennDiagram)
 context("test function for plot venn-like fig")
 
 test_that("vennpie.csAnno runs", {
-
     data(peakAnno)
     expect_s4_class(peakAnno, "csAnno")
     expect_true(peakAnno@hasGenomicAnnotation)
 
     expect_silent(vennpie.csAnno(peakAnno))
-
 })
 
 
 test_that("vennpie.csAnno errors on non-csAnno input", {
-
     fake_input <- GenomicRanges::GRanges("chr1", IRanges::IRanges(1, 100))
 
     expect_error(vennpie.csAnno(fake_input))
 })
 
 
-
 test_that("vennplot works with gene list example", {
-
     data(peakAnnoList, package = "epiSeeker")
 
     genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
@@ -41,7 +36,6 @@ test_that("vennplot works with gene list example", {
 
 
 test_that("vennplot works with named list", {
-
     data(peakAnnoList, package = "epiSeeker")
     genes <- lapply(peakAnnoList, function(i) as.data.frame(i)$geneId)
 
@@ -54,10 +48,9 @@ test_that("vennplot works with named list", {
 
 
 test_that("vennplot.peakfile works with example peak files", {
-
     files <- list(
-        system.file("extdata", "sample_peaks.txt", package="epiSeeker"),
-        system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+        system.file("extdata", "sample_peaks.txt", package = "epiSeeker"),
+        system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
     )
 
     p3 <- vennplot.peakfile(files)
@@ -68,10 +61,9 @@ test_that("vennplot.peakfile works with example peak files", {
 
 
 test_that("vennplot.peakfile with custom labels", {
-
     files <- list(
-        system.file("extdata", "sample_peaks.txt", package="epiSeeker"),
-        system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+        system.file("extdata", "sample_peaks.txt", package = "epiSeeker"),
+        system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
     )
 
     labels <- c("A", "B")

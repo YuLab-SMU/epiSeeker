@@ -3,7 +3,6 @@ library(epiSeeker)
 context("test function for subset csAnno")
 
 test_that("subset.csAnno", {
-
     data(peakAnno)
 
     original <- peakAnno
@@ -38,5 +37,4 @@ test_that("subset.csAnno", {
         sep = "_"
     )
     expect_true(all(res_indices %in% original_indices))
-
 })

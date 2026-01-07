@@ -22,15 +22,16 @@
 #' @return annotation object
 #' @keywords classes
 setClass("csAnno",
-         representation=representation(
-             anno = "GRanges",
-             tssRegion = "numeric",
-             level = "character",
-             hasGenomicAnnotation = "logical",
-             detailGenomicAnnotation="data.frame",
-             annoStat="data.frame",
-             peakNum="numeric"
-             ))
+    representation = representation(
+        anno = "GRanges",
+        tssRegion = "numeric",
+        level = "character",
+        hasGenomicAnnotation = "logical",
+        detailGenomicAnnotation = "data.frame",
+        annoStat = "data.frame",
+        peakNum = "numeric"
+    )
+)
 
 
 #' convert csAnno object to GRanges
@@ -44,26 +45,27 @@ setClass("csAnno",
 #' as.GRanges(peakAnno)
 #' @export
 as.GRanges <- function(x) {
-    if (!is(x, "csAnno"))
+    if (!is(x, "csAnno")) {
         stop("not supported...")
+    }
     return(x@anno)
 }
 
 #' getting status of annotation
-#' 
+#'
 #' @title getAnnoStat
 #' @param x csAnno object
 #' @return data frame
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' getAnnoStat(peakAnno)
 #' @export
 getAnnoStat <- function(x) {
-    if (!is(x, "csAnno"))
+    if (!is(x, "csAnno")) {
         stop("not supported...")
+    }
     return(x@annoStat)
 }
-
 
 
 #' Combine csAnno Object
@@ -73,101 +75,104 @@ getAnnoStat <- function(x) {
 #' @param x csAnno object
 #' @param ... csAnno objects
 #' @return csAnno object
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' combine_csAnno(peakAnno, peakAnno)
-#' @importFrom methods new 
+#' @importFrom methods new
 #' @export
-combine_csAnno <- function(x, ...){
+combine_csAnno <- function(x, ...) {
     z <- list(x, ...)
-    
-    if(sum(vapply(z, function(x) !is(x, "csAnno"), FUN.VALUE = logical(1))) != 0){
+
+    if (sum(vapply(z, function(x) !is(x, "csAnno"), FUN.VALUE = logical(1))) != 0) {
         stop("not supported...")
     }
-    
-    if(length(z)<2){
+
+    if (length(z) < 2) {
         stop("need two or more csAnno object...")
     }
-    
-    
-    if(sum(!duplicated(lapply(z, function(x) x@tssRegion[1]))) != 1 
-       && sum(!duplicated(lapply(z, function(x) x@tssRegion[2]))) != 1){
+
+
+    if (sum(!duplicated(lapply(z, function(x) x@tssRegion[1]))) != 1 &&
+        sum(!duplicated(lapply(z, function(x) x@tssRegion[2]))) != 1) {
         stop("the tss regions of different csAnno objects should be the same...")
     }
-    
-    if(sum(!duplicated(lapply(z, function(x) x@level))) != 1){
+
+    if (sum(!duplicated(lapply(z, function(x) x@level))) != 1) {
         stop("the level of different csAnno object should be the same...")
     }
-    
-    if(sum(!duplicated(lapply(z, function(x) x@hasGenomicAnnotation))) != 1){
+
+    if (sum(!duplicated(lapply(z, function(x) x@hasGenomicAnnotation))) != 1) {
         stop("the status of GenomicAnnotation should be the same...")
     }
-    
+
     combine_tssRegion <- x@tssRegion
     combine_level <- x@level
     combine_hasGenomicAnnotation <- x@hasGenomicAnnotation
-    
+
     combine_anno <- x@anno
-    for(i in 2:length(z)){
-        combine_anno <- c(combine_anno,z[[i]]@anno)
+    for (i in 2:length(z)) {
+        combine_anno <- c(combine_anno, z[[i]]@anno)
     }
-    
+
     combine_detailGenomicAnnotation <- lapply(z, function(x) x@detailGenomicAnnotation)
-    combine_detailGenomicAnnotation <- do.call("rbind",combine_detailGenomicAnnotation)
-    
+    combine_detailGenomicAnnotation <- do.call("rbind", combine_detailGenomicAnnotation)
+
     combine_peakNum <- x@peakNum
-    for(i in 2:length(z)){
-        combine_peakNum <- combine_peakNum+z[[i]]@peakNum
+    for (i in 2:length(z)) {
+        combine_peakNum <- combine_peakNum + z[[i]]@peakNum
     }
-    
+
     feature <- x@annoStat$Feature
-    for(i in 2:length(z)){
-        if(length(feature)<length(z[[i]]@annoStat$Feature)){
+    for (i in 2:length(z)) {
+        if (length(feature) < length(z[[i]]@annoStat$Feature)) {
             feature_levels <- levels(z[[i]]@annoStat$Feature)
-            feature <- c(as.vector(feature),as.vector(z[[i]]@annoStat$Feature))
+            feature <- c(as.vector(feature), as.vector(z[[i]]@annoStat$Feature))
             feature <- feature[!duplicated(feature)]
-            feature <- factor(feature, 
-                              levels = feature_levels)
+            feature <- factor(feature,
+                levels = feature_levels
+            )
             feature <- sort(feature)
-        }else{
+        } else {
             feature_levels <- levels(feature)
-            feature <- c(as.vector(feature),as.vector(z[[i]]@annoStat$Feature))
+            feature <- c(as.vector(feature), as.vector(z[[i]]@annoStat$Feature))
             feature <- feature[!duplicated(feature)]
-            feature <- factor(feature, 
-                              levels = feature_levels)
+            feature <- factor(feature,
+                levels = feature_levels
+            )
             feature <- sort(feature)
         }
     }
-    
-    combine_annoStat <- data.frame(Feature=feature)
-    
-    for(i in seq_len(length(z))){
-        combine_annoStat <- merge(combine_annoStat, z[[i]]@annoStat, 
-                                  by = "Feature", all = TRUE, sort = FALSE)
+
+    combine_annoStat <- data.frame(Feature = feature)
+
+    for (i in seq_len(length(z))) {
+        combine_annoStat <- merge(combine_annoStat, z[[i]]@annoStat,
+            by = "Feature", all = TRUE, sort = FALSE
+        )
         combine_annoStat[is.na(combine_annoStat)] <- 0
-        combine_annoStat <- combine_annoStat[order(combine_annoStat$Feature),]
+        combine_annoStat <- combine_annoStat[order(combine_annoStat$Feature), ]
     }
-    
-    total <- (ncol(combine_annoStat)-1)*100
+
+    total <- (ncol(combine_annoStat) - 1) * 100
     combine_annoStat$sum <- rowSums(combine_annoStat[, 2:ncol(combine_annoStat)])
-    
-    
+
+
     for (i in seq_len(length(combine_annoStat$sum))) {
-        combine_annoStat$result[i] <- (combine_annoStat$sum[i]/total)*100
+        combine_annoStat$result[i] <- (combine_annoStat$sum[i] / total) * 100
     }
-    
-    annoStat_result <- data.frame(Feature=combine_annoStat[,1],Frequency=combine_annoStat[,ncol(combine_annoStat)])
-    
+
+    annoStat_result <- data.frame(Feature = combine_annoStat[, 1], Frequency = combine_annoStat[, ncol(combine_annoStat)])
+
     res <- new("csAnno",
-               anno = combine_anno,
-               tssRegion = combine_tssRegion,
-               level = combine_level,
-               hasGenomicAnnotation = combine_hasGenomicAnnotation,
-               detailGenomicAnnotation = combine_detailGenomicAnnotation,
-               annoStat = annoStat_result,
-               peakNum = combine_peakNum
+        anno = combine_anno,
+        tssRegion = combine_tssRegion,
+        level = combine_level,
+        hasGenomicAnnotation = combine_hasGenomicAnnotation,
+        detailGenomicAnnotation = combine_detailGenomicAnnotation,
+        annoStat = annoStat_result,
+        peakNum = combine_peakNum
     )
-    
+
     return(res)
 }
 
@@ -176,7 +181,7 @@ combine_csAnno <- function(x, ...){
 #' @name vennpie
 #' @docType methods
 #' @rdname vennpie-methods
-#' 
+#'
 #' @title vennpie method
 #' @param x A `csAnno` instance
 #' @param r initial radius
@@ -186,14 +191,15 @@ combine_csAnno <- function(x, ...){
 #' @usage vennpie(x, r = 0.2, cex=1.2, ...)
 #' @exportMethod vennpie
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("vennpie", signature(x="csAnno"),
-          function(x, 
-                   r = 0.2, 
-                   cex = 1.2, 
-                   ...) {
-            vennpie.csAnno(x, r, cex, ...)
-          }
-          )
+setMethod(
+    "vennpie", signature(x = "csAnno"),
+    function(x,
+             r = 0.2,
+             cex = 1.2,
+             ...) {
+        vennpie.csAnno(x, r, cex, ...)
+    }
+)
 
 
 #' upsetplot method generics
@@ -209,15 +215,16 @@ setMethod("vennpie", signature(x="csAnno"),
 #' @usage upsetplot(x, ...)
 #' @importFrom enrichplot upsetplot
 #' @exportMethod upsetplot
-#' @examples 
+#' @examples
 #' data(peakAnno)
 #' upsetplot(peakAnno)
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("upsetplot", signature(x="csAnno"),
-          function(x, ...) {
-              upsetplot.csAnno(x, ...)
-          }
-          )
+setMethod(
+    "upsetplot", signature(x = "csAnno"),
+    function(x, ...) {
+        upsetplot.csAnno(x, ...)
+    }
+)
 
 #' convert csAnno object to data.frame
 #'
@@ -230,10 +237,11 @@ setMethod("upsetplot", signature(x="csAnno"),
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
 #' @method as.data.frame csAnno
 #' @export
-as.data.frame.csAnno <- function(x, row.names=NULL, optional=FALSE, ...) {
+as.data.frame.csAnno <- function(x, row.names = NULL, optional = FALSE, ...) {
     y <- as.GRanges(x)
-    if (!(is.null(row.names) || is.character(row.names)))
+    if (!(is.null(row.names) || is.character(row.names))) {
         stop("'row.names' must be NULL or a character vector")
+    }
     df <- as.data.frame(y)
     rownames(df) <- row.names
     return(df)
@@ -251,21 +259,24 @@ as.data.frame.csAnno <- function(x, row.names=NULL, optional=FALSE, ...) {
 #' @importFrom methods show
 #' @exportMethod show
 #' @usage show(object)
-#' @examples 
-#' peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+#' @examples
+#' peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 #' show(peakfile)
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("show", signature(object="csAnno"),
-          function(object) {
-              cat("Annotated peaks generated by epiSeeker\n")
-              cat(paste(length(object@anno), object@peakNum, sep="/"),
-                  " peaks were annotated\n")
-              if (object@hasGenomicAnnotation) {
-                  cat("Genomic Annotation Summary:\n")
-                  print(object@annoStat)
-              }
-          }
-          )
+setMethod(
+    "show", signature(object = "csAnno"),
+    function(object) {
+        cat("Annotated peaks generated by epiSeeker\n")
+        cat(
+            paste(length(object@anno), object@peakNum, sep = "/"),
+            " peaks were annotated\n"
+        )
+        if (object@hasGenomicAnnotation) {
+            cat("Genomic Annotation Summary:\n")
+            print(object@annoStat)
+        }
+    }
+)
 
 #' plotAnnoBar method for list of `csAnno` instances
 #'
@@ -274,24 +285,26 @@ setMethod("show", signature(object="csAnno"),
 #' @rdname plotAnnoBar-methods
 #' @aliases plotAnnoBar,list-method
 #' @exportMethod plotAnnoBar
-setMethod("plotAnnoBar", signature(x="list"),
-          function(x,
-                   xlab="",
-                   ylab='Percentage(%)',
-                   title="Feature Distribution",
-                   ...) {
-              if (is.null(names(x))) {
-                  nn <- paste0("Peak", seq_along(x))
-                  warning("input is not a named list, set the name automatically to ", paste(nn, collapse = " "))
-                  names(x) <- nn
-                  ## stop("input object should be a named list...")
-              }
-              anno <- lapply(x, getAnnoStat)
-              ## anno.df <- ldply(anno)
-              anno.df <- list_to_dataframe(anno)
-              categoryColumn <- ".id"
-              plotAnnoBar.data.frame(anno.df, xlab, ylab, title, categoryColumn)
-          })
+setMethod(
+    "plotAnnoBar", signature(x = "list"),
+    function(x,
+             xlab = "",
+             ylab = "Percentage(%)",
+             title = "Feature Distribution",
+             ...) {
+        if (is.null(names(x))) {
+            nn <- paste0("Peak", seq_along(x))
+            warning("input is not a named list, set the name automatically to ", paste(nn, collapse = " "))
+            names(x) <- nn
+            ## stop("input object should be a named list...")
+        }
+        anno <- lapply(x, getAnnoStat)
+        ## anno.df <- ldply(anno)
+        anno.df <- list_to_dataframe(anno)
+        categoryColumn <- ".id"
+        plotAnnoBar.data.frame(anno.df, xlab, ylab, title, categoryColumn)
+    }
+)
 
 #' plotAnnoBar method for `csAnno` instance
 #'
@@ -309,17 +322,18 @@ setMethod("plotAnnoBar", signature(x="list"),
 #' @exportMethod plotAnnoBar
 #' @usage plotAnnoBar(x, xlab="", ylab='Percentage(\%)',title="Feature Distribution", ...)
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("plotAnnoBar", signature(x="csAnno"),
-          function(x,
-                   xlab="",
-                   ylab="Percentage(%)",
-                   title="Feature Distribution",
-                   ...) {
-              anno.df <- getAnnoStat(x)
-              categoryColumn <- 1
-              plotAnnoBar.data.frame(anno.df, xlab, ylab, title, categoryColumn)
-          })
-
+setMethod(
+    "plotAnnoBar", signature(x = "csAnno"),
+    function(x,
+             xlab = "",
+             ylab = "Percentage(%)",
+             title = "Feature Distribution",
+             ...) {
+        anno.df <- getAnnoStat(x)
+        categoryColumn <- 1
+        plotAnnoBar.data.frame(anno.df, xlab, ylab, title, categoryColumn)
+    }
+)
 
 
 #' plotAnnoPie method for `csAnno` instance
@@ -339,22 +353,23 @@ setMethod("plotAnnoBar", signature(x="csAnno"),
 #' @param ... extra parameter
 #' @return plot
 #' @exportMethod plotAnnoPie
-#' @usage plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA, 
-#'     legend.position = "rightside", pie3D = FALSE, 
+#' @usage plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA,
+#'     legend.position = "rightside", pie3D = FALSE,
 #'     radius = 0.8, ...)
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("plotAnnoPie", signature(x="csAnno"),
-          function(x,
-                   ndigit=2,
-                   cex=0.9,
-                   col=NA,
-                   legend.position="rightside",
-                   pie3D=FALSE,
-                   radius=0.8,
-                   ...){
-              plotAnnoPie.csAnno(x, ndigit, cex, col, legend.position, pie3D, radius, ...)
-          })
-
+setMethod(
+    "plotAnnoPie", signature(x = "csAnno"),
+    function(x,
+             ndigit = 2,
+             cex = 0.9,
+             col = NA,
+             legend.position = "rightside",
+             pie3D = FALSE,
+             radius = 0.8,
+             ...) {
+        plotAnnoPie.csAnno(x, ndigit, cex, col, legend.position, pie3D, radius, ...)
+    }
+)
 
 
 #' plotDistToTSS method for list of `csAnno` instances
@@ -364,27 +379,31 @@ setMethod("plotAnnoPie", signature(x="csAnno"),
 #' @rdname plotDistToTSS-methods
 #' @aliases plotDistToTSS,list-method
 #' @exportMethod plotDistToTSS
-setMethod("plotDistToTSS", signature(x="list"),
-          function(x, distanceColumn="distanceToTSS",
-                                     xlab="", ylab="Binding sites (%) (5'->3')",
-                                     title="Distribution of transcription factor-binding loci relative to TSS",                       
-                     distanceBreaks=c(0, 1000, 3000, 5000, 10000, 100000),
-                     palette = NULL, ...) {
-              if (is.null(names(x))) {
-                  nn <- paste0("Peak", seq_along(x))
-                  warning("input is not a named list, set the name automatically to ", paste(nn, collapse = " "))
-                  names(x) <- nn
-                  ## stop("input object should be a named list...")
-              }
+setMethod(
+    "plotDistToTSS", signature(x = "list"),
+    function(x, distanceColumn = "distanceToTSS",
+             xlab = "", ylab = "Binding sites (%) (5'->3')",
+             title = "Distribution of transcription factor-binding loci relative to TSS",
+             distanceBreaks = c(0, 1000, 3000, 5000, 10000, 100000),
+             palette = NULL, ...) {
+        if (is.null(names(x))) {
+            nn <- paste0("Peak", seq_along(x))
+            warning("input is not a named list, set the name automatically to ", paste(nn, collapse = " "))
+            names(x) <- nn
+            ## stop("input object should be a named list...")
+        }
 
-              peakAnno <- lapply(x, as.data.frame)
-              ## peakDist <- ldply(peakAnno)
-              peakDist <- list_to_dataframe(peakAnno)
-              categoryColumn <- ".id"
-              plotDistToTSS.data.frame(peakDist, distanceColumn = distanceColumn,
-                                       distanceBreaks = distanceBreaks, palette = palette,
-                                       xlab = xlab, ylab = ylab, title = title, categoryColumn = categoryColumn)
-          })
+        peakAnno <- lapply(x, as.data.frame)
+        ## peakDist <- ldply(peakAnno)
+        peakDist <- list_to_dataframe(peakAnno)
+        categoryColumn <- ".id"
+        plotDistToTSS.data.frame(peakDist,
+            distanceColumn = distanceColumn,
+            distanceBreaks = distanceBreaks, palette = palette,
+            xlab = xlab, ylab = ylab, title = title, categoryColumn = categoryColumn
+        )
+    }
+)
 
 
 #' plotDistToTSS method for `csAnno` instance
@@ -408,15 +427,18 @@ setMethod("plotDistToTSS", signature(x="list"),
 #' ylab="Binding sites (\%) (5'->3')",
 #' title="Distribution of transcription factor-binding loci relative to TSS",...)
 #' @author Guangchuang Yu <https://guangchuangyu.github.io>
-setMethod("plotDistToTSS", signature(x="csAnno"),
-          function(x, distanceColumn="distanceToTSS",
-                                     xlab="", ylab="Binding sites (%) (5'->3')",
-                                     title="Distribution of transcription factor-binding loci relative to TSS", 
-                                     distanceBreaks=c(0, 1000, 3000, 5000, 10000, 100000),
-                                     palette = NULL,...) {
-              peakDist <- as.data.frame(x)
-              categoryColumn <- 1
-              plotDistToTSS.data.frame(peakDist, distanceColumn = distanceColumn, distanceBreaks = distanceBreaks, palette = palette,
-                                       xlab = xlab, ylab = ylab, title = title, categoryColumn = categoryColumn)
-          })
-
+setMethod(
+    "plotDistToTSS", signature(x = "csAnno"),
+    function(x, distanceColumn = "distanceToTSS",
+             xlab = "", ylab = "Binding sites (%) (5'->3')",
+             title = "Distribution of transcription factor-binding loci relative to TSS",
+             distanceBreaks = c(0, 1000, 3000, 5000, 10000, 100000),
+             palette = NULL, ...) {
+        peakDist <- as.data.frame(x)
+        categoryColumn <- 1
+        plotDistToTSS.data.frame(peakDist,
+            distanceColumn = distanceColumn, distanceBreaks = distanceBreaks, palette = palette,
+            xlab = xlab, ylab = ylab, title = title, categoryColumn = categoryColumn
+        )
+    }
+)

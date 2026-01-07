@@ -3,7 +3,6 @@ library(epiSeeker)
 context("test function for plotDistToTSS ")
 
 test_that("plotDistToTSS works with basic example", {
-
     data("peakAnno", package = "epiSeeker")
 
     df <- as.data.frame(peakAnno)
@@ -33,7 +32,6 @@ test_that("plotDistToTSS works with custom distanceBreaks", {
 
 
 test_that("plotDistToTSS works with palette option", {
-
     data("peakAnno", package = "epiSeeker")
 
     df <- as.data.frame(peakAnno)
@@ -49,7 +47,6 @@ test_that("plotDistToTSS works with palette option", {
 
 
 test_that("plotDistToTSS works with '.id'", {
-
     data("peakAnno", package = "epiSeeker")
 
     df <- as.data.frame(peakAnno)
@@ -59,7 +56,7 @@ test_that("plotDistToTSS works with '.id'", {
     expect_silent({
         p <- plotDistToTSS.data.frame(
             df,
-            categoryColumn = ".id"   
+            categoryColumn = ".id"
         )
     })
 

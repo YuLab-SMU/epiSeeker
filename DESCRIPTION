@@ -1,8 +1,8 @@
 Package: epiSeeker
 Type: Package
 Title: epiSeeker: an R package for Annotation, Comparison and Visualization of multi-omics epigenetic data
-Version: 0.99.13
-Authors@R: c( 
+Version: 0.99.14
+Authors@R: c(
     person(given = "Guangchuang", family = "Yu",       email = "guangchuangyu@gmail.com",      role = c("aut", "cre", "fnd"), comment = c(ORCID = "0000-0002-6485-8781")),
     person(given = "Ming",        family = "Li",       email = "limiang929@gmail.com",         role = "ctb"),
     person(given = "Qianwen",     family = "Wang",     email = "treywea@gmail.com",            role = "ctb"),
@@ -11,14 +11,14 @@ Authors@R: c(
     person(given = "Michael",     family = "Kluge",    email = "michael.kluge@bio.ifi.lmu.de", role = "ctb"),
     person(given = "Thomas",      family = "Schwarzl", email = "schwarzl@embl.de",             role = "ctb"),
     person(given = "Zhougeng",    family = "Xu",       email = "xuzhougeng@163.com",           role = "ctb"),
-    person(given = "Chun-Hui",    family = "Gao",      email = "gaospecial@gmail.com",         role = "ctb", comment=c(ORCID = "0000-0002-1445-7939"))
-	)
-Description: This package implements functions to analyze multi-omics epigenetic data. 
-    Data of fragment type and base type are supported by epiSeeker. 
-    It provides functions to retrieve the nearest genes around the peak, annotate genomic region of the peak, 
+    person(given = "Chun-Hui",    family = "Gao",      email = "gaospecial@gmail.com",         role = "ctb")
+    )
+Description: This package implements functions to analyze multi-omics epigenetic data.
+    Data of fragment type and base type are supported by epiSeeker.
+    It provides functions to retrieve the nearest genes around the peak, annotate genomic region of the peak,
     statistical methods to estimate the significance of overlap among peak data sets, and motif analysis.
-    It incorporates the GEO database for users to compare their own dataset with those deposited in the database. 
-    The comparison can be used to infer cooperative regulation and thus can be used to generate hypotheses. 
+    It incorporates the GEO database for users to compare their own dataset with those deposited in the database.
+    The comparison can be used to infer cooperative regulation and thus can be used to generate hypotheses.
     Several visualization functions are implemented to summarize the coverage of the
     peak experiment, average profile and heatmap of peaks binding to TSS
     regions, genomic annotation, distance to TSS, overlap of peaks or genes, and

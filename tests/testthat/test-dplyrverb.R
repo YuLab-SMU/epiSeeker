@@ -3,7 +3,6 @@ library(epiSeeker)
 context("test function for dplyr verb ")
 
 test_that("filter.GRanges for demo_peak", {
-
     data("demo_peak", package = "epiSeeker")
 
     df <- as.data.frame(demo_peak)
@@ -17,7 +16,6 @@ test_that("filter.GRanges for demo_peak", {
 
 
 test_that("mutate.GRanges for demo_peak", {
-
     data("demo_peak", package = "epiSeeker")
 
     res1 <- dplyr::mutate(demo_peak, new_var = 1)
@@ -33,11 +31,10 @@ test_that("mutate.GRanges for demo_peak", {
 
 
 test_that("rename.GRanges", {
-
     data("demo_peak", package = "epiSeeker")
 
     df <- as.data.frame(demo_peak)
-    old_col <- names(df)[ncol(df)]  
+    old_col <- names(df)[ncol(df)]
     new_col <- "renamed_col"
 
     res <- rename(demo_peak, !!new_col := !!as.name(old_col))
@@ -48,7 +45,6 @@ test_that("rename.GRanges", {
 
 
 test_that("arrange.GRanges", {
-
     data("demo_peak", package = "epiSeeker")
 
     res <- dplyr::arrange(demo_peak, seqnames)

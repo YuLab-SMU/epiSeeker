@@ -16,11 +16,10 @@
 #' @author G Yu
 getNearestFeatureIndicesAndDistances <- function(peaks, features,
                                                  sameStrand = FALSE,
-                                                 ignoreOverlap=FALSE,
-                                                 ignoreUpstream=FALSE,
-                                                 ignoreDownstream=FALSE,
+                                                 ignoreOverlap = FALSE,
+                                                 ignoreUpstream = FALSE,
+                                                 ignoreDownstream = FALSE,
                                                  overlap = "TSS") {
-
     overlap <- match.arg(overlap, c("TSS", "all"))
 
     if (!ignoreOverlap && overlap == "all") {
@@ -32,20 +31,20 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
 
     ## only keep start position based on strand
     ## start(features) <- end(features) <- ifelse(strand(features) == "+", start(features), end(features))
-    features <- resize(features, width=1) # faster
+    features <- resize(features, width = 1) # faster
 
     ## add dummy NA feature for peaks that are at the last or first feature
     ## suggested by Michael Kluge
     features.bak <- features
     seqlevels(features) <- c(seqlevels(features), "chrNA")
-    dummy <- GRanges("chrNA", IRanges(1,1))
+    dummy <- GRanges("chrNA", IRanges(1, 1))
 
     ## dummy$tx_id <- -1
     ## dummy$tx_name <- "NA"
 
     cns <- names(mcols(features))
     for (cn in cns) {
-        if (grepl('id', cn)) {
+        if (grepl("id", cn)) {
             mcols(dummy)[[cn]] <- -1
         } else {
             mcols(dummy)[[cn]] <- NA
@@ -70,7 +69,7 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
     if (sum(na.idx) > 0) { ## suggested by Thomas Schwarzl
         ps.idx <- ps.idx[!na.idx]
         pe.idx <- pe.idx[!na.idx]
-        ##peaks <- peaks[!na.idx]
+        ## peaks <- peaks[!na.idx]
     }
 
     # set NA values to dummy value if only one entry is affected
@@ -95,7 +94,7 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
     ## restore the old feature object
     features <- features.bak
 
-    pse <- data.frame(ps=psD, pe=peD)
+    pse <- data.frame(ps = psD, pe = peD)
     if (ignoreUpstream) {
         j <- rep(2, nrow(pse))
     } else if (ignoreDownstream) {
@@ -106,11 +105,11 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
 
     ## index
     idx <- ps.idx
-    idx[j==2] <- pe.idx[j==2]
+    idx[j == 2] <- pe.idx[j == 2]
 
     ## distance
     dd <- psD
-    dd[j==2] <- peD[j==2]
+    dd[j == 2] <- peD[j == 2]
 
     index <- distanceToTSS <- rep(NA, length(peaks))
     distanceToTSS[!na.idx] <- dd
@@ -121,7 +120,7 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
 
         if (overlap == "all") {
             hit <- overlap_hit
-            if ( length(hit) != 0 ) {
+            if (length(hit) != 0) {
                 qh <- queryHits(hit)
                 hit.idx <- getFirstHitIndex(qh)
                 hit <- hit[hit.idx]
@@ -129,20 +128,21 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
                 featureIdx <- subjectHits(hit)
 
                 index[peakIdx] <- featureIdx
-                distance_both_end <- data.frame(start=start(peaks[peakIdx]) - start(features[featureIdx]),
-                                          end = end(peaks[peakIdx]) - start(features[featureIdx]))
+                distance_both_end <- data.frame(
+                    start = start(peaks[peakIdx]) - start(features[featureIdx]),
+                    end = end(peaks[peakIdx]) - start(features[featureIdx])
+                )
                 distance_idx <- apply(distance_both_end, 1, function(i) which.min(abs(i)))
-                distance_minimal <- distance_both_end[,1]
-                distance_minimal[distance_idx == 2] <- distance_both_end[distance_idx==2, 2]
+                distance_minimal <- distance_both_end[, 1]
+                distance_minimal[distance_idx == 2] <- distance_both_end[distance_idx == 2, 2]
 
                 distanceToTSS[peakIdx] <- distance_minimal * ifelse(strand(features[featureIdx]) == "+", 1, -1)
-
             }
         }
 
         hit <- findOverlaps(peaks, BiocGenerics::unstrand(features))
 
-        if ( length(hit) != 0 ) {
+        if (length(hit) != 0) {
             qh <- queryHits(hit)
             hit.idx <- getFirstHitIndex(qh)
             hit <- hit[hit.idx]
@@ -152,14 +152,15 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
             index[peakIdx] <- featureIdx
             distanceToTSS[peakIdx] <- 0
         }
-
     }
 
     j <- is.na(distanceToTSS) | is.na(index)
 
-    res <- list(index=index[!j],
-                distance=distanceToTSS[!j],
-                peak=peaks[!j])
+    res <- list(
+        index = index[!j],
+        distance = distanceToTSS[!j],
+        peak = peaks[!j]
+    )
 
     return(res)
 }

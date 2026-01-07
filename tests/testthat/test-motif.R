@@ -5,7 +5,6 @@ library(universalmotif)
 context("test function for motif analysis")
 
 test_that("getMotifMatrix works on example region", {
-
     data(pwm_obj, package = "epiSeeker")
 
     region <- GRanges(
@@ -15,7 +14,7 @@ test_that("getMotifMatrix works on example region", {
 
     motif_df <- getMotifMatrix(
         region  = region,
-        pwm     = pwm_obj[c(45,120,170)],
+        pwm     = pwm_obj[c(45, 120, 170)],
         ref_obj = BSgenome.Hsapiens.UCSC.hg38,
         by      = "name"
     )
@@ -35,7 +34,6 @@ test_that("getMotifMatrix works on example region", {
 
 
 test_that("plotMotifProf works with motifMatrix example", {
-
     data(pwm_obj, package = "epiSeeker")
 
     region <- GRanges(
@@ -45,7 +43,7 @@ test_that("plotMotifProf works with motifMatrix example", {
 
     motif_df <- getMotifMatrix(
         region  = region,
-        pwm     = pwm_obj[c(45,120,170)],
+        pwm     = pwm_obj[c(45, 120, 170)],
         ref_obj = BSgenome.Hsapiens.UCSC.hg38
     )
 
@@ -60,6 +58,4 @@ test_that("plotMotifProf works with motifMatrix example", {
     expect_true("motif" %in% names(motif_df))
 
     expect_equal(attr(motif_df, "range"), c(10525891, 10525991))
-
 })
-

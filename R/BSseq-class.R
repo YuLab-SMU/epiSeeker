@@ -15,24 +15,24 @@
 #' @return data.frame
 #' @importFrom methods setMethod
 #' @exportMethod getBmMatrix
-setMethod("getBmMatrix",signature(input = "BSseq"),
-          function(region,
-                   input,
-                   BSgenome,
-                   base = NULL,
-                   motif = NULL,
-                   position_bias = NULL,
-                   cover_depth=TRUE,
-                   ...){
-
-            getBmMatrix.BSseq(region = region,
-                                        input = input,
-                                        BSgenome = BSgenome,
-                                        base = base,
-                                        motif = motif,
-                                        position_bias = position_bias,
-                                        cover_depth = cover_depth)
-
-          })
-
-
+setMethod(
+    "getBmMatrix", signature(input = "BSseq"),
+    function(region,
+             input,
+             BSgenome,
+             base = NULL,
+             motif = NULL,
+             position_bias = NULL,
+             cover_depth = TRUE,
+             ...) {
+        getBmMatrix.BSseq(
+            region = region,
+            input = input,
+            BSgenome = BSgenome,
+            base = base,
+            motif = motif,
+            position_bias = position_bias,
+            cover_depth = cover_depth
+        )
+    }
+)

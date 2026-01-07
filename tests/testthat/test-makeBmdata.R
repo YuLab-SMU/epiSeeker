@@ -29,18 +29,17 @@ test_that("makeBmDataFromData works for data.frame", {
 
 
 test_that("makeBmDataFromData works for list of data.frame", {
-    df1 <- data.frame(chr="chr1", pos=c(10,20), v1=c(1,2))
-    df2 <- data.frame(chr="chr1", pos=c(10,20), v1=c(3,4))
+    df1 <- data.frame(chr = "chr1", pos = c(10, 20), v1 = c(1, 2))
+    df2 <- data.frame(chr = "chr1", pos = c(10, 20), v1 = c(3, 4))
     lst <- list(df1, df2)
 
-    bm <- makeBmDataFromData(lst, sampleNames=c("S1", "S2"))
+    bm <- makeBmDataFromData(lst, sampleNames = c("S1", "S2"))
 
     expect_s4_class(bm, "bmData")
 })
 
 
 test_that("plotBmProf works with list input", {
-
     data("demo_bmdata", package = "epiSeeker")
 
     bm_df <- getBmMatrix(
@@ -60,7 +59,7 @@ test_that("plotBmProf works with list input", {
         interactive = FALSE,
         ncol = 1
     )
-    
+
 
     expect_true(
         inherits(p, "ggplot")
