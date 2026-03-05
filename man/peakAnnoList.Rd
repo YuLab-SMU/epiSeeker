@@ -12,7 +12,7 @@ list of csAnno object
 }
 \description{
 A list of \code{csAnno} objects obtained by annotating multiple peak
-files using \code{epiSeeker::annotateSeq()}.  
+files using \code{epiSeeker::annotateSeq()}.
 See data-raw/example_data.R
 }
 \section{Provenance}{

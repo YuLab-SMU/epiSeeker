@@ -54,9 +54,12 @@ The objects in \code{data} must have specific forms. Colunms should be
    observation.
 }
 \examples{
-demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt", 
-                                package="epiSeeker")
-demo_bisseq <- read.table(demo_bisseq_file,header = TRUE)
-demo_bmdata <- makeBmDataFromData(data = list(acinar_methyl = demo_bisseq), 
-                                  sampleNames = "acinar_methyl")
+demo_bisseq_file <- system.file("extdata", "demo_bisseq.txt",
+    package = "epiSeeker"
+)
+demo_bisseq <- read.table(demo_bisseq_file, header = TRUE)
+demo_bmdata <- makeBmDataFromData(
+    data = list(acinar_methyl = demo_bisseq),
+    sampleNames = "acinar_methyl"
+)
 }

@@ -20,8 +20,8 @@ peak information, in GRanges or data.frame object
 Read peak file and store in data.frame or GRanges object
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
-peak.gr <- readPeakFile(peakfile, as="GRanges")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
+peak.gr <- readPeakFile(peakfile, as = "GRanges")
 peak.gr
 }
 \author{

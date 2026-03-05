@@ -30,23 +30,23 @@ GRanges object
 Prepare a bioregion of selected feature
 }
 \details{
-this function combined previous functions getPromoters(), getBioRegion() and getGeneBody() 
+this function combined previous functions getPromoters(), getBioRegion() and getGeneBody()
 in order to solve the following issues.
 
 (1) <https://github.com/GuangchuangYu/ChIPseeker/issues/16>
 
 (2) <https://github.com/GuangchuangYu/ChIPseeker/issues/87>
 
-1. function can provide a region of interest from txdb object. 
-2. function can make region from granges object. txdb object do not contain insulator or enhancer regions. 
+1. function can provide a region of interest from txdb object.
+2. function can make region from granges object. txdb object do not contain insulator or enhancer regions.
 Users can provide these regions through self-made granges object \url{https://github.com/YuLab-SMU/ChIPseeker/issues/189}.
 
-There are three kinds of way to extend regions: start_site, end_site and body. 
-We take transcript region to expain the differences of these three regions (tx: chr1 1000 1400). 
+There are three kinds of way to extend regions: start_site, end_site and body.
+We take transcript region to expain the differences of these three regions (tx: chr1 1000 1400).
 
 (1) body region refers to the 1000 ~ 1400 bp.
 
-(2) start_site region with (upstream = upstream = 100) refers to 900-1100bp. 
+(2) start_site region with (upstream = upstream = 100) refers to 900-1100bp.
 
 (3) end_site region with (upstream = upstream = 100) refers to 1300-1500bp.
 }

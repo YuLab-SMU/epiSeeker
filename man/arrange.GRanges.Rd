@@ -20,7 +20,7 @@ grange object
 Arrange GRanges object
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::arrange(peak, seqnames)
 }

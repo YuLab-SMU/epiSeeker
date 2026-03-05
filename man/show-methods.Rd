@@ -18,7 +18,7 @@ message
 show method for `csAnno` instance
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 show(peakfile)
 }
 \author{

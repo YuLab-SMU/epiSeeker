@@ -17,8 +17,8 @@ plotAnnoPie(
   ...
 )
 
-plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA, 
-    legend.position = "rightside", pie3D = FALSE, 
+plotAnnoPie(x, ndigit = 2, cex = 0.9, col = NA,
+    legend.position = "rightside", pie3D = FALSE,
     radius = 0.8, ...)
 }
 \arguments{

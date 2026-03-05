@@ -11,7 +11,7 @@ A `csAnno` object containing 220 annotated peaks.
 csAnno object
 }
 \description{
-A `csAnno` object representing the annotation result of the example peak set `demo_peak`.  
+A `csAnno` object representing the annotation result of the example peak set `demo_peak`.
 Peaks were annotated using the function `annotateSeq()` in `epiSeeker`.
 }
 \section{Provenance}{

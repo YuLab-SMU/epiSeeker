@@ -13,7 +13,7 @@ pwm_obj
 }
 \description{
 A collection of transcription factor position weight matrices (PWMs)
-retrieved from the JASPAR 2024 database.  
+retrieved from the JASPAR 2024 database.
 This dataset is used to demonstrate motif enrichment, motif scanning,
 and peak–motif association analyses in \pkg{epiSeeker}.
 See data-raw/example_data.R
@@ -21,7 +21,7 @@ See data-raw/example_data.R
 \section{Provenance}{
 
 The PWM set was obtained using the JASPAR 2024 SQLite database bundled in
-the \pkg{JASPAR2024} package.  
+the \pkg{JASPAR2024} package.
 Matrices were retrieved using \pkg{TFBSTools} with the following parameters:
 \itemize{
   \item \code{collection = "CORE"}
@@ -34,7 +34,7 @@ Matrices were retrieved using \pkg{TFBSTools} with the following parameters:
 \section{Data structure}{
 
 A \code{TFBSTools::PWMatrixList} (or \code{PFMatrixList}) object containing
-one PWM per transcription factor.  
+one PWM per transcription factor.
 Each matrix stores nucleotide position weights across the TF binding motif,
 with rows representing \code{A, C, G, T} and columns representing motif positions.
 }

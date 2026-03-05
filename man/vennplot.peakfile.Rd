@@ -18,8 +18,10 @@ figure
 Vennplot for peak files
 }
 \examples{
-files <- list(system.file("extdata", "sample_peaks.txt", package="epiSeeker"),
-              system.file("extdata", "sample_peaks.txt", package="epiSeeker"))
+files <- list(
+    system.file("extdata", "sample_peaks.txt", package = "epiSeeker"),
+    system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
+)
 vennplot.peakfile(files)
 }
 \author{

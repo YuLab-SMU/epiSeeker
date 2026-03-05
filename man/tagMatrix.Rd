@@ -17,7 +17,7 @@ tag distribution plotting functions in \pkg{epiSeeker}. See data-raw/example_dat
 \section{Provenance}{
 
 The tag matrix was generated using a sample peak file obtained from
-\code{getSampleFiles()[[4]]}.  
+\code{getSampleFiles()[[4]]}.
 Peaks were imported via \code{readPeakFile()} and processed using
 \code{epiSeeker::getTagMatrix()} with the following settings:
 \itemize{

@@ -117,7 +117,7 @@ plotCov
 Plot peak coverage
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 peak <- readPeakFile(peakfile)
 plotCov(peak)
 }

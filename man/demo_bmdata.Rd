@@ -12,16 +12,16 @@ bmData object
 }
 \description{
 A small example \code{bmData} object representing cytosine methylation
-measurements from Bisulfite-Seq data.  
+measurements from Bisulfite-Seq data.
 This dataset is intended for demonstrating base-modification visualization,
 regional methylation profiling, and \code{epiSeeker} workflows operating on
-\code{bmData} objects. 
+\code{bmData} objects.
 See data-raw/example_data.R
 }
 \section{Provenance}{
 
 The example dataset was constructed from publicly available Bisulfite-Seq
-data (GEO accession: \code{GSM6940395}, genome build: hg38).  
+data (GEO accession: \code{GSM6940395}, genome build: hg38).
 The raw methylation coverage file (\code{*.bismark.cov.gz}) was imported
 using \pkg{data.table::fread()}.
 
@@ -41,7 +41,7 @@ dataset. The data were processed as follows:
 
 \section{Data structure}{
 
-A \code{bmData} S4 object containing one sample (\code{"acinar_methyl"}).  
+A \code{bmData} S4 object containing one sample (\code{"acinar_methyl"}).
 Each entry stores:
 \describe{
   \item{\code{chr}}{Chromosome in UCSC format (e.g. \code{"chr22"}).}

@@ -13,7 +13,7 @@ vector of gene names
 }
 \description{
 A character vector of gene IDs returned by \code{seq2gene()}, representing
-genes associated with a subset of peaks.  
+genes associated with a subset of peaks.
 This dataset is used to illustrate peak-to-gene mapping and regulatory
 region annotation workflows in \pkg{epiSeeker}.
 See data-raw/example_data.R
@@ -28,7 +28,7 @@ linked to the example peak set via TSS proximity or flanking-gene search.
 
 The example peak set \code{demo_peak} was constructed by sampling up to
 10 peaks per autosome (chr1–chr22) from the ChIP-seq dataset
-\code{GSM6418464}.  
+\code{GSM6418464}.
 Peaks were imported using \code{readPeakFile()}, subset by chromosome,
 and combined into a single \code{GRanges} object.
 

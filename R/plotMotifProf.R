@@ -44,7 +44,7 @@ plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score",
 
     if (interactive) {
         df_interactive <- df %>%
-            group_by(motif) %>%
+            group_by(motif, seg_id) %>%
             summarise(
                 motif_chr = unique(chr),
                 motif_start = min(coordinate),
@@ -53,7 +53,7 @@ plotMotifProf <- function(df, legend_lab = "motif", y_lab = "motif score",
                 motif_score = unique(score),
                 .groups = "drop"
             ) %>%
-            left_join(df, by = "motif")
+            left_join(df, by = c("motif", "seg_id"))
 
         rlang::check_installed("ggiraph", reason = "For interactive plot.")
 

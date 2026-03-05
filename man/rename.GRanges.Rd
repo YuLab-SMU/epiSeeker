@@ -18,7 +18,7 @@ A GRanges object with renamed metadata columns.
 Rename columns of a GRanges object
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::rename(peak, tag = tags)
 }

@@ -33,7 +33,7 @@ getTagMatrix(
 
 \item{TxDb}{TxDb or self-made granges object, served as txdb}
 
-\item{weightCol}{column name of weight, default is NULL.This column acts as a weight vaule. 
+\item{weightCol}{column name of weight, default is NULL.This column acts as a weight vaule.
 Details see \url{https://github.com/YuLab-SMU/ChIPseeker/issues/15}}
 
 \item{nbin}{the amount of nbines. Calculate the tagMatrix by binning method.
@@ -50,35 +50,37 @@ tagMatrix
 getTagMatrix
 }
 \details{
-getTagMatrix() function can produce the matrix for visualization. 
-Matrix represents the peak count in a windows and there are two ways to specify the 'windows': 
+getTagMatrix() function can produce the matrix for visualization.
+Matrix represents the peak count in a windows and there are two ways to specify the 'windows':
 
-(1) use \code{\link{getPromoters}} and \code{\link{getBioRegion}} to get 'windows' and 
-put it into windows parameter in getTagMatrix(). 
+(1) use \code{\link{getPromoters}} and \code{\link{getBioRegion}} to get 'windows' and
+put it into windows parameter in getTagMatrix().
 
-(2) use getTagMatrix() to call getPromoters()/getBioRegion(). 
-In this way users do not need to input 'windows' parameter but need to input 'TxDb' parameter. 
-'TxDb' can accept a set of packages contained annotation of regions of 
-different genomes(e.g. TxDb.Hsapiens.UCSC.hg38.knownGene). 
-Users can get the regions of interest through specific functions. 
-These specific functions are built in getPromoters()/getBioRegion(). 
+(2) use getTagMatrix() to call getPromoters()/getBioRegion().
+In this way users do not need to input 'windows' parameter but need to input 'TxDb' parameter.
+'TxDb' can accept a set of packages contained annotation of regions of
+different genomes(e.g. TxDb.Hsapiens.UCSC.hg38.knownGene).
+Users can get the regions of interest through specific functions.
+These specific functions are built in getPromoters()/getBioRegion().
 
 However, many regions can not be gain through txdb(e.g. insulator and enhancer regions),
-Users can provide these regions in the form of granges object. 
+Users can provide these regions in the form of granges object.
 These self-made granges object will be passed to 'TxDb' and they will
 be passed to makeBioRegionFromGranges() to produce the 'windows'.
 
-In a word, 'TxDb' parameter getTagMatrix() is a reference information. 
+In a word, 'TxDb' parameter getTagMatrix() is a reference information.
 Users can pass txdb object or self-made granges into it.
 }
 \examples{
 if (interactive()) {
-  require(TxDb.Hsapiens.UCSC.hg38.knownGene)
-  txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-  data(demo_peak)
-  tagMatrix <- getTagMatrix(demo_peak, type = "start_site", by = "gene", 
-                            upstream = 500, downstream = 500,
-                            TxDb = txdb, weightCol = "V7")
+    require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+    txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+    data(demo_peak)
+    tagMatrix <- getTagMatrix(demo_peak,
+        type = "start_site", by = "gene",
+        upstream = 500, downstream = 500,
+        TxDb = txdb, weightCol = "V7"
+    )
 }
 }
 \author{

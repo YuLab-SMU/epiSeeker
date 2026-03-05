@@ -6,7 +6,6 @@
 #' @importFrom yulab.utils update_cache_item
 #' @importFrom yulab.utils rm_cache_item
 #' @importFrom yulab.utils initial_cache_item
-#' @importFrom yulab.utils %||%
 #' @importFrom S4Vectors metadata
 #' @return Returns `invisible(NULL)` invisibly. The primary purpose of this function is to manage
 #'   the TXDB cache through side effects (creating, updating, or removing cached objects),

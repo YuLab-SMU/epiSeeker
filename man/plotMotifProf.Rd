@@ -38,10 +38,14 @@ Plot the profile of motif of specific peak
 \examples{
 require(BSgenome.Hsapiens.UCSC.hg38)
 data(pwm_obj)
-region_oi <- GRanges(seqnames = "chr22", 
-                     ranges = IRanges(start = 10525891, end = 10525991))
-motifMatrix <- getMotifMatrix(region = region_oi, 
-                              pwm = pwm_obj[c(45,120,170)], 
-                              ref_obj = BSgenome.Hsapiens.UCSC.hg38)
+region_oi <- GRanges(
+    seqnames = "chr22",
+    ranges = IRanges(start = 10525891, end = 10525991)
+)
+motifMatrix <- getMotifMatrix(
+    region = region_oi,
+    pwm = pwm_obj[c(45, 120, 170)],
+    ref_obj = BSgenome.Hsapiens.UCSC.hg38
+)
 plotMotifProf(motifMatrix)
 }

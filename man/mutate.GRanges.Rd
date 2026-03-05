@@ -18,7 +18,7 @@
 
 \item{...}{additional parameters}
 
-\item{.by}{Optional grouping variable(s) (column name or variable expression) 
+\item{.by}{Optional grouping variable(s) (column name or variable expression)
 specifying which columns to group by for operations}
 
 \item{.keep}{Character vector specifying which columns to retain. Possible values:
@@ -36,7 +36,7 @@ A processed GRanges object containing the added or modified columns
 Extend mutate to Peak (GRanges class object)
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::mutate(peak, score = tags)
 }

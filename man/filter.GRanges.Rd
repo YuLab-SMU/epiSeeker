@@ -11,10 +11,10 @@
 
 \item{...}{additional parameters}
 
-\item{.by}{Optional grouping variable(s) (column name or variable expression) 
+\item{.by}{Optional grouping variable(s) (column name or variable expression)
 specifying which columns to group by when applying filters}
 
-\item{.preserve}{Logical value indicating whether to preserve the original grouping 
+\item{.preserve}{Logical value indicating whether to preserve the original grouping
 structure when .by is specified. If TRUE, group order and identities are maintained}
 }
 \value{
@@ -26,7 +26,7 @@ grange object
 Extend filter to Peak (GRanges class object)
 }
 \examples{
-peakfile <- system.file("extdata", "sample_peaks.txt", package="epiSeeker")
+peakfile <- system.file("extdata", "sample_peaks.txt", package = "epiSeeker")
 peak <- readPeakFile(peakfile)
 dplyr::filter(peak, fold_enrichment > 20)
 }
