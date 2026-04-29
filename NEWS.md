@@ -1,3 +1,7 @@
+# epiSeeker 1.0.0
+
++ Bioconductor RELEASE_3_23 (2026-04-29, Wed)
+
 # epiSeeker 0.99.12
 
 + add more runnable examples and increase the coverage of tests (44.18%) (2025-11-30, Sun)
