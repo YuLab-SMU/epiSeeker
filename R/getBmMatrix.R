@@ -71,7 +71,7 @@ getBmMatrix.BSseq <- function(region,
         if (tmp[position_bias[i]] != base) {
             stop(
                 "The ", position_bias[i], " position of the ", motif[i], " is not the correct base(", base, ") to be detected.",
-                "please cheak the position bias..."
+                "please check the position bias..."
             )
         }
     }
@@ -246,7 +246,7 @@ getBmMatrix.bmData <- function(region,
         if (tmp[position_bias[i]] != base) {
             stop(
                 "The ", position_bias[i], " position of the ", motif[i], " is not the correct base(", base, ") to be detected.",
-                "please cheak the position bias..."
+                "please check the position bias..."
             )
         }
     }

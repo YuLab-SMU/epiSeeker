@@ -11,6 +11,7 @@
 #' @importFrom ggplot2 theme_minimal
 #' @author Guangchuang Yu
 upsetplot.csAnno <- function(x, order_by = "freq", vennpie = FALSE, vp = list(x = .6, y = .7, width = .8, height = .8)) {
+    rlang::check_installed("ggupset", reason = "For upset plot.")
     y <- x@detailGenomicAnnotation
     nn <- names(y)
     y <- as.matrix(y)
