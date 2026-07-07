@@ -17,7 +17,7 @@
 filter.GRanges <- function(.data, ..., .by = NULL, .preserve = FALSE) {
     dots <- rlang::quos(...)
     as.data.frame(.data) |>
-        dplyr::filter(!!!dots, .by = .by, .preserve = .preserve) |>
+        dplyr::filter(!!!dots, .by = !!.by, .preserve = .preserve) |>
         droplevels() |>
         GenomicRanges::makeGRangesFromDataFrame(keep.extra.columns = TRUE)
 }
@@ -53,12 +53,12 @@ mutate.GRanges <- function(.data, ..., .by = NULL,
 
     if (!is.null(.before)) {
         df <- df |>
-            dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .before = .before)
+            dplyr::mutate(!!!dots, .by = !!.by, .keep = .keep, .before = !!.before)
     } else if (!is.null(.after)) {
         df <- df |>
-            dplyr::mutate(!!!dots, .by = .by, .keep = .keep, .after = .after)
+            dplyr::mutate(!!!dots, .by = !!.by, .keep = .keep, .after = !!.after)
     } else {
-        df <- df |> dplyr::mutate(!!!dots, .by = .by, .keep = .keep)
+        df <- df |> dplyr::mutate(!!!dots, .by = !!.by, .keep = .keep)
     }
 
     df |>
