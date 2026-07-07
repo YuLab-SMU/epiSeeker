@@ -142,7 +142,7 @@ plotBmProf <- function(df,
 
         # check xlim
         if (!is.null(xlim)) {
-            if (length(xlim != length(df))) {
+            if (length(xlim) != length(df)) {
                 stop("the length of xlim and the length of df are not equal...")
             }
         }

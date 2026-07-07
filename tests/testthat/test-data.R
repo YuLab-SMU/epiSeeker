@@ -42,6 +42,7 @@ test_that("tagMatrix", {
 
 
 test_that("pwm_obj", {
+    skip_if_not_installed("TFBSTools")
     data("pwm_obj", package = "epiSeeker")
 
     expect_true(
