@@ -1,3 +1,7 @@
+# epiSeeker 1.1.1
+
++ make csAnno subset robust to GRanges metadata columns (2027-07-07, Tue)
+
 # epiSeeker 1.0.0
 
 + Bioconductor RELEASE_3_23 (2026-04-29, Wed)
