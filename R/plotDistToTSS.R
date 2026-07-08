@@ -131,8 +131,8 @@ plotDistToTSS.data.frame <- function(peakDist,
             mutate(freq = .data$freq / sum(.data$freq) * 100)
     } else {
         peakDist <- peakDist |>
-            summarise(freq = length(.data$Feature), .by = c(categoryColumn, "Feature", "sign")) |>
-            mutate(freq = .data$freq / sum(.data$freq) * 100, .by = categoryColumn)
+            summarise(freq = length(.data$Feature), .by = !!c(categoryColumn, "Feature", "sign")) |>
+            mutate(freq = .data$freq / sum(.data$freq) * 100, .by = !!categoryColumn)
     }
 
     if (any(peakDist$sign == 0)) {
