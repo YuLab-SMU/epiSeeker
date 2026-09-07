@@ -240,7 +240,6 @@ importFrom(stats,
 importFrom(tidyr,gather)
 importFrom(tidyselect,all_of)
 importFrom(utils,
-  data,
   download.file,
   file_test,
   getFromNamespace,

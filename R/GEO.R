@@ -113,7 +113,6 @@ downloadGEO.internal <- function(info, destDir) {
     }
 }
 
-#' @importFrom utils data
 #' @importFrom RSQLite dbConnect
 #' @importFrom RSQLite dbGetQuery
 prepareGSMInfo <- function() {
