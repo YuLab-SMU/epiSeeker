@@ -14,3 +14,5 @@ epiSeeker_files
 epiSeeker_cache
 gh-pages
 .trae/
+epiSeeker.Rcheck/
+epiSeeker*.tar.gz

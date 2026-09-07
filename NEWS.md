@@ -1,5 +1,8 @@
 # epiSeeker 1.1.1
 
++ documentation build migrated to roxygen2 8.1.0 (re-generated Rd pages and
+  NAMESPACE; fixed `csAnno` class `@aliases` to be a single line); the exported
+  API is unchanged
 + fixed bug in `getNearestFeatureIndicesAndDistances()` where results for
   `overlap=="all"` were silently overridden by the `overlap=="TSS"` branch,
   causing the two modes to behave identically (2026-09-07, Mon)

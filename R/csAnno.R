@@ -2,11 +2,7 @@
 #' This class represents the output of epiSeeker Annotation
 #'
 #' @name csAnno-class
-#' @aliases csAnno-class
-#' show,csAnno-method vennpie,csAnno-method
-#' plotDistToTSS,csAnno-method plotAnnoBar,csAnno-method
-#' plotAnnoPie,csAnno-method upsetplot,csAnno-method
-#' subset,csAnno-method
+#' @aliases csAnno-class show,csAnno-method vennpie,csAnno-method plotDistToTSS,csAnno-method plotAnnoBar,csAnno-method plotAnnoPie,csAnno-method upsetplot,csAnno-method subset,csAnno-method
 #'
 #' @docType class
 #' @slot anno annotation

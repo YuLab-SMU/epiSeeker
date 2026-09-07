@@ -62,152 +62,198 @@ import(GenomicRanges)
 import(IRanges)
 import(ggplot2)
 importClassesFrom(SummarizedExperiment,RangedSummarizedExperiment)
-importFrom(AnnotationDbi,get)
-importFrom(AnnotationDbi,select)
-importFrom(BiocGenerics,end)
-importFrom(BiocGenerics,start)
-importFrom(BiocGenerics,unstrand)
+importFrom(AnnotationDbi,
+  get,
+  select
+)
+importFrom(BiocGenerics,
+  end,
+  start,
+  unstrand
+)
 importFrom(Biostrings,DNAStringSet)
 importFrom(GenomeInfoDb,seqnames)
-importFrom(GenomicFeatures,exonsBy)
-importFrom(GenomicFeatures,fiveUTRsByTranscript)
-importFrom(GenomicFeatures,genes)
-importFrom(GenomicFeatures,intronsByTranscript)
-importFrom(GenomicFeatures,threeUTRsByTranscript)
-importFrom(GenomicFeatures,transcripts)
-importFrom(GenomicFeatures,transcriptsBy)
-importFrom(GenomicRanges,"mcols<-")
-importFrom(GenomicRanges,"strand<-")
-importFrom(GenomicRanges,GRanges)
-importFrom(GenomicRanges,GRangesList)
-importFrom(GenomicRanges,findOverlaps)
-importFrom(GenomicRanges,granges)
-importFrom(GenomicRanges,makeGRangesFromDataFrame)
-importFrom(GenomicRanges,mcols)
-importFrom(GenomicRanges,seqnames)
-importFrom(GenomicRanges,start)
-importFrom(GenomicRanges,strand)
-importFrom(IRanges,IRanges)
-importFrom(IRanges,subsetByOverlaps)
-importFrom(RSQLite,dbConnect)
-importFrom(RSQLite,dbGetQuery)
-importFrom(S4Vectors,SimpleList)
-importFrom(S4Vectors,head)
-importFrom(S4Vectors,metadata)
-importFrom(S4Vectors,queryHits)
-importFrom(S4Vectors,runValue)
-importFrom(S4Vectors,subjectHits)
-importFrom(S4Vectors,tail)
-importFrom(SummarizedExperiment,"assays<-")
-importFrom(SummarizedExperiment,SummarizedExperiment)
-importFrom(SummarizedExperiment,assayNames)
-importFrom(SummarizedExperiment,assays)
-importFrom(aplot,insert_bottom)
-importFrom(aplot,plot_list)
-importFrom(aplot,xlim2)
-importFrom(boot,boot)
-importFrom(boot,boot.ci)
-importFrom(bsseq,BSseq)
-importFrom(bsseq,pData)
-importFrom(dplyr,arrange)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,rename)
-importFrom(dplyr,summarise)
+importFrom(GenomicFeatures,
+  exonsBy,
+  fiveUTRsByTranscript,
+  genes,
+  intronsByTranscript,
+  threeUTRsByTranscript,
+  transcripts,
+  transcriptsBy
+)
+importFrom(GenomicRanges,
+  "mcols<-",
+  "strand<-",
+  GRanges,
+  GRangesList,
+  findOverlaps,
+  granges,
+  makeGRangesFromDataFrame,
+  mcols,
+  seqnames,
+  start,
+  strand
+)
+importFrom(IRanges,
+  IRanges,
+  subsetByOverlaps
+)
+importFrom(RSQLite,
+  dbConnect,
+  dbGetQuery
+)
+importFrom(S4Vectors,
+  SimpleList,
+  head,
+  metadata,
+  queryHits,
+  runValue,
+  subjectHits,
+  tail
+)
+importFrom(SummarizedExperiment,
+  "assays<-",
+  SummarizedExperiment,
+  assayNames,
+  assays
+)
+importFrom(aplot,
+  insert_bottom,
+  plot_list,
+  xlim2
+)
+importFrom(boot,
+  boot,
+  boot.ci
+)
+importFrom(bsseq,
+  BSseq,
+  pData
+)
+importFrom(dplyr,
+  arrange,
+  filter,
+  group_by,
+  left_join,
+  mutate,
+  rename,
+  summarise
+)
 importFrom(enrichplot,upsetplot)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,aes_string)
-importFrom(ggplot2,annotate)
-importFrom(ggplot2,coord_cartesian)
-importFrom(ggplot2,coord_fixed)
-importFrom(ggplot2,coord_flip)
-importFrom(ggplot2,element_blank)
-importFrom(ggplot2,element_line)
-importFrom(ggplot2,element_rect)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,facet_grid)
-importFrom(ggplot2,geom_bar)
-importFrom(ggplot2,geom_blank)
-importFrom(ggplot2,geom_col)
-importFrom(ggplot2,geom_curve)
-importFrom(ggplot2,geom_hline)
-importFrom(ggplot2,geom_line)
-importFrom(ggplot2,geom_rect)
-importFrom(ggplot2,geom_ribbon)
-importFrom(ggplot2,geom_segment)
-importFrom(ggplot2,geom_text)
-importFrom(ggplot2,geom_tile)
-importFrom(ggplot2,geom_vline)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,ggtitle)
-importFrom(ggplot2,guide_legend)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,rel)
-importFrom(ggplot2,scale_color_manual)
-importFrom(ggplot2,scale_fill_brewer)
-importFrom(ggplot2,scale_fill_distiller)
-importFrom(ggplot2,scale_fill_gradient2)
-importFrom(ggplot2,scale_fill_hue)
-importFrom(ggplot2,scale_fill_manual)
-importFrom(ggplot2,scale_x_continuous)
-importFrom(ggplot2,scale_y_continuous)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,theme_bw)
-importFrom(ggplot2,theme_classic)
-importFrom(ggplot2,theme_minimal)
-importFrom(ggplot2,xlab)
-importFrom(ggplot2,xlim)
-importFrom(ggplot2,ylab)
+importFrom(ggplot2,
+  aes,
+  aes_string,
+  annotate,
+  coord_cartesian,
+  coord_fixed,
+  coord_flip,
+  element_blank,
+  element_line,
+  element_rect,
+  element_text,
+  facet_grid,
+  geom_bar,
+  geom_blank,
+  geom_col,
+  geom_curve,
+  geom_hline,
+  geom_line,
+  geom_rect,
+  geom_ribbon,
+  geom_segment,
+  geom_text,
+  geom_tile,
+  geom_vline,
+  ggplot,
+  ggtitle,
+  guide_legend,
+  labs,
+  rel,
+  scale_color_manual,
+  scale_fill_brewer,
+  scale_fill_distiller,
+  scale_fill_gradient2,
+  scale_fill_hue,
+  scale_fill_manual,
+  scale_x_continuous,
+  scale_y_continuous,
+  theme,
+  theme_bw,
+  theme_classic,
+  theme_minimal,
+  xlab,
+  xlim,
+  ylab
+)
 importFrom(grDevices,colorRampPalette)
-importFrom(graphics,layout)
-importFrom(graphics,legend)
-importFrom(graphics,par)
-importFrom(graphics,pie)
-importFrom(graphics,plot.new)
-importFrom(grid,popViewport)
-importFrom(grid,pushViewport)
-importFrom(grid,viewport)
-importFrom(magrittr,"%<>%")
-importFrom(magrittr,"%>%")
-importFrom(methods,as)
-importFrom(methods,is)
-importFrom(methods,missingArg)
-importFrom(methods,new)
-importFrom(methods,setClass)
-importFrom(methods,setGeneric)
-importFrom(methods,setMethod)
-importFrom(methods,show)
-importFrom(parallel,detectCores)
-importFrom(parallel,mclapply)
+importFrom(graphics,
+  layout,
+  legend,
+  par,
+  pie,
+  plot.new
+)
+importFrom(grid,
+  popViewport,
+  pushViewport,
+  viewport
+)
+importFrom(magrittr,
+  "%<>%",
+  "%>%"
+)
+importFrom(methods,
+  as,
+  is,
+  missingArg,
+  new,
+  setClass,
+  setGeneric,
+  setMethod,
+  show
+)
+importFrom(parallel,
+  detectCores,
+  mclapply
+)
 importFrom(plotrix,floating.pie)
-importFrom(rlang,.data)
-importFrom(rlang,check_installed)
-importFrom(rlang,quos)
-importFrom(rlang,sym)
-importFrom(rtracklayer,import.chain)
-importFrom(rtracklayer,liftOver)
+importFrom(rlang,
+  .data,
+  check_installed,
+  quos,
+  sym
+)
+importFrom(rtracklayer,
+  import.chain,
+  liftOver
+)
 importFrom(scales,rescale)
-importFrom(stats,as.formula)
-importFrom(stats,dist)
-importFrom(stats,hclust)
-importFrom(stats,p.adjust)
-importFrom(stats,phyper)
-importFrom(stats,reshape)
+importFrom(stats,
+  as.formula,
+  dist,
+  hclust,
+  p.adjust,
+  phyper,
+  reshape
+)
 importFrom(tidyr,gather)
 importFrom(tidyselect,all_of)
-importFrom(utils,data)
-importFrom(utils,download.file)
-importFrom(utils,file_test)
-importFrom(utils,getFromNamespace)
-importFrom(utils,read.delim)
-importFrom(utils,setTxtProgressBar)
-importFrom(utils,txtProgressBar)
-importFrom(yulab.utils,get_cache_element)
-importFrom(yulab.utils,get_cache_item)
-importFrom(yulab.utils,initial_cache_item)
-importFrom(yulab.utils,mat2df)
-importFrom(yulab.utils,rm_cache_item)
-importFrom(yulab.utils,update_cache_item)
-importFrom(yulab.utils,yulab_msg)
+importFrom(utils,
+  data,
+  download.file,
+  file_test,
+  getFromNamespace,
+  read.delim,
+  setTxtProgressBar,
+  txtProgressBar
+)
+importFrom(yulab.utils,
+  get_cache_element,
+  get_cache_item,
+  initial_cache_item,
+  mat2df,
+  rm_cache_item,
+  update_cache_item,
+  yulab_msg
+)
