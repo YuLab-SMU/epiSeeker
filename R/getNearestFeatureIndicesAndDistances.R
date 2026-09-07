@@ -138,19 +138,20 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
 
                 distanceToTSS[peakIdx] <- distance_minimal * ifelse(strand(features[featureIdx]) == "+", 1, -1)
             }
-        }
+        } else {
+            ## overlap == "TSS": find overlaps with TSS points (resized features of width 1, TSS sites only)
+            hit <- findOverlaps(peaks, BiocGenerics::unstrand(features))
 
-        hit <- findOverlaps(peaks, BiocGenerics::unstrand(features))
+            if (length(hit) != 0) {
+                qh <- queryHits(hit)
+                hit.idx <- getFirstHitIndex(qh)
+                hit <- hit[hit.idx]
+                peakIdx <- queryHits(hit)
+                featureIdx <- subjectHits(hit)
 
-        if (length(hit) != 0) {
-            qh <- queryHits(hit)
-            hit.idx <- getFirstHitIndex(qh)
-            hit <- hit[hit.idx]
-            peakIdx <- queryHits(hit)
-            featureIdx <- subjectHits(hit)
-
-            index[peakIdx] <- featureIdx
-            distanceToTSS[peakIdx] <- 0
+                index[peakIdx] <- featureIdx
+                distanceToTSS[peakIdx] <- 0
+            }
         }
     }
 

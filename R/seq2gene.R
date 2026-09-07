@@ -63,11 +63,8 @@ seq2gene <- function(seq, tssRegion, flankDistance, TxDb, sameStrand = FALSE) {
 
     distance <- idx.dist$distance
 
-    pi <- distance > tssRegion[1] & distance < tssRegion[2]
-    promoters <- mcols(nearestFeatures[pi])[["gene_id"]]
-
-    nearest_genes <- mcols(nearestFeatures[!pi][abs(distance[!pi]) < flankDistance])[["gene_id"]]
-
-    genes <- c(genes, promoters, nearest_genes)
+    nearest_genes <- mcols(nearestFeatures[abs(distance) < flankDistance |
+                          (distance > tssRegion[1] & distance < tssRegion[2])])[["gene_id"]]
+    genes <- c(genes, nearest_genes)
     return(unique(genes))
 }
