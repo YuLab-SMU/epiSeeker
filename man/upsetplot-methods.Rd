@@ -5,10 +5,27 @@
 \alias{upsetplot}
 \title{upsetplot method}
 \usage{
-upsetplot(x, ...)
+upsetplot(x, n = 10, type = "boxplot", layer = NULL,
+    value = c("score", "abs_score"), core_enrichment = FALSE, ...)
 }
 \arguments{
 \item{x}{A `csAnno` instance}
+
+\item{n}{number of categories to be plotted; only used by methods that
+support it and ignored by the `csAnno` method}
+
+\item{type}{plot type; only used by methods that support it and ignored by
+the `csAnno` method}
+
+\item{layer}{optional layer; only used by methods that support it and
+ignored by the `csAnno` method}
+
+\item{value}{score summary to display for overlapping features; only used
+by methods that support it and ignored by the `csAnno` method}
+
+\item{core_enrichment}{logical indicating whether only core features should
+be used; only used by methods that support it and ignored by the `csAnno`
+method}
 
 \item{...}{additional parameter}
 }

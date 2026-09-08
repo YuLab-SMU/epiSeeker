@@ -206,9 +206,21 @@ setMethod(
 #'
 #' @title upsetplot method
 #' @param x A `csAnno` instance
+#' @param n number of categories to be plotted; only used by methods that
+#' support it and ignored by the `csAnno` method
+#' @param type plot type; only used by methods that support it and ignored by
+#' the `csAnno` method
+#' @param layer optional layer; only used by methods that support it and
+#' ignored by the `csAnno` method
+#' @param value score summary to display for overlapping features; only used
+#' by methods that support it and ignored by the `csAnno` method
+#' @param core_enrichment logical indicating whether only core features should
+#' be used; only used by methods that support it and ignored by the `csAnno`
+#' method
 #' @param ... additional parameter
 #' @return plot
-#' @usage upsetplot(x, ...)
+#' @usage upsetplot(x, n = 10, type = "boxplot", layer = NULL,
+#'     value = c("score", "abs_score"), core_enrichment = FALSE, ...)
 #' @importFrom enrichplot upsetplot
 #' @exportMethod upsetplot
 #' @examples

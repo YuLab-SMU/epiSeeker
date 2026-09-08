@@ -1,4 +1,4 @@
-# epiSeeker 1.1.1
+# epiSeeker 1.1.2
 
 + documentation build migrated to roxygen2 8.1.0 (re-generated Rd pages and
   NAMESPACE; fixed `csAnno` class `@aliases` to be a single line); the exported
@@ -6,6 +6,9 @@
 + fixed bug in `getNearestFeatureIndicesAndDistances()` where results for
   `overlap=="all"` were silently overridden by the `overlap=="TSS"` branch,
   causing the two modes to behave identically (2026-09-07, Mon)
+
+# epiSeeker 1.1.1
+
 + make csAnno subset robust to GRanges metadata columns (2027-07-07, Tue)
 
 # epiSeeker 1.0.0
