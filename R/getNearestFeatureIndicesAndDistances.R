@@ -3,7 +3,9 @@
 #' @title getNearestFeatureIndicesAndDistances
 #' @param peaks peak in GRanges
 #' @param features features in GRanges
-#' @param sameStrand logical, whether find nearest gene in the same strand
+#' @param sameStrand logical, whether find nearest gene in the same strand,
+#'   both when finding the nearest feature and when detecting overlaps with it.
+#'   Peaks with ambiguous strand ('*') are compatible with features on any strand
 #' @param ignoreOverlap logical, whether ignore overlap of TSS with peak
 #' @param ignoreUpstream logical, if True only annotate gene at the 3' of the peak.
 #' @param ignoreDownstream logical, if True only annotate gene at the 5' of the peak.
@@ -23,7 +25,7 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
     overlap <- match.arg(overlap, c("TSS", "all"))
 
     if (!ignoreOverlap && overlap == "all") {
-        overlap_hit <- findOverlaps(peaks, BiocGenerics::unstrand(features))
+        overlap_hit <- findOverlaps(peaks, overlapFeature(features, sameStrand))
     }
 
     ## peaks only conatin all peak records, in GRanges object
@@ -140,7 +142,7 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
             }
         } else {
             ## overlap == "TSS": find overlaps with TSS points (resized features of width 1, TSS sites only)
-            hit <- findOverlaps(peaks, BiocGenerics::unstrand(features))
+            hit <- findOverlaps(peaks, overlapFeature(features, sameStrand))
 
             if (length(hit) != 0) {
                 qh <- queryHits(hit)
@@ -165,6 +167,27 @@ getNearestFeatureIndicesAndDistances <- function(peaks, features,
 
     return(res)
 }
+
+#' feature set used for overlap detection
+#'
+#' When `sameStrand = TRUE`, features keep their strand information so that a
+#' peak with an unambiguous strand (+ or -) is only matched to features on the
+#' same strand. Peaks with ambiguous strand ('*') are still compatible with
+#' features on any strand, which is the expected behaviour for peaks reported by
+#' unstranded peak callers.
+#'
+#' @param features GRanges object of features
+#' @param sameStrand logical
+#' @return GRanges object, stranded or unstranded depending on `sameStrand`
+#' @noRd
+#' @author G Yu
+overlapFeature <- function(features, sameStrand) {
+    if (sameStrand) {
+        return(features)
+    }
+    return(BiocGenerics::unstrand(features))
+}
+
 
 isPeakFeatureOverlap <- function(peak, feature) {
     peakRange <- ranges(peak)

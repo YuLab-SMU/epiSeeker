@@ -1,3 +1,22 @@
+# epiSeeker 1.1.3
+
++ `annotateSeq()` now reports `geneChr` and `geneStrand` as characters instead of
+  factor codes. `as.data.frame()` returns 'seqnames'/'strand' as factors and
+  assigning a factor into `mcols()` dropped the class, so both columns came out
+  as integers (e.g. `geneStrand` = 1/2 instead of +/-, and a wrong `geneChr`
+  whenever the seqlevels were not in numeric order). (2026-09-15, Tue)
++ `annotateSeq()` now warns when peaks are dropped because no feature of `TxDb`
+  can be found for them (e.g. peaks on contigs/scaffolds without genes, or a
+  seqlevels style mismatch). Previously they disappeared silently. (2026-09-15, Tue)
++ `annotateSeq(..., sameStrand = TRUE)` no longer assigns a peak to a feature on
+  the opposite strand. Overlap detection in `getNearestFeatureIndicesAndDistances()`
+  was calling `findOverlaps()` with `unstrand(features)`, which bypassed `sameStrand`
+  and overrode the strand-aware nearest-feature result. Peaks with ambiguous
+  strand (`*`) are unaffected and still match features on any strand.
+  (2026-09-15, Tue)
++ `plotAnnoBar()` no longer uses the deprecated `ggplot2::aes_string()`. It follows
+  the tidy evaluation idiom already used by `plotDistToTSS()`. (2026-09-15, Tue)
+
 # epiSeeker 1.1.2
 
 + documentation build migrated to roxygen2 8.1.0 (re-generated Rd pages and

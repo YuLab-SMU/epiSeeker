@@ -83,7 +83,6 @@ is_valid_color <- function(color) {
 #' @importFrom magrittr %<>%
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
-#' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 geom_bar
 #' @importFrom ggplot2 geom_hline
 #' @importFrom ggplot2 theme_bw

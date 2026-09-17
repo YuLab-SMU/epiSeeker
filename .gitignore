@@ -14,5 +14,7 @@ epiSeeker_files
 epiSeeker_cache
 gh-pages
 .trae/
+.workbuddy-ai
 epiSeeker.Rcheck/
 epiSeeker*.tar.gz
+Rplots.pdf

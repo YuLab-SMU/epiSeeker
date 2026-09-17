@@ -151,6 +151,16 @@ annotateSeq <- function(peak,
     ## update peak, remove un-map peak if exists.
     peak.gr <- idx.dist$peak
 
+    n.dropped <- peakNum - length(peak.gr)
+    if (n.dropped > 0) {
+        warning(n.dropped, " of ", peakNum, " peaks were dropped, ",
+                "since no feature of 'TxDb' can be found for them. ",
+                "This usually happens for peaks located on contigs/scaffolds ",
+                "that carry no gene, or when the seqlevels style of the peaks ",
+                "does not match the one of 'TxDb'.",
+                call. = FALSE)
+    }
+
     ## annotation
     if (assignGenomicAnnotation == TRUE) {
         if (verbose) {
@@ -235,7 +245,13 @@ annotateSeq <- function(peak,
     }
 
     for (cn in colnames(nearestFeatures.df)) {
-        mcols(peak.gr)[[cn]][has_nearest_idx] <- unlist(nearestFeatures.df[, cn])
+        v <- nearestFeatures.df[[cn]]
+        ## as.data.frame() returns 'seqnames' and 'strand' as factors; assigning
+        ## a factor into mcols() drops the class and keeps only the integer
+        ## codes, so that geneChr/geneStrand were reported as integers
+        ## (e.g. 1/2 instead of +/-). Turn factors into characters first.
+        if (is.factor(v)) v <- as.character(v)
+        mcols(peak.gr)[[cn]][has_nearest_idx] <- unlist(v)
     }
 
     mcols(peak.gr)[["distanceToTSS"]] <- distance

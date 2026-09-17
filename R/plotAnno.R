@@ -10,7 +10,6 @@
 #' @param categoryColumn category column
 #' @return bar plot that summarize genomic features of peaks
 #' @importFrom ggplot2 ggplot
-#' @importFrom ggplot2 aes_string
 #' @importFrom ggplot2 geom_bar
 #' @importFrom ggplot2 coord_flip
 #' @importFrom ggplot2 theme_bw
@@ -29,11 +28,19 @@ plotAnnoBar.data.frame <- function(anno.df,
                                    categoryColumn) {
     anno.df$Feature <- factor(anno.df$Feature, levels = rev(levels(anno.df$Feature)))
 
-    p <- ggplot(anno.df, aes_string(
-        x = categoryColumn,
-        fill = "Feature",
-        y = "Frequency"
-    ))
+    if (categoryColumn == 1) {
+        p <- ggplot(anno.df, aes(
+            x = 1,
+            fill = .data$Feature,
+            y = .data$Frequency
+        ))
+    } else {
+        p <- ggplot(anno.df, aes(
+            x = .data[[categoryColumn]],
+            fill = .data$Feature,
+            y = .data$Frequency
+        ))
+    }
 
     p <- p + geom_bar(stat = "identity") + coord_flip() + theme_bw()
     p <- p + ylab(ylab) + xlab(xlab) + ggtitle(title)
