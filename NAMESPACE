@@ -120,8 +120,7 @@ importFrom(SummarizedExperiment,
 )
 importFrom(aplot,
   insert_bottom,
-  plot_list,
-  xlim2
+  plot_list
 )
 importFrom(boot,
   boot,
@@ -160,8 +159,6 @@ importFrom(ggplot2,
   geom_line,
   geom_rect,
   geom_ribbon,
-  geom_segment,
-  geom_text,
   geom_tile,
   geom_vline,
   ggplot,
@@ -173,7 +170,6 @@ importFrom(ggplot2,
   scale_fill_brewer,
   scale_fill_distiller,
   scale_fill_gradient2,
-  scale_fill_hue,
   scale_fill_manual,
   scale_x_continuous,
   scale_y_continuous,
@@ -193,11 +189,7 @@ importFrom(graphics,
   pie,
   plot.new
 )
-importFrom(grid,
-  popViewport,
-  pushViewport,
-  viewport
-)
+importFrom(grid,unit)
 importFrom(magrittr,
   "%<>%",
   "%>%"
@@ -241,7 +233,6 @@ importFrom(tidyselect,all_of)
 importFrom(utils,
   download.file,
   file_test,
-  getFromNamespace,
   read.delim,
   setTxtProgressBar,
   txtProgressBar

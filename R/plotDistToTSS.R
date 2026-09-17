@@ -93,10 +93,7 @@ is_valid_color <- function(color) {
 #' @importFrom ggplot2 geom_hline
 #' @importFrom ggplot2 scale_y_continuous
 #' @importFrom ggplot2 scale_x_continuous
-#' @importFrom ggplot2 scale_fill_brewer
-#' @importFrom ggplot2 scale_fill_hue
 #' @importFrom ggplot2 scale_fill_manual
-#' @importFrom ggplot2 geom_text
 #' @importFrom rlang .data
 #' @seealso \code{\link{annotateSeq}}
 #' @author Guangchuang Yu \url{https://guangchuangyu.github.io}

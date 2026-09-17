@@ -298,7 +298,7 @@ plotBmProf <- function(df,
 #' @importFrom GenomicRanges GRanges
 #' @importFrom GenomicRanges seqnames
 #' @importFrom IRanges IRanges
-#' @importFrom aplot xlim2
+#' @importFrom grid unit
 #' @importFrom aplot insert_bottom
 #' @importFrom magrittr %>%
 plotBmProf.internal <- function(df,

@@ -16,6 +16,12 @@
   (2026-09-15, Tue)
 + `plotAnnoBar()` no longer uses the deprecated `ggplot2::aes_string()`. It follows
   the tidy evaluation idiom already used by `plotDistToTSS()`. (2026-09-15, Tue)
++ dropped unused `@importFrom` directives with no call site (`aplot::xlim2`,
+  `ggplot2::geom_segment`, `ggplot2::geom_text`, `ggplot2::scale_fill_hue`,
+  `utils::getFromNamespace`) and a duplicate `ggplot2::scale_fill_brewer`. The
+  `grid::unit()` import, previously declared in `upsetplot()` which never used it,
+  now sits in `plotBmProf()` where `unit()` is actually called, keeping `grid` a
+  genuine import. (2026-09-17, Thu)
 
 # epiSeeker 1.1.2
 

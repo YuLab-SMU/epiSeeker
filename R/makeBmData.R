@@ -293,7 +293,6 @@ makeBmDataFromFiles <- function(name,
 
 #' @importFrom GenomicRanges mcols
 #' @importFrom GenomicRanges GRangesList
-#' @importFrom utils getFromNamespace
 makeBmDataFromFiles.folder <- function(name, variablesNames) {
     ## check the file type
     file_type <- gsub(".*\\.", "", list.files(name))

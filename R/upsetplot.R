@@ -1,6 +1,3 @@
-#' @importFrom grid viewport
-#' @importFrom grid pushViewport
-#' @importFrom grid popViewport
 #' @importFrom graphics plot.new
 #' @importFrom ggplot2 coord_fixed
 #' @importFrom ggplot2 ggplot
