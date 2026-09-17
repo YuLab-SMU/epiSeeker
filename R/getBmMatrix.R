@@ -108,8 +108,6 @@ getBmMatrix.BSseq <- function(region,
 }
 
 
-#' @importFrom tidyr gather
-#' @importFrom tidyselect all_of
 #' @importFrom GenomicRanges mcols
 #' @importFrom GenomicRanges start
 getBmMatrix.BSseq.internal <- function(region,
@@ -156,14 +154,14 @@ getBmMatrix.BSseq.internal <- function(region,
         depth_content <- names(results)[grep("depth", names(results))]
         methylation_content <- names(results)[grep("methylation", names(results))]
         content <- c(depth_content, methylation_content)
-        df <- gather(results, sample, value, all_of(content))
+        df <- pivot_longer_df(results, content)
         df$type[grep("depth", df$sample)] <- "depth"
         df$type[grep("methylation", df$sample)] <- "methylation"
         df$sample <- gsub("_depth", "", df$sample)
         df$sample <- gsub("_methylation", "", df$sample)
     } else {
         content <- names(results)[grep("methylation", names(results))]
-        df <- gather(results, sample, value, all_of(content))
+        df <- pivot_longer_df(results, content)
         df$sample <- gsub("_methylation", "", df$sample)
     }
 
@@ -281,8 +279,6 @@ getBmMatrix.bmData <- function(region,
 }
 
 
-#' @importFrom tidyr gather
-#' @importFrom tidyselect all_of
 #' @importFrom GenomicRanges mcols
 #' @importFrom GenomicRanges start
 #' @importFrom SummarizedExperiment assayNames
@@ -334,7 +330,7 @@ getBmMatrix.bmData.internal <- function(region,
             value2_content <- names(results)[grep(aName[2], names(results))]
             value1_content <- names(results)[grep(aName[1], names(results))]
             content <- c(value1_content, value2_content)
-            df <- gather(results, sample, value, all_of(content))
+            df <- pivot_longer_df(results, content)
             df$type <- rep(paste0(aName[1], aName[2]), length(df$sample))
             df$type[grep(aName[2], df$sample)] <- aName[2]
             df$type[df$type != aName[2]] <- aName[1]
@@ -344,7 +340,7 @@ getBmMatrix.bmData.internal <- function(region,
             value1_content <- names(results)[grep(aName[1], names(results))]
             value2_content <- names(results)[grep(aName[2], names(results))]
             content <- c(value1_content, value2_content)
-            df <- gather(results, sample, value, all_of(content))
+            df <- pivot_longer_df(results, content)
             df$type <- rep(paste0(aName[1], aName[2]), length(df$sample))
             df$type[grep(aName[1], df$sample)] <- aName[1]
             df$type[df$type != aName[1]] <- aName[2]
@@ -353,7 +349,7 @@ getBmMatrix.bmData.internal <- function(region,
         }
     } else {
         content <- names(results)[grep(aName, names(results))]
-        df <- gather(results, sample, value, all_of(content))
+        df <- pivot_longer_df(results, content)
         df$sample <- gsub(paste0("_", aName), "", df$sample)
         df$type <- aName
     }
@@ -364,4 +360,36 @@ getBmMatrix.bmData.internal <- function(region,
     attr(df, "data") <- "bmData"
     attr(df, "chromosome") <- paste0("chr", gsub("chr", "", region$chr, ignore.case = TRUE))
     return(df)
+}
+
+
+#' reshape a data.frame from wide to long format
+#'
+#' Drop-in replacement for the `tidyr::gather(data, sample, value, all_of(content))`
+#' calls used above. `tidyr::pivot_longer()` is the modern API, but it differs in
+#' two ways that would silently change the result: it returns a tibble instead of
+#' a `data.frame`, and it stacks the gathered columns row by row whereas
+#' `gather()` stacked them column by column. Both are restored here so that the
+#' returned value is identical to the previous implementation.
+#'
+#' @param data data.frame in wide format
+#' @param content character vector of the columns to gather
+#' @return data.frame in long format, with `sample` and `value` columns
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyselect all_of
+#' @noRd
+pivot_longer_df <- function(data, content) {
+    df <- pivot_longer(data,
+        cols = all_of(content),
+        names_to = "sample", values_to = "value"
+    )
+    df <- as.data.frame(df)
+
+    ## keep the row order of the previous gather() call: rows grouped by column,
+    ## following the order of `content` (the second key makes the sort stable)
+    df <- df[order(match(df$sample, content), seq_len(nrow(df))), , drop = FALSE]
+
+    ## subsetting keeps the original row names; gather() numbered them 1..n
+    rownames(df) <- NULL
+    df
 }

@@ -51,6 +51,18 @@ test_that("plotBmProf works with list input", {
         cover_depth = TRUE
     )
 
+    ## getBmMatrix() returns a plain data.frame in long format.
+    ## pivot_longer_df() restores the type and the row order of the former
+    ## tidyr::gather() call, so a bare pivot_longer() here would silently
+    ## return a tibble and reorder the rows.
+    expect_s3_class(bm_df, "data.frame")
+    expect_false(inherits(bm_df, "tbl_df"))
+    expect_identical(
+        names(bm_df),
+        c("coordinate", "motif", "strand", "sample", "value", "type")
+    )
+    expect_identical(rownames(bm_df), as.character(seq_len(nrow(bm_df))))
+
     df_list <- list(a = bm_df, b = bm_df)
 
 
