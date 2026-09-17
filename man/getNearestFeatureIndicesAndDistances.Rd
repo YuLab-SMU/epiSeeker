@@ -19,7 +19,9 @@ getNearestFeatureIndicesAndDistances(
 
 \item{features}{features in GRanges}
 
-\item{sameStrand}{logical, whether find nearest gene in the same strand}
+\item{sameStrand}{logical, whether find nearest gene in the same strand,
+both when finding the nearest feature and when detecting overlaps with it.
+Peaks with ambiguous strand ('*') are compatible with features on any strand}
 
 \item{ignoreOverlap}{logical, whether ignore overlap of TSS with peak}
 

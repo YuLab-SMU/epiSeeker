@@ -143,7 +143,6 @@ importFrom(dplyr,
 importFrom(enrichplot,upsetplot)
 importFrom(ggplot2,
   aes,
-  aes_string,
   annotate,
   coord_cartesian,
   coord_fixed,
