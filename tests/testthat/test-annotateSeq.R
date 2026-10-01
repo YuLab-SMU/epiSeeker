@@ -29,6 +29,19 @@ test_that("geneChr / geneStrand are characters, not factor codes", {
     expect_equal(as.character(m$geneStrand), c("-", "+"))
 })
 
+test_that("all peaks dropped reports the seqlevels mismatch", {
+    ## issue #238 of ChIPseeker: no seqlevel of the peaks matches TxDb, so all
+    ## peaks are dropped and the annotation code then failed with
+    ## "Error: invalid subscript"
+    peak <- GRanges("chr1_gl000191_random", IRanges(1000, 1200))
+    txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+
+    expect_error(
+        suppressWarnings(annotateSeq(peak, TxDb = txdb, verbose = FALSE)),
+        "seqlevels"
+    )
+})
+
 test_that("peaks without any feature in TxDb are reported, not silently dropped", {
     peak <- GRanges(c("chr1", "chrM"),
                     IRanges(start = c(1500, 1500), width = 100))

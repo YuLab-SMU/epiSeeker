@@ -25,6 +25,13 @@
   whole transcript, which is why most entries can be 0 - while non-overlapping
   peaks get the signed distance to the feature TSS (issue #235 of ChIPseeker).
   (2026-10-01, Thu)
++ `annotateSeq()` no longer fails with `Error: invalid subscript` when *every*
+  peak is dropped, which typically happens because none of the seqlevels of the
+  peaks matches `TxDb` (`chr1` vs `NC_000001.11`): `.get_distance_to_gene_end()`
+  no longer hands the `SortedByQueryHits` object returned by `follow()` for an
+  empty query to `features[]`, and `annotateSeq()` reports the seqlevels mismatch
+  together with how to align the chromosome names (`seqlevelsStyle()`).
+  (2026-10-01, Thu)
 
 # epiSeeker 1.1.3
 
