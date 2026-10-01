@@ -39,7 +39,11 @@ annotateSeq(
 
 \item{annoDb}{annotation package}
 
-\item{addFlankGeneInfo}{logical, add flanking gene information from the peaks}
+\item{addFlankGeneInfo}{logical, add flanking gene information from the peaks.
+The resulting `flank_gene_distances` column reports 0 when the peak
+overlaps the feature range (at `level = "transcript"` this is the whole
+transcript, so peaks inside a transcript body get 0) and the signed
+distance to the feature TSS otherwise.}
 
 \item{flankDistance}{distance of flanking sequence}
 
@@ -79,6 +83,17 @@ geneStrand: gene strand
 geneId: entrezgene ID
 
 distanceToTSS: distance from peak to gene TSS
+
+if addFlankGeneInfo is TRUE, extra columns will be included:
+
+flank_geneIds: semicolon-separated gene IDs within `flankDistance` of the peak
+
+flank_gene_distances: semicolon-separated distances of these genes. A value
+of 0 means that the peak overlaps the feature range: at level = "transcript"
+the feature is the whole transcript, so peaks inside a transcript body
+always get 0 regardless of their distance to the TSS. For non-overlapping
+features the signed distance to the feature TSS is reported. See
+https://github.com/YuLab-SMU/ChIPseeker/issues/235
 
 if annoDb is provided, extra column will be included:
 

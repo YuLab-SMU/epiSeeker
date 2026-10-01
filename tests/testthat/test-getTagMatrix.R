@@ -22,6 +22,27 @@ test_that("getTagMatrix function for single peak file", {
     expect_equal(dim(tagMatrix)[2], 6001)
 })
 
+test_that("body tag matrix works with a sub-1kb flank extension", {
+    ## issue #250 (ChIPseeker): upstream/downstream = 500 made ChIPseeker's
+    ## binning code divide by zero.  epiSeeker bins the flanks separately, so
+    ## this guards the same scenario here
+    data(demo_peak)
+    txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+    tagMatrix <- getTagMatrix(demo_peak,
+        type = "body", by = "gene",
+        upstream = 500, downstream = 500, nbin = 50,
+        TxDb = txdb, weightCol = "V7",
+        verbose = FALSE
+    )
+
+    expect_true(is.matrix(tagMatrix))
+    expect_true(ncol(tagMatrix) > 50)
+    expect_false(anyNA(tagMatrix))
+    expect_equal(attr(tagMatrix, "upstream"), 500)
+    expect_equal(attr(tagMatrix, "downstream"), 500)
+})
+
 # test the getPromoters can run normally or not
 test_that("getPromoters runs with default parameters", {
     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene

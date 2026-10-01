@@ -27,6 +27,9 @@ getAllFlankingGene <- function(peak.gr, features, level = "transcript", distance
 
     hitInfo$peakIdx <- qh
 
+    ## distance 0 means the peak overlaps the feature range.  At
+    ## level = "transcript" the feature is the whole transcript, so peaks
+    ## inside a transcript body get 0 no matter how far the TSS is (#235)
     overlapHit <- findOverlaps(peak.gr2, BiocGenerics::unstrand(featureHit))
     hitInfo$distance <- NA
     hitInfo$distance[subjectHits(overlapHit)] <- 0

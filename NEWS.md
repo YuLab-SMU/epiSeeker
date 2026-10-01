@@ -1,3 +1,31 @@
+# epiSeeker 1.1.4
+
++ `annotateSeq()` keeps `annotation`, `geneChr/geneStart/geneEnd`, `geneId` and
+  `transcriptId` consistent with each other at transcript level (issue #252 of
+  ChIPseeker). The transcript id of an exon/intron/UTR hit was taken from
+  `names(genomicRegion)[subjectIndex]`, indexing the unlisted ranges with the
+  names of the `GRangesList`; this mostly returned NA and occasionally a wrong
+  transcript, so a peak could be reported with the metadata of an unrelated
+  transcript (even on another chromosome). The ids are now expanded before
+  indexing, and the same alignment is applied at `level = "gene"`, where the gene
+  of the overlapping exon/intron/UTR is resolved with `TXID2EG()` and used
+  instead of the nearest gene. (2026-10-01, Thu)
++ `seq2gene()` no longer fails with `$ operator is invalid for atomic vectors`
+  when none of the queried regions overlaps an exon
+  (`getGenomicAnnotation.internal()` returns `NA` then); host-gene extraction is
+  skipped and the nearest/flanking genes are still reported (issue #248 of
+  ChIPseeker). (2026-10-01, Thu)
++ `downloadGEObedFiles()`/`downloadGSMbedFiles()` rewrite the `ftp://` urls of
+  `gsminfo$supplementary_file` to `https://` before downloading and report the
+  underlying download error when a file cannot be fetched (issue #254 of
+  ChIPseeker). (2026-10-01, Thu)
++ Documented the distance definition of `flank_gene_distances` reported by
+  `annotateSeq(..., addFlankGeneInfo = TRUE)`: a distance of 0 means that the
+  peak overlaps the feature range - at `level = "transcript"` the feature is the
+  whole transcript, which is why most entries can be 0 - while non-overlapping
+  peaks get the signed distance to the feature TSS (issue #235 of ChIPseeker).
+  (2026-10-01, Thu)
+
 # epiSeeker 1.1.3
 
 + `annotateSeq()` now reports `geneChr` and `geneStrand` as characters instead of

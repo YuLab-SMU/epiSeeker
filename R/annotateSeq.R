@@ -8,7 +8,11 @@
 #' @param assignGenomicAnnotation logical, assign peak genomic annotation or not
 #' @param genomicAnnotationPriority genomic annotation priority
 #' @param annoDb annotation package
-#' @param addFlankGeneInfo logical, add flanking gene information from the peaks
+#' @param addFlankGeneInfo logical, add flanking gene information from the peaks.
+#'   The resulting `flank_gene_distances` column reports 0 when the peak
+#'   overlaps the feature range (at `level = "transcript"` this is the whole
+#'   transcript, so peaks inside a transcript body get 0) and the signed
+#'   distance to the feature TSS otherwise.
 #' @param flankDistance distance of flanking sequence
 #' @param sameStrand logical, whether find nearest/overlap gene in the same strand
 #' @param ignoreOverlap logical, whether ignore overlap of TSS with peak
@@ -38,6 +42,17 @@
 #' geneId: entrezgene ID
 #'
 #' distanceToTSS: distance from peak to gene TSS
+#'
+#' if addFlankGeneInfo is TRUE, extra columns will be included:
+#'
+#' flank_geneIds: semicolon-separated gene IDs within `flankDistance` of the peak
+#'
+#' flank_gene_distances: semicolon-separated distances of these genes. A value
+#' of 0 means that the peak overlaps the feature range: at level = "transcript"
+#' the feature is the whole transcript, so peaks inside a transcript body
+#' always get 0 regardless of their distance to the TSS. For non-overlapping
+#' features the signed distance to the feature TSS is reported. See
+#' https://github.com/YuLab-SMU/ChIPseeker/issues/235
 #'
 #' if annoDb is provided, extra column will be included:
 #'
@@ -173,6 +188,28 @@ annotateSeq <- function(peak,
         anno <- getGenomicAnnotation(peak.gr, distance, tssRegion, TxDb, level, genomicAnnotationPriority, sameStrand = sameStrand)
         annotation <- anno[["annotation"]]
         detailGenomicAnnotation <- anno[["detailGenomicAnnotation"]]
+
+        ## Keep the feature level metadata tied to the feature that supplied
+        ## the exon/intron annotation when genes or isoforms overlap
+        ## (issue #252).
+        if (level == "transcript") {
+            aligned <- .align_transcript_annotation(
+                peak.gr, features, idx.dist$index, distance,
+                anno[["annotationFeatureId"]]
+            )
+        } else if (level == "gene") {
+            aligned <- .align_annotation_feature(
+                peak.gr, features, idx.dist$index, distance,
+                anno[["annotationFeatureGene"]], idColumn = "gene_id"
+            )
+        } else {
+            aligned <- NULL
+        }
+
+        if (!is.null(aligned)) {
+            idx.dist$index <- aligned$index
+            distance <- aligned$distance
+        }
     } else {
         annotation <- NULL
         detailGenomicAnnotation <- NULL
