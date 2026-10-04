@@ -16,3 +16,4 @@ epiSeeker_cache
 Session-info_cache
 index_cache
 /.quarto/
+tests/
