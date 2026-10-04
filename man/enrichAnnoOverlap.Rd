@@ -32,6 +32,12 @@ data.frame
 \description{
 Calculate overlap significance of ChIP experiments based on their nearest gene annotation
 }
+\details{
+`N_OL` counts overlapping \emph{genes}, not peaks, so it can be larger than
+the number of input peaks: a peak is annotated to its nearest gene, but the
+same gene is reported once per peak and a peak region may overlap several
+target genes (see issue #84 of ChIPseeker).
+}
 \examples{
 if (interactive()) {
     require(TxDb.Hsapiens.UCSC.hg38.knownGene)

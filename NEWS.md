@@ -32,6 +32,16 @@
   empty query to `features[]`, and `annotateSeq()` reports the seqlevels mismatch
   together with how to align the chromosome names (`seqlevelsStyle()`).
   (2026-10-01, Thu)
++ `enrichPeakOverlap()`/`enrichAnnoOverlap()` accept a single `GRanges` as
+  `targetPeak`: it was passed on unwrapped while the overlap code works on a
+  list of target peak sets, so the call failed with "GRanges objects don't
+  support [[, as.list(), lapply()". The documentation of `enrichPeakOverlap()`
+  and `enrichAnnoOverlap()` now also states the direction of the test (the
+  observed ratio is the fraction of *target* peaks covered by the query peaks and
+  the target is the shuffled set, so `N_OL` is direction free while the p-value
+  is not) and that `N_OL` of `enrichAnnoOverlap()` counts genes and can therefore
+  exceed the number of input peaks (issue #84 of ChIPseeker).
+  (2026-10-01, Thu)
 
 # epiSeeker 1.1.3
 
