@@ -86,6 +86,45 @@ test_that("the overlap count is symmetric while the tested ratio is not", {
 })
 
 
+test_that("symmetric=TRUE gives the same p-value in both directions", {
+    ## issue #84 of ChIPseeker: the opt-in symmetric p-value combines both
+    ## directions as min(1, 2*min(p, p_rev))
+    txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+
+    set.seed(11)
+    hot <- sample(1000000:1400000, 3)
+    A <- GRanges("chr1", IRanges(c(sample(hot, 2),
+                                   sample(2000000:2400000, 18)), width = 300))
+    B <- GRanges("chr1", IRanges(c(sample(hot, 3),
+                                   sample(3000000:3400000, 97)), width = 300))
+
+    set.seed(1)
+    d.ab <- enrichPeakOverlap(A, B, TxDb = txdb, nShuffle = 100, mc.cores = 1,
+                              verbose = FALSE
+    )
+    set.seed(1)
+    s.ab <- enrichPeakOverlap(A, B, TxDb = txdb, nShuffle = 100, mc.cores = 1,
+                              verbose = FALSE, symmetric = TRUE
+    )
+    set.seed(1)
+    s.ba <- enrichPeakOverlap(B, A, TxDb = txdb, nShuffle = 100, mc.cores = 1,
+                              verbose = FALSE, symmetric = TRUE
+    )
+
+    ## direction free ...
+    expect_equal(s.ab$pvalue, s.ba$pvalue)
+    expect_equal(s.ab$N_OL, s.ba$N_OL)
+
+    ## ... and consistent with the one-sided test it is built from
+    set.seed(1)
+    p.rev <- epiSeeker:::enrichOverlap.peak.mirrored(A, list(B), txdb, 100,
+                                                     mc.cores = 1, verbose = FALSE
+    )$pvalue
+    expect_equal(s.ab$pvalue, min(1, 2 * min(d.ab$pvalue, p.rev)))
+    expect_true(s.ab$pvalue >= d.ab$pvalue)
+})
+
+
 test_that("shuffle", {
     txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
 

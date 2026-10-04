@@ -13,7 +13,8 @@ enrichPeakOverlap(
   chainFile = NULL,
   pool = TRUE,
   mc.cores = detectCores() - 1,
-  verbose = TRUE
+  verbose = TRUE,
+  symmetric = FALSE
 )
 }
 \arguments{
@@ -34,6 +35,15 @@ enrichPeakOverlap(
 \item{mc.cores}{number of cores, see \link[parallel]{mclapply}}
 
 \item{verbose}{logical}
+
+\item{symmetric}{logical, whether the p-value should be direction free.
+Default is FALSE, which reports the one-sided test described above. If
+TRUE, the mirrored direction (query and target exchanged) is computed as
+well and the two are combined as `min(1, 2*min(p, p_rev))` (Hedges), so that
+the result does not depend on the order of the arguments. Note that this
+doubles the number of permutations and that the smallest reportable p-value
+becomes `2/(nShuffle+1)`; use a larger `nShuffle` and `set.seed()` for a
+reproducible result (issue #84 of ChIPseeker)}
 }
 \value{
 data.frame

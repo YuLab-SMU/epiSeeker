@@ -146,6 +146,14 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod 
 #' @param pool logical, whether pool target peaks
 #' @param mc.cores number of cores, see \link[parallel]{mclapply}
 #' @param verbose logical
+#' @param symmetric logical, whether the p-value should be direction free.
+#'   Default is FALSE, which reports the one-sided test described above. If
+#'   TRUE, the mirrored direction (query and target exchanged) is computed as
+#'   well and the two are combined as `min(1, 2*min(p, p_rev))` (Hedges), so that
+#'   the result does not depend on the order of the arguments. Note that this
+#'   doubles the number of permutations and that the smallest reportable p-value
+#'   becomes `2/(nShuffle+1)`; use a larger `nShuffle` and `set.seed()` for a
+#'   reproducible result (issue #84 of ChIPseeker)
 #' @return data.frame
 #' @export
 #' @examples
@@ -158,7 +166,8 @@ enrichAnnoOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod 
 #' @importFrom rtracklayer liftOver
 #' @author G Yu
 enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod = "BH", nShuffle = 1000,
-                              chainFile = NULL, pool = TRUE, mc.cores = detectCores() - 1, verbose = TRUE) {
+                              chainFile = NULL, pool = TRUE, mc.cores = detectCores() - 1, verbose = TRUE,
+                              symmetric = FALSE) {
     TxDb <- loadTxDb(TxDb)
     query.gr <- loadPeak(queryPeak)
     if (is(targetPeak[1], "GRanges") || is(targetPeak[[1]], "GRanges")) {
@@ -192,7 +201,8 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod 
                 nShuffle = nShuffle,
                 chainFile = chainFile,
                 mc.cores = mc.cores,
-                verbose = verbose
+                verbose = verbose,
+                symmetric = symmetric
             )
         })
         res <- do.call("rbind", res_list)
@@ -203,6 +213,16 @@ enrichPeakOverlap <- function(queryPeak, targetPeak, TxDb = NULL, pAdjustMethod 
         p <- padj <- NA
     } else {
         p <- p.ol$pvalue
+        if (symmetric) {
+            ## combine the one-sided test with the mirrored direction (query and
+            ## target exchanged) as min(1, 2*min(p, p_rev)); see the 'Direction of
+            ## the test' section of the documentation
+            p.rev <- enrichOverlap.peak.mirrored(query.gr, target.gr, TxDb,
+                                                  nShuffle, mc.cores = mc.cores,
+                                                  verbose = verbose
+            )$pvalue
+            p <- pmin(1, 2 * pmin(p, p.rev))
+        }
         padj <- p.adjust(p, method = pAdjustMethod)
     }
 
@@ -338,5 +358,77 @@ enrichOverlap.peak.internal <- function(query.gr, target.gr, TxDb, nShuffle = 10
     ## p <- lapply(qr, function(q) mean(rr>q))
     p <- lapply(qr, function(q) (sum(rr > q) + 1) / (length(rr) + 1))
     res <- list(pvalue = unlist(p), overlap = qLen)
+    return(res)
+}
+
+#' Mirrored permutation test of peak overlap
+#'
+#' The same permutation test as `enrichOverlap.peak.internal()`, but with the
+#' roles of the two peak sets exchanged: the *target* peaks are kept fixed and
+#' the *query* peaks are shuffled, so the observed ratio is the fraction of query
+#' peaks covered by the target peaks. It is the second half of the two-sided
+#' (symmetric) p-value of `enrichPeakOverlap(symmetric = TRUE)` (issue #84 of
+#' ChIPseeker).
+#'
+#' @param query.gr GRanges of the query peaks
+#' @param target.gr list of GRanges, one element per target peak set
+#' @param TxDb TxDb object, provides the chromosome lengths for shuffling
+#' @param nShuffle integer, number of permutations
+#' @param mc.cores integer, number of cores
+#' @param verbose logical
+#' @return list with the `pvalue` of every target peak set and the number of
+#'   overlapping query peaks
+#' @importFrom utils txtProgressBar
+#' @importFrom utils setTxtProgressBar
+#' @importFrom parallel mclapply
+#' @noRd
+#' @author G Yu
+enrichOverlap.peak.mirrored <- function(query.gr, target.gr, TxDb, nShuffle = 1000,
+                                         mc.cores = detectCores() - 1, verbose = TRUE) {
+    if (verbose) {
+        cat(">> permutation test of peak overlap (mirrored)...\t",
+            format(Sys.time(), "%Y-%m-%d %X"), "\n",
+            sep = ""
+        )
+    }
+
+    idx <- sample(seq_along(query.gr), nShuffle, replace = TRUE)
+    len <- length(query.gr)
+
+    obs <- unlist(lapply(target.gr, function(tt) {
+        length(intersect(query.gr, tt))
+    }))
+
+    if (nShuffle < 1) {
+        return(list(pvalue = NULL, overlap = obs))
+    }
+
+    if (verbose) {
+        pb <- txtProgressBar(min = 0, max = nShuffle, style = 3)
+    }
+
+    shuffleOne <- function(j) {
+        if (verbose) {
+            setTxtProgressBar(pb, j)
+        }
+        qShuffle <- shuffle(query.gr[idx[j]], TxDb)
+        unlist(lapply(target.gr, function(tt) length(intersect(qShuffle, tt))))
+    }
+
+    if (Sys.info()[1] == "Windows") {
+        rr <- lapply(seq_along(idx), shuffleOne)
+    } else {
+        rr <- mclapply(seq_along(idx), shuffleOne, mc.cores = mc.cores)
+    }
+
+    if (verbose) {
+        close(pb)
+    }
+
+    rr <- matrix(unlist(rr), nrow = length(target.gr))
+    qr <- obs / len
+    p <- apply(rr, 1, function(r) (sum(r > qr) + 1) / (nShuffle + 1))
+
+    res <- list(pvalue = unname(p), overlap = obs)
     return(res)
 }
