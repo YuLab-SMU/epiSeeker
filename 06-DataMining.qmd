@@ -90,7 +90,7 @@ and _submission\_date_ will be incorporated.
 
 ## Download GEO ChIP data sets
 
-`r Biocpkg("ChIPseeker")` provide function `downloadGEObedFiles` to download all the bed files of a particular genome.
+`r Biocpkg("epiSeeker")` provides the function `downloadGEObedFiles` to download all the bed files of a particular genome.
 
 ```{r}
 #| label: downloadGEObedFiles
@@ -105,6 +105,12 @@ Or a vector of GSM accession number by `downloadGSMbedFiles`.
 gsm <- hg19$gsm[sample(nrow(hg19), 10)]
 downloadGSMbedFiles(gsm, destDir="hg19")
 ```
+
+The _supplementary\_file_ column of the table above stores the files as `ftp://` URLs. GEO no longer
+serves them over FTP, so both download functions rewrite the URL to `https://` before fetching, and no
+FTP access is required from the user side. Files that are already present in _destDir_ are not downloaded
+again, and a file that cannot be fetched is reported with the underlying error instead of being skipped
+silently.
 
 
 ## Overlap significant testing

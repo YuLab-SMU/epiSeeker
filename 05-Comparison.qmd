@@ -64,7 +64,7 @@ dotplot(compKEGG, showCategory = 15, title = "KEGG Pathway Enrichment Analysis")
 ## Overlap of peaks and annotated genes
 
 User may want to compare the overlap peaks of replicate experiments or from different experiments. 
-`r Biocpkg("ChIPseeker")` provides `peak2GRanges` that can read peak file and stored in GRanges object. 
+`r Biocpkg("epiSeeker")` provides `readPeakFile` that can read a peak file and store it in a `GRanges` object.
 Several files can be read simultaneously using lapply, and then passed to `vennplot` to calculate their overlap and draw venn plot.
 
 `vennplot` accept a list of object, can be a list of GRanges or a list of vector. 
@@ -83,7 +83,7 @@ vennplot(genes)
 
 Overlap is very important, if two ChIP experiment by two different proteins overlap in a large fraction of their peaks, 
 they may cooperative in regulation. Calculating the overlap is only touch the surface. 
-`r Biocpkg("ChIPseeker")` implemented statistical methods to measure the significance of the overlap.
+`r Biocpkg("epiSeeker")` implemented statistical methods to measure the significance of the overlap.
 
 ## Shuffle genome coordination
 
@@ -148,3 +148,43 @@ their genome version are different. This creat the possibility of comparison amo
 
 In the output, _qSample_ is the name of _queryPeak_ and _qLen_ is the the number of peaks in _queryPeak_. _N\_OL_ is the number of 
 overlap between _queryPeak_ and _targetPeak_.
+
+### The permutation test is one-sided
+
+`enrichPeakOverlap()` shuffles the **target** peaks and asks how surprising the observed overlap is. The
+observed quantity is therefore the fraction of _target_ peaks covered by _query_ peaks
+(`_N\_OL_/_tLen_`), and the test answers *"are the query peaks enriched within the target peaks?"*.
+
+This has two consequences that are worth knowing before comparing two directions:
+
+* _N\_OL_ is direction free, it reports the same number when _queryPeak_ and _targetPeak_ are exchanged,
+  while the p-value is not, because it normalises by the size of the _target_ set and shuffles it. When
+  the two peak sets differ in size, the p-values of the two directions can differ considerably.
+* Even for peak sets of the same size the two null distributions are sampled independently, so repeated
+  runs differ slightly. Use `set.seed()` together with a large _nShuffle_ when the exact value matters,
+  or compare _N\_OL_ if a direction-free measure is what you need.
+
+::: {.callout-tip title="Direction-free p-values with `symmetric = TRUE`"}
+Parameter _symmetric_ (default `FALSE`) computes the mirrored direction as well -- query and target
+exchanged -- and combines the two one-sided p-values as `min(1, 2*min(p, p_rev))`. The result then no
+longer depends on the order of the arguments.
+
+```{r}
+#| label: enrichPeakOverlap-symmetric
+#| eval: false
+enrichPeakOverlap(queryPeak  = files[[5]],
+                  targetPeak = unlist(files[1:4]),
+                  TxDb       = txdb,
+                  nShuffle   = 1000,
+                  symmetric  = TRUE,
+                  verbose    = FALSE)
+```
+
+Two things to keep in mind: the number of permutations is doubled, and because the two p-values are
+combined, the smallest reportable p-value becomes `2/(nShuffle+1)`.
+:::
+
+`enrichAnnoOverlap()`, which compares the annotated _genes_ of two data sets, uses a hypergeometric test
+that is already exactly symmetric and therefore has no _symmetric_ parameter. In that function _N\_OL_
+counts **genes** rather than peaks, so it can be larger than the number of input peaks: every peak is
+annotated to its nearest gene and a peak region may overlap several genes.

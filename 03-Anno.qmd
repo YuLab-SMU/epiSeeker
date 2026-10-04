@@ -47,7 +47,7 @@ peakAnno.edb <- annotateSeq(files[[4]], tssRegion=c(-3000, 3000),
 
 Peak Annotation is performed by `annotateSeq`. User can define TSS (transcription start site) region, 
 by default TSS is defined from -3kb to +3kb. The output of `annotateSeq` is `csAnno` instance. 
-`r Biocpkg("ChIPseeker")` provides `as.GRanges` to convert `csAnno` to `GRanges` instance, 
+`r Biocpkg("epiSeeker")` provides `as.GRanges` to convert `csAnno` to `GRanges` instance, 
 and `as.data.frame` to convert `csAnno` to `data.frame` which can be exported to file by `write.table`.
 
 `TxDb` object contained transcript-related features of a particular genome. 
@@ -55,15 +55,16 @@ Bioconductor provides several package that containing `TxDb` object of model org
 for instance `r Biocpkg("TxDb.Hsapiens.UCSC.hg38.knownGene")`, `r Biocpkg("TxDb.Hsapiens.UCSC.hg19.knownGene")` for 
 human genome hg38 and hg19, `r Biocpkg("TxDb.Mmusculus.UCSC.mm10.knownGene")` and 
 `r Biocpkg("TxDb.Mmusculus.UCSC.mm9.knownGene")` for 
-mouse genome mm10 and mm9, etc. User can also prepare their own `TxDb` object by retrieving information from UCSC Genome Bioinformatics 
-and BioMart data resources by R function `makeTxDbFromBiomart` and `makeTxDbFromUCSC`. 
+mouse genome mm10 and mm9, etc. User can also prepare their own `TxDb` object by retrieving information from UCSC Genome Bioinformatics
+and BioMart data resources by R function `makeTxDbFromBiomart` and `makeTxDbFromUCSC`, which are provided by the
+`r Biocpkg("txdbmaker")` package (in earlier releases they were part of `r Biocpkg("GenomicFeatures")`).
 `TxDb` object should be passed for peak annotation.
 
 All the peak information contained in peakfile will be retained in the output of `annotateSeq`. 
 The position and strand information of nearest genes are reported. 
 The distance from peak to the TSS of its nearest gene is also reported. 
 The genomic region of the peak is reported in annotation column. 
-Since some annotation may overlap, `r Biocpkg("ChIPseeker")` adopted the following priority in genomic annotation.
+Since some annotation may overlap, `r Biocpkg("epiSeeker")` adopted the following priority in genomic annotation.
 
 * Promoter
 * 5' UTR
@@ -76,7 +77,7 @@ Since some annotation may overlap, `r Biocpkg("ChIPseeker")` adopted the followi
 
 _Downstream_ is defined as the downstream of gene end.
 
-`r Biocpkg("ChIPseeker")` also provides parameter _genomicAnnotationPriority_ for user to prioritize this hierachy.
+`r Biocpkg("epiSeeker")` also provides parameter _genomicAnnotationPriority_ for user to prioritize this hierachy.
 
 `annotateSeq` report detail information when the annotation is Exon or Intron, 
 for instance "Exon (uc002sbe.3/9736, exon 69 of 80)", means that the peak is overlap with an Exon of transcript uc002sbe.3, 
@@ -87,6 +88,37 @@ Parameter annoDb is optional, if provided, extra columns including SYMBOL, GENEN
 The geneId column in annotation output will be consistent with the geneID in TxDb. 
 If it is ENTREZID, ENSEMBL will be added if annoDb is provided, while if it is ENSEMBL ID, ENTREZID will be added.
 
+::: {.callout-note title="All annotation columns describe the same feature"}
+The genomic annotation is computed from the exon/intron/UTR region that overlaps the peak, while the
+nearest feature is searched independently by distance to the TSS. Where transcripts or genes overlap,
+epiSeeker reports both from the **same** feature: with `level = "transcript"` the transcript that produced
+the annotation is reported in `transcriptId`, with `level = "gene"` the gene that owns it is reported in
+`geneId`. Accordingly `geneChr`, `geneStart`, `geneEnd`, `geneStrand` and `distanceToTSS` always describe
+that same feature, and peaks annotated as _Promoter_ are reported with the nearest TSS. A peak located in
+the body of a long transcript is therefore reported with an exon of that transcript, not with a different
+transcript that happens to have a closer TSS.
+
+With `addFlankGeneInfo = TRUE` the additional `flank_geneIds`, `flank_txIds` and `flank_gene_distances`
+columns list all genes/transcripts within `flankDistance`. A distance of `0` there means that the peak
+**overlaps the feature range**: because at `level = "transcript"` the feature is the whole transcript,
+most entries are `0` even when the distance to the transcript TSS is large. Only for features that do not
+overlap the peak the signed distance to their TSS is reported (negative upstream, positive downstream).
+:::
+
+::: {.callout-warning title="Peaks and TxDb must use the same chromosome names"}
+A peak can only be matched to a feature when both use the same chromosome names. If they differ, for
+instance peaks in `NC_000001.11` (GENBANK) style while the `TxDb` uses `chr1`, no feature can be found,
+every peak is dropped and `annotateSeq()` stops with an explicit message. Align the names with
+`seqlevelsStyle()` from `r Biocpkg("GenomeInfoDb")`:
+
+```{r}
+#| label: seqlevelsStyle
+#| eval: false
+seqlevelsStyle(peak) <- "NCBI"       # chr1 -> NC_000001.11
+# or
+seqlevelsStyle(txdb) <- "Ensembl"    # NC_000001.11 -> chr1
+```
+:::
 
 
 ## Visualize Genomic Annotation

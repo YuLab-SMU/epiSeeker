@@ -9,7 +9,7 @@ Biocpkg <- yulab.utils::Biocpkg
 The datasets _CBX6_ and _CBX7_ in this vignettes were downloaded 
 from _GEO (GSE40740)_[@pemberton_genome-wide_2014] while _ARmo\_0M_, _ARmo\_1nM_ and _ARmo\_100nM_ were 
 downloaded from _GEO (GSE48308)_[@urbanucci_overexpression_2012] . 
-`r Biocpkg("ChIPseeker")` provides `readPeakFile` to load the peak and store in `GRanges` object.
+`r Biocpkg("epiSeeker")` provides `readPeakFile` to load the peak and store in `GRanges` object.
 
 ```{r}
 #| label: peak-load
@@ -87,7 +87,7 @@ atac_p <- plotCov(pancancer_atac, weightCol = "V5",
 ![](fig/pancancer.png){.center}
 
 
-When `peak` is a `GRangsList` object, user can set the colors directly or by passing a palette to `fill_color`.
+When `peak` is a `GRangesList` object, user can set the colors directly or by passing a palette to `fill_color`.
 
 ```{r}
 #| label: plot-Cov-list
@@ -129,7 +129,7 @@ which means upstream and downstream parameter be length(region) * 0.2.
 If users do not want to methods above to get the region of interest, users can provide a granges through windows parameters.
 
 Since tagMatrix has been derived, epiSeeker provide two functions to visualize it: 
-(1) `plotPeakProfile()` function: visualize tagMatrix in a line graph. 
+(1) `plotPeakProf()` function: visualize tagMatrix in a line graph. 
 (2)`plotPeakHeatmap()` function: visualize the tagMatrix in a heatmap. 
 We also provide `plot_prof` parameter in `plotPeakHeatmap()` that can plot the line graph and heatmap in a figure.
 
@@ -263,7 +263,7 @@ plotPeakHeatmap(gene_intron_tssTagMatrix, conf = 0.95)
 
 ### Profile of multiple samples of one reference region
 
-Users can input a `GrangeList` object to visualize multiple samples.
+Users can input a `GRangesList` object to visualize multiple samples.
 
 ```{r}
 #| label: plot-multiple-sample-TSS
@@ -282,8 +282,8 @@ plotPeakHeatmap(tssTagMatrix_list, conf = 0.95)
 
 ### Profile of multiple samples of multiple reference regions
 
-Users can input a `GrangeList` object and different values to `by` parameter to profile multiple samples of multiple reference regions.
-`peak` parameter in getTagMatrix can not only recept `Grange/GrangeList` object but also bed file path.
+Users can input a `GRangesList` object and different values to `by` parameter to profile multiple samples of multiple reference regions.
+`peak` parameter in getTagMatrix can not only recept `GRanges`/`GRangesList` object but also bed file path.
 
 ```{r}
 #| label: plot-multiple-sample-multiple-region
