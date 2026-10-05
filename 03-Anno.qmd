@@ -107,17 +107,29 @@ overlap the peak the signed distance to their TSS is reported (negative upstream
 
 ::: {.callout-warning title="Peaks and TxDb must use the same chromosome names"}
 A peak can only be matched to a feature when both use the same chromosome names. If they differ, for
-instance peaks in `NC_000001.11` (GENBANK) style while the `TxDb` uses `chr1`, no feature can be found,
-every peak is dropped and `annotateSeq()` stops with an explicit message. Align the names with
-`seqlevelsStyle()` from `r Biocpkg("GenomeInfoDb")`:
+instance peaks in `NC_000001.11` style while the `TxDb` uses `chr1`, no feature can be found, every peak
+is dropped and `annotateSeq()` stops with an explicit message. Check the style of both objects with
+`seqlevelsStyle(seqlevels(x))` from `r Biocpkg("GenomeInfoDb")` and, when both sides can be converted,
+use the replacement form:
 
 ```{r}
 #| label: seqlevelsStyle
 #| eval: false
-seqlevelsStyle(peak) <- "NCBI"       # chr1 -> NC_000001.11
-# or
-seqlevelsStyle(txdb) <- "Ensembl"    # NC_000001.11 -> chr1
+seqlevelsStyle(peak) <- "UCSC"    # "1" -> "chr1", the usual case
+seqlevelsStyle(peak) <- "Ensembl" # "chr1" -> "1"
 ```
+
+Note that names such as `NC_000001.11` are *not* mapped automatically (they are reported as style
+`RefSeq` and the `GenBank` target style is not supported); rename them explicitly instead. The rule below
+holds for the standard NCBI assemblies, where the numeric part of the accession is the chromosome number:
+
+```{r}
+#| label: seqlevelsStyle-accession
+#| eval: false
+seqlevels(peak) <- sub("^NC_0*(\\d+)\\..*$", "chr\\1", seqlevels(peak))  # NC_000067.7 -> chr67
+```
+
+For other assemblies build the mapping from the assembly report and use `GenomeInfoDb::mapSeqlevels()`.
 :::
 
 
