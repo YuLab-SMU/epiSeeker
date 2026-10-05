@@ -32,6 +32,17 @@ test_that("upsetplot.csAnno works with vennpie enabled", {
             inherits(p, "gtable") ||
             inherits(p, "patchwork")
     )
+
+    ## the plot has to be drawable, not only constructible: the vennpie
+    ## sub-view is embedded as an annotation_custom() layer, which ggplot2 >= 4.0
+    ## rejects outside of coord_cartesian()
+    skip_if_not_installed("ggplot2")
+    fn <- tempfile(fileext = ".png")
+    on.exit(unlink(fn), add = TRUE)
+    expect_error(
+        suppressWarnings(ggplot2::ggsave(fn, p, width = 7, height = 5, dpi = 72)),
+        NA
+    )
 })
 
 

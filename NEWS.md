@@ -51,6 +51,21 @@
   the smallest reportable p-value to `2/(nShuffle+1)`. `enrichAnnoOverlap()` needs
   no such argument, its hypergeometric p-value is already exactly symmetric (issue
   #84 of ChIPseeker). (2026-10-01, Thu)
++ `upsetplot(vennpie = TRUE)` can be drawn again with ggplot2 >= 4.0. The vennpie
+  sub-view is embedded as an `annotation_custom()` layer, which ggplot2 only
+  supports below `coord_cartesian()`. The sub-view no longer uses `coord_fixed()`
+  and the parent plot is converted with `ggplotify` as well, because the ggupset
+  coordinate system (`CoordCombMatrix`) rejects such layers. No replacement for
+  the removed `coord_fixed()` is added: ggplotify rasterises the grob with the
+  aspect ratio of the device, and forcing a square panel distorted the venn
+  diagram further (measured anisotropy 1.43 without versus 1.50 with
+  `theme(aspect.ratio = 1)`, against 1.41 for the undistorted drawing). Before,
+  the plot failed with `` `annotation_custom()` only works with
+  `coord_cartesian()` ``. Note that ggupset 0.4.1 itself still maps the
+  deprecated `size` aesthetic, so drawing the plot may print
+  "Please use `linewidth` instead"; the warning comes from ggupset
+  (https://github.com/const-ae/ggupset/issues) and can be ignored.
+  (2026-10-01, Thu)
 
 # epiSeeker 1.1.3
 
