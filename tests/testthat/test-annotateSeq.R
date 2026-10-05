@@ -42,6 +42,17 @@ test_that("all peaks dropped reports the seqlevels mismatch", {
     )
 })
 
+test_that("an empty input returns an empty annotation", {
+    ## a zero-length peak set used to fail with "Error: invalid subscript"
+    txdb <- TxDb.Hsapiens.UCSC.hg19.knownGene
+    pa <- annotateSeq(GRanges(), TxDb = txdb, verbose = FALSE)
+
+    expect_s4_class(pa, "csAnno")
+    expect_equal(length(pa@anno), 0)
+    expect_equal(pa@peakNum, 0)
+    expect_equal(nrow(as.data.frame(pa)), 0)
+})
+
 test_that("peaks without any feature in TxDb are reported, not silently dropped", {
     peak <- GRanges(c("chr1", "chrM"),
                     IRanges(start = c(1500, 1500), width = 100))

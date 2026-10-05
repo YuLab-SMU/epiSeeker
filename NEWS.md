@@ -42,6 +42,12 @@
   is not) and that `N_OL` of `enrichAnnoOverlap()` counts genes and can therefore
   exceed the number of input peaks (issue #84 of ChIPseeker).
   (2026-10-01, Thu)
++ An empty input is now handled: `annotateSeq(GRanges(), ...)` returns an empty
+  `csAnno` instead of failing with "Error: invalid subscript". The root cause
+  (follow()/precede() returning a SortedByQueryHits object instead of indices for
+  an empty query) is guarded in `getNearestFeatureIndicesAndDistances()`, which
+  also makes `seq2gene()` return `character(0)` for an empty input.
+  (2026-10-01, Thu)
 + `enrichPeakOverlap()` gained an opt-in `symmetric` argument. With
   `symmetric = TRUE` the mirrored direction (query and target exchanged) is
   computed as well and the two one-sided permutation p-values are combined as
