@@ -53,12 +53,73 @@ peak coverage of multiple samples. Here we provide function to plot the hierarch
 Co-accessibility is also supported to be visualized in the picture by showing the peak pairs with the highest positive correlation 
 scores and the highest negative correlation scores.
 
+For the following example, we use TCGA pan-cancer ATAC-seq signals in the
+chr8:126712193-128412193 region. The prepared file `data/pancancer_atac.rds`
+contains a named list of 23 `GRanges` objects, one per cancer type, with the
+same 1,555 peak intervals in each object. `V4` stores a cancer-specific peak
+identifier, and `V5` stores the arithmetic mean of the log2-normalized signals
+across samples of that cancer type.
+
+You can load the supplied RDS file directly to run the plotting example below.
+To regenerate it, first place `TCGA-ATAC_PanCan_Log2Norm_Counts.rds` in
+`raw_data/` relative to the book project root, then run the following code from
+that root. The input has seven annotation columns, including `seqnames`,
+`start`, and `end`, followed by sample signal columns. Cancer types are derived
+from the first four characters of the sample column names after removing
+lowercase `x` characters from those prefixes. Only peaks fully contained in
+the selected region are retained. Missing signal values are not removed when
+computing the means. This preparation chunk is not run during book rendering;
+the full input matrix is not bundled with the book.
+
+```{r}
+#| label: prepare-pancancer-atac
+#| eval: false
+
+chr <- "chr8"
+start_pos <- 126712193
+end_pos <- 128412193
+
+atac_data <- readRDS("./raw_data/TCGA-ATAC_PanCan_Log2Norm_Counts.rds")
+atac_data$seqnames <- as.character(atac_data$seqnames)
+sub_data <- atac_data[
+    atac_data$seqnames == chr &
+        atac_data$start >= start_pos & atac_data$end <= end_pos,
+    , drop = FALSE
+]
+
+sample_signals <- sub_data[, 8:ncol(sub_data), drop = FALSE]
+cancer_type <- substr(colnames(sample_signals), start = 1, stop = 4)
+cancer_type <- gsub("x", "", cancer_type)
+cancer_types <- sort(unique(cancer_type))
+
+# Average log2-normalized signals within each cancer type for each peak.
+cancer_type_mt <- do.call(cbind, lapply(cancer_types, function(cancer) {
+    rowMeans(sample_signals[, cancer_type == cancer, drop = FALSE])
+}))
+colnames(cancer_type_mt) <- cancer_types
+
+peak_list <- setNames(vector("list", length(cancer_types)), cancer_types)
+for (cancer in cancer_types) {
+    peak_list[[cancer]] <- GenomicRanges::GRanges(
+        seqnames = sub_data$seqnames,
+        ranges = IRanges::IRanges(start = sub_data$start, end = sub_data$end),
+        strand = "*",
+        V4 = paste0(cancer, "_", seq_len(nrow(sub_data))),
+        V5 = cancer_type_mt[, cancer]
+    )
+}
+
+dir.create("./data", recursive = TRUE, showWarnings = FALSE)
+saveRDS(peak_list, "./data/pancancer_atac.rds")
+```
+
+The prepared list can now be used to display cancer-type coverage profiles,
+their hierarchical clustering, and co-accessibility relationships:
+
 ```{r}
 #| label: plot-pancancer
 #| eval: false
 
-# Details of the dataset and pre-processing we used here can be found from xxxx
-# We only show usage here for demonstration
 pancancer_atac <- readRDS("./data/pancancer_atac.rds")
 
 fill_color <- c("#a10589", "#fce364", "#854d23", "#c0b742",
