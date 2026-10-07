@@ -17,7 +17,7 @@ downloaded from _GEO (GSE48308)_[@urbanucci_overexpression_2012] .
 library(epiSeeker)
 
 files <- getSampleFiles()
-print(files)
+print(lapply(files, basename))
 peak <- readPeakFile(files[[4]])
 peak
 ```
