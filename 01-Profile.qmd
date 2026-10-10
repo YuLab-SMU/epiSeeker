@@ -17,7 +17,7 @@ downloaded from _GEO (GSE48308)_[@urbanucci_overexpression_2012] .
 library(epiSeeker)
 
 files <- getSampleFiles()
-print(files)
+print(lapply(files, basename))
 peak <- readPeakFile(files[[4]])
 peak
 ```
@@ -57,8 +57,6 @@ scores and the highest negative correlation scores.
 #| label: plot-pancancer
 #| eval: false
 
-# Details of the dataset and pre-processing we used here can be found from xxxx
-# We only show usage here for demonstration
 pancancer_atac <- readRDS("./data/pancancer_atac.rds")
 
 fill_color <- c("#a10589", "#fce364", "#854d23", "#c0b742",
