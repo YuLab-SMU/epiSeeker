@@ -1046,12 +1046,18 @@ loadBSgenome <- function(BSgenome) {
         ## get the object from BSgenome
         BSgenome_name <- attr(BSgenome, "pkgname")
 
-        if (requireNamespace(BSgenome_name, quietly = TRUE, character.only = TRUE)) {
-            text <- paste0("package:", BSgenome_name)
-            object <- ls(text)[grep("^[^BSgenome]", ls(text))]
-            command <- paste0(BSgenome_name, "::", object)
-            ## execute the command "pkg::object"
-            BSgenome <- eval(parse(text = command))
+        ## no `character.only` (see getGeneAnno()), and read the exports of the namespace
+        ## rather than ls("package:..."), which needs the package to be attached. The
+        ## genome is the first export that is a BSgenome; the earlier pattern "^[^BSgenome]"
+        ## is a character class and dropped organisms starting with B or S (Scerevisiae)
+        if (requireNamespace(BSgenome_name, quietly = TRUE)) {
+            for (obj in getNamespaceExports(BSgenome_name)) {
+                x <- getExportedValue(BSgenome_name, obj)
+                if (is(x, "BSgenome")) {
+                    BSgenome <- x
+                    break
+                }
+            }
         }
     }
 
