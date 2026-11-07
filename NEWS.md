@@ -1,5 +1,28 @@
 # epiSeeker 1.1.4
 
++ The example peak files are hg38, like the `TxDb` the vignette and the tests annotate them
+  with. The five GEO files of `getSampleFiles()` (GSE40740 CBX6/CBX7, GSE48308 ARmo) and
+  `sample_peaks.txt` were hg19 peaks annotated against hg38 genes: CBX6_BF had 15% of its
+  peaks within 1 kb of a TSS instead of 58%, and its Reactome enrichment (kidney
+  development, gastrulation) was gone. They are lifted with the UCSC hg19ToHg38 chain,
+  keeping the peaks that map to one range of the same width (98.5-100% per file,
+  `data-raw/lift_sample_data_hg38.R`); `tagMatrix` and `peakAnnoList` are rebuilt with
+  `TxDb.Hsapiens.UCSC.hg38.knownGene`, and the outputs pasted in the vignette are updated.
+  Annotated as published (hg19) and as shipped (hg38), the same peaks fall in the same
+  feature category for 96-98% of them, and CBX6 gives the same top Reactome pathways.
+  (2026-11-03, Tue)
++ `annotateSeq(annoDb = "org.Hs.eg.db")` adds the gene annotation (SYMBOL,
+  GENENAME, ENSEMBL) again under R >= 4.6. The package was loaded with
+  `requireNamespace(annoDb, character.only = TRUE)`; `character.only` is an
+  argument of `require()`, which R 4.6's `loadNamespace()` rejects, so
+  `requireNamespace()` returned `FALSE`, the database was never looked up, and
+  every call ended with the misleading warning "ID type not matched". The
+  database is now taken from the package namespace, so it need not be attached
+  either, and an `OrgDb` object is accepted as well as its name. The same fix
+  applies to the BSgenome lookup of `getBmMatrix()`, which also no longer drops
+  genomes whose organism starts with B or S (`Scerevisiae`): its pattern
+  `"^[^BSgenome]"` was a character class, not "does not start with BSgenome".
+  (2026-10-23, Fri)
 + `annotateSeq()` keeps `annotation`, `geneChr/geneStart/geneEnd`, `geneId` and
   `transcriptId` consistent with each other at transcript level (issue #252 of
   ChIPseeker). The transcript id of an exon/intron/UTR hit was taken from

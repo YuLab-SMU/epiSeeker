@@ -655,6 +655,10 @@ getGene <- function(TxDb, by = "gene") {
 
 #' get filenames of sample files
 #'
+#' Five ChIP-seq peak files from GEO: CBX6 and CBX7 (GSE40740) and ARmo at 0 M, 1 nM and
+#' 100 nM (GSE48308). The files were published on hg19 and are shipped lifted to hg38
+#' (UCSC hg19ToHg38 chain; peaks that did not map to one range of the same width were
+#' dropped, see data-raw/lift_sample_data_hg38.R), so annotate them with an hg38 TxDb.
 #'
 #' @title getSampleFiles
 #' @return list of file names
@@ -1046,12 +1050,18 @@ loadBSgenome <- function(BSgenome) {
         ## get the object from BSgenome
         BSgenome_name <- attr(BSgenome, "pkgname")
 
-        if (requireNamespace(BSgenome_name, quietly = TRUE, character.only = TRUE)) {
-            text <- paste0("package:", BSgenome_name)
-            object <- ls(text)[grep("^[^BSgenome]", ls(text))]
-            command <- paste0(BSgenome_name, "::", object)
-            ## execute the command "pkg::object"
-            BSgenome <- eval(parse(text = command))
+        ## no `character.only` (see getGeneAnno()), and read the exports of the namespace
+        ## rather than ls("package:..."), which needs the package to be attached. The
+        ## genome is the first export that is a BSgenome; the earlier pattern "^[^BSgenome]"
+        ## is a character class and dropped organisms starting with B or S (Scerevisiae)
+        if (requireNamespace(BSgenome_name, quietly = TRUE)) {
+            for (obj in getNamespaceExports(BSgenome_name)) {
+                x <- getExportedValue(BSgenome_name, obj)
+                if (is(x, "BSgenome")) {
+                    BSgenome <- x
+                    break
+                }
+            }
         }
     }
 
