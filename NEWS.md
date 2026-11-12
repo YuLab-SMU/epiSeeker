@@ -6,6 +6,9 @@
   `ENST00000479182.5/91653` to `ENST00000798887.1/102724542` in BioC 3.24,
   failing `R CMD check` on both Linux builders. Expected values are now derived
   from the installed TxDb at test time. (2026-11-12, Thu)
+
+# epiSeeker 1.1.4
+
 + `annotateSeq()` keeps `annotation`, `geneChr/geneStart/geneEnd`, `geneId` and
   `transcriptId` consistent with each other at transcript level (issue #252 of
   ChIPseeker). The transcript id of an exon/intron/UTR hit was taken from
