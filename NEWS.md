@@ -1,5 +1,11 @@
-# epiSeeker 1.1.4
+# epiSeeker 1.1.5
 
++ `test-txdb.R` no longer pins the `tx_id` -> gene mapping of
+  `TxDb.Hsapiens.UCSC.hg38.knownGene`. That mapping is annotation data rebuilt
+  for each Bioconductor release, and tx 70455 changed from
+  `ENST00000479182.5/91653` to `ENST00000798887.1/102724542` in BioC 3.24,
+  failing `R CMD check` on both Linux builders. Expected values are now derived
+  from the installed TxDb at test time. (2026-11-12, Thu)
 + `annotateSeq()` keeps `annotation`, `geneChr/geneStart/geneEnd`, `geneId` and
   `transcriptId` consistent with each other at transcript level (issue #252 of
   ChIPseeker). The transcript id of an exon/intron/UTR hit was taken from
